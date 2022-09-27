@@ -1,0 +1,20 @@
+package practica2_eduardo_blanco;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class Exercise2 {
+
+	private Connection c = null;
+	private static String url = "jdbc:oracle:thin:@156.35.94.98:1521:desa19";
+	private static String username = "UO285176";
+	private static String passwd;
+	
+	public static void main(String[] args) {
+		Scanner teclado = new Scanner(System.in);
+		System.out.println("Introduce tu contraseña: ");
+		passwd = teclado.nextLine();
+		System.out.println(passwd);
+	}
+
+}

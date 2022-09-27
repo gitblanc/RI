@@ -1,0 +1,6 @@
+---Configuración del Eclipse para RI---
+1. Window-Preferences-Safe actions-Perform, format y format all selected
+   Pinchar en formatter-seleccionar java conventions-edit-line wrapping-ponerlo a 80 -modificar el nombre
+   Aplicar
+
+

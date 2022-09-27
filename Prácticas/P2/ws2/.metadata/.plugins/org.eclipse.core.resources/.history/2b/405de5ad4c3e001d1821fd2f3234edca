@@ -1,0 +1,9 @@
+package practica2_eduardo_blanco;
+
+public class Exercise2 {
+
+	public static void main(String[] args) {
+		Connection c = null;
+	}
+
+}

@@ -1,0 +1,20 @@
+import java.sql.Connection;
+
+/**
+ * 
+ */
+
+/**
+ * @author UO285176
+ *
+ */
+public class Session1 {
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+	Connection c = null;
+    }
+
+}

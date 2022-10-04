@@ -61,7 +61,7 @@ public class FindNotInvoicedWorkOrders {
 				worker.id = rs.getString("id");
 				worker.description = rs.getString("description");
 				worker.state = rs.getString("state");
-				worker.date = rs.getTimestamp("date").toLocalDateTime();
+				worker.date = rs.getTimestamp("date");
 				worker.total = rs.getDouble("total");
 				workOrders.add(worker);
 			}

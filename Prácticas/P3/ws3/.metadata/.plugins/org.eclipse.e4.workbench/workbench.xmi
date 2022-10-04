@@ -218,18 +218,15 @@
       <tags>categoryTag:Help</tags>
     </sharedElements>
     <sharedElements xsi:type="advanced:Area" xmi:id="_gxKewEPEEe2QMvW8BTqnkw" elementId="org.eclipse.ui.editorss" selectedElement="_8CJJkEP5Ee286ra43jN8Nw">
-      <children xsi:type="basic:PartSashContainer" xmi:id="_8CJJkEP5Ee286ra43jN8Nw" selectedElement="_gxKewUPEEe2QMvW8BTqnkw" horizontal="true">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_8CJJkEP5Ee286ra43jN8Nw" selectedElement="_8CJJkUP5Ee286ra43jN8Nw" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_gxKewUPEEe2QMvW8BTqnkw" elementId="org.eclipse.e4.primaryDataStack" containerData="5000" selectedElement="_sDCokEP5Ee286ra43jN8Nw">
           <tags>org.eclipse.e4.primaryDataStack</tags>
           <tags>EditorStack</tags>
-          <tags>active</tags>
           <children xsi:type="basic:Part" xmi:id="_sDCokEP5Ee286ra43jN8Nw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="FindNotInvoicedWorkOrders.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
-            <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;FindNotInvoicedWorkOrders.java&quot; partName=&quot;FindNotInvoicedWorkOrders.java&quot; title=&quot;FindNotInvoicedWorkOrders.java&quot; tooltip=&quot;CWS1/src/uo/ri/cws/application/business/invoice/create/commands/FindNotInvoicedWorkOrders.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CWS1/src/uo/ri/cws/application/business/invoice/create/commands/FindNotInvoicedWorkOrders.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1708&quot; selectionTopPixel=&quot;796&quot;/>&#xD;&#xA;&lt;/editor>"/>
+            <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;FindNotInvoicedWorkOrders.java&quot; partName=&quot;FindNotInvoicedWorkOrders.java&quot; title=&quot;FindNotInvoicedWorkOrders.java&quot; tooltip=&quot;CWS1/src/uo/ri/cws/application/business/invoice/create/commands/FindNotInvoicedWorkOrders.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CWS1/src/uo/ri/cws/application/business/invoice/create/commands/FindNotInvoicedWorkOrders.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2052&quot; selectionTopPixel=&quot;796&quot;/>&#xD;&#xA;&lt;/editor>"/>
             <tags>Editor</tags>
             <tags>removeOnHide</tags>
             <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
-            <tags>active</tags>
-            <tags>activeOnClose</tags>
           </children>
           <children xsi:type="basic:Part" xmi:id="_sR3HsEP5Ee286ra43jN8Nw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="FindNotInvoicedWorkOrdersAction.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
             <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;FindNotInvoicedWorkOrdersAction.java&quot; partName=&quot;FindNotInvoicedWorkOrdersAction.java&quot; title=&quot;FindNotInvoicedWorkOrdersAction.java&quot; tooltip=&quot;CWS1/src/uo/ri/cws/application/ui/cashier/action/FindNotInvoicedWorkOrdersAction.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CWS1/src/uo/ri/cws/application/ui/cashier/action/FindNotInvoicedWorkOrdersAction.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;3&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
@@ -257,6 +254,7 @@
           </children>
         </children>
         <children xsi:type="basic:PartStack" xmi:id="_8CJJkUP5Ee286ra43jN8Nw" elementId="PartStack@4db0894c" containerData="5000" selectedElement="_aK1UEEP9Ee286ra43jN8Nw">
+          <tags>active</tags>
           <children xsi:type="basic:Part" xmi:id="_21RcEEP5Ee286ra43jN8Nw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="FindAllMechanics.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
             <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;FindAllMechanics.java&quot; partName=&quot;FindAllMechanics.java&quot; title=&quot;FindAllMechanics.java&quot; tooltip=&quot;CWS1/src/uo/ri/cws/application/business/mechanic/crud/FindAllMechanics.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CWS1/src/uo/ri/cws/application/business/mechanic/crud/FindAllMechanics.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;433&quot; selectionTopPixel=&quot;66&quot;/>&#xD;&#xA;&lt;/editor>"/>
             <tags>Editor</tags>
@@ -282,10 +280,12 @@
             <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
           </children>
           <children xsi:type="basic:Part" xmi:id="_aK1UEEP9Ee286ra43jN8Nw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="InvoicingService.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
-            <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;InvoicingService.java&quot; partName=&quot;InvoicingService.java&quot; title=&quot;InvoicingService.java&quot; tooltip=&quot;CWS1/src/uo/ri/cws/application/business/invoice/InvoicingService.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CWS1/src/uo/ri/cws/application/business/invoice/InvoicingService.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;26&quot; selectionOffset=&quot;4669&quot; selectionTopPixel=&quot;2376&quot;/>&#xD;&#xA;&lt;/editor>"/>
+            <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;InvoicingService.java&quot; partName=&quot;InvoicingService.java&quot; title=&quot;InvoicingService.java&quot; tooltip=&quot;CWS1/src/uo/ri/cws/application/business/invoice/InvoicingService.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CWS1/src/uo/ri/cws/application/business/invoice/InvoicingService.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;4749&quot; selectionTopPixel=&quot;2376&quot;/>&#xD;&#xA;&lt;/editor>"/>
             <tags>Editor</tags>
             <tags>removeOnHide</tags>
             <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
+            <tags>active</tags>
+            <tags>activeOnClose</tags>
           </children>
           <children xsi:type="basic:Part" xmi:id="_xjSy0EP-Ee286ra43jN8Nw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="FindNotInvoicedWorkOrdersAction.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
             <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;FindNotInvoicedWorkOrdersAction.java&quot; partName=&quot;FindNotInvoicedWorkOrdersAction.java&quot; title=&quot;FindNotInvoicedWorkOrdersAction.java&quot; tooltip=&quot;CWS0/src/uo/ri/cws/application/ui/cashier/action/FindNotInvoicedWorkOrdersAction.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CWS0/src/uo/ri/cws/application/ui/cashier/action/FindNotInvoicedWorkOrdersAction.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1488&quot; selectionTopPixel=&quot;330&quot;/>&#xD;&#xA;&lt;/editor>"/>
@@ -441,7 +441,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gsFxgEPEEe2QMvW8BTqnkw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_g7ZtIEP2Ee286ra43jN8Nw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_gAnzfkPEEe2QMvW8BTqnkw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_1OnbwEQDEe2LTcX_fuP9aw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_gAnzfkPEEe2QMvW8BTqnkw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gsFxgUPEEe2QMvW8BTqnkw" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -472,7 +472,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gsGYkkPEEe2QMvW8BTqnkw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_g7biUkP2Ee286ra43jN8Nw" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_gAny_UPEEe2QMvW8BTqnkw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_1OpQ8EQDEe2LTcX_fuP9aw" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_gAny_UPEEe2QMvW8BTqnkw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_gsGYk0PEEe2QMvW8BTqnkw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -2373,7 +2373,7 @@
   <addons xmi:id="_f_fxV0PEEe2QMvW8BTqnkw" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_f_fxWEPEEe2QMvW8BTqnkw" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_f_rXcEPEEe2QMvW8BTqnkw" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_gxEscUP2Ee286ra43jN8Nw" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_1DyEwUQDEe2LTcX_fuP9aw" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_gAeBoEPEEe2QMvW8BTqnkw" elementId="org.eclipse.team.ui.category.team" name="Version control (Team)" description="Actions that apply when working with a version control system"/>
   <categories xmi:id="_gAeBoUPEEe2QMvW8BTqnkw" elementId="org.eclipse.ui.category.views" name="Views" description="Commands for opening views"/>

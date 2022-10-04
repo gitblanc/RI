@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.mechanic.crud;
+
+/**
+ * @author UO285176
+ *
+ */
+public class DeleteMechanic {
+
+	private static final String SQL = "delete from TMechanics where id = ?";
+	private static final String URL = "jdbc:hsqldb:hsql://localhost";
+	private static final String USER = "sa";
+	private static final String PASSWORD = "";
+
+	public void execute() {
+
+	}
+}

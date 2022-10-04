@@ -1,0 +1,24 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.mechanic.crud;
+
+import java.util.List;
+
+import uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto;
+
+/**
+ * @author UO285176
+ *
+ */
+public class FindAllMechanics {
+	
+	private static final String SQL = "select id, dni, name, surname, version from TMechanics";
+	private static final String URL = "jdbc:hsqldb:hsql://localhost";
+	private static final String USER = "sa";
+	private static final String PASSWORD = "";
+	
+	public List<MechanicBLDto> execute() {
+		List<MechanicBLDto> mechanics = new ArrayList<>();
+	}
+}

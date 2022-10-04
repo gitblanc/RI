@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.mechanic.crud;
+
+/**
+ * @author UO285176
+ *
+ */
+public class UpdateMechanic {
+	public void execute() {
+		
+	}
+}

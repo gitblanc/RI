@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="assertion.Argument"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.mechanic.crud.AddMechanic"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.mechanic.crud.FindAllMechanics"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.ui.util.Printer"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.mechanic.MechanicService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.mechanic.crud.MechanicServiceImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.BusinessFactory"/>
@@ -16,6 +13,11 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.create.InvoicingServiceImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.create.commands.FindNotInvoicedWorkOrders"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.create.WorkorderService.WorkOrderBLDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.create.commands.WorkOrdersBilling"/>
+    <fullyQualifiedTypeName name="assertion.Argument"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.ui.util.Printer"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto"/>
 </qualifiedTypeNameHistroy>

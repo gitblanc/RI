@@ -1,0 +1,65 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.mechanic.crud;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
+
+import assertion.Argument;
+import uo.ri.cws.application.business.BusinessException;
+import uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto;
+import uo.ri.cws.application.business.mechanic.assembler.MechanicAssembler;
+import uo.ri.cws.application.business.util.BusinessCheck;
+import uo.ri.cws.application.persistence.PersistenceException;
+import uo.ri.cws.application.persistence.PersistenceFactory;
+import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
+
+/**
+ * @author UO285176
+ *
+ */
+public class AddMechanic {
+
+	private MechanicBLDto mechanic = null;
+
+	public AddMechanic(MechanicBLDto mechanic) {
+		Argument.isNotNull(mechanic, "The mechanic cannot be null");
+		Argument.isNotEmpty(mechanic.dni, "The dni cannot be null");
+		this.mechanic = mechanic;
+		this.mechanic.id = UUID.randomUUID().toString();
+		this.mechanic.version = 1L;
+	}
+
+	// Lógica de negocio para añadir a un mecánico
+	public MechanicBLDto execute() throws BusinessException {
+		MechanicGateway mg = PersistenceFactory.forMechanic();
+		Connection c = null;
+
+		try {
+			c = DriverManager.getConnection(URL, USER, PASSWORD);
+			c.setAutoCommit(false);
+			
+			// Comprobación de que el mecánico esté vacío
+			BusinessCheck.isTrue(mg.findByDni(mechanic.dni).isEmpty(), "The exists a mechanic with the same dni");
+			mg.add(MechanicAssembler.toDALDto(mechanic));
+			
+			c.commit();
+		} catch (SQLException e) {
+			c.rollback();
+			throw new PersistenceException(e);
+		} finally {
+			if (c != null)
+				try {
+					c.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
+		return mechanic;
+	}
+
+}

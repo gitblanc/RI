@@ -1,0 +1,36 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.mechanic.crud;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import jdbc.Jdbc;
+import uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto;
+
+/**
+ * @author UO285176
+ *
+ */
+public class FindAllMechanics {
+	
+	public List<MechanicBLDto> execute() {
+		List<MechanicBLDto> mechanics = new ArrayList<>();
+		Connection c = null;
+		try {
+			c = Jdbc.createThreadConnection();
+			c.setAutoCommit(false);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mechanics;
+	}
+}

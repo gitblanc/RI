@@ -1,0 +1,84 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.invoice.create.commands;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import console.Console;
+import math.Round;
+import uo.ri.cws.application.business.BusinessException;
+
+/**
+ * @author UO285176
+ *
+ */
+public class WorkOrdersBilling {
+	private static final String URL = "jdbc:hsqldb:hsql://localhost";
+	private static final String USER = "sa";
+	private static final String PASSWORD = "";
+
+	private static final String SQL_CHECK_WORKORDER_STATE = "select state from TWorkOrders where id = ?";
+
+	private static final String SQL_LAST_INVOICE_NUMBER = "select max(number) from TInvoices";
+
+	private static final String SQL_FIND_WORKORDER_AMOUNT = "select amount from TWorkOrders where id = ?";
+
+	private static final String SQL_INSERT_INVOICE = "insert into TInvoices(id, number, date, vat, amount, state, version) "
+			+ "	values(?, ?, ?, ?, ?, ?, ?)";
+
+	private static final String SQL_LINK_WORKORDER_TO_INVOICE = "update TWorkOrders set invoice_id = ? where id = ?";
+
+	private static final String SQL_MARK_WORKORDER_AS_INVOICED = "update TWorkOrders set state = 'INVOICED' where id = ?";
+
+	private static final String SQL_FIND_WORKORDERS = "select * from TWorkOrders where id = ?";
+
+	private static final String SQL_UPDATEVERSION_WORKORDERS = "update TWorkOrders set version=version+1 where id = ?";
+	private Connection connection;
+
+	public void execute() {
+		List<String> workOrderIds = new ArrayList<String>();
+		// type work order ids to be invoiced in the invoice
+		do {
+			String id = Console.readString("Type work order ids:  ");
+			workOrderIds.add(id);
+		} while (nextWorkorder());
+
+		try {
+			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+
+			if (!checkWorkOrdersExist(workOrderIds))
+				throw new BusinessException("Workorder does not exist");
+			if (!checkWorkOrdersFinished(workOrderIds))
+				throw new BusinessException("Workorder is not finished yet");
+
+			long numberInvoice = generateInvoiceNumber();
+			LocalDate dateInvoice = LocalDate.now();
+			double amount = calculateTotalInvoice(workOrderIds); // vat not included
+			double vat = vatPercentage(amount, dateInvoice);
+			double total = amount * (1 + vat / 100); // vat included
+			total = Round.twoCents(total);
+
+			String idInvoice = createInvoice(numberInvoice, dateInvoice, vat, total);
+			linkWorkordersToInvoice(idInvoice, workOrderIds);
+			markWorkOrderAsInvoiced(workOrderIds);
+			updateVersion(workOrderIds);
+			displayInvoice(numberInvoice, dateInvoice, amount, vat, total);
+
+			connection.commit();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (connection != null)
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
+	}
+}

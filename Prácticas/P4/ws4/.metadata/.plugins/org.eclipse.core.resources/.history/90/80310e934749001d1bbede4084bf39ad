@@ -1,0 +1,37 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.mechanic.crud;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
+
+import assertion.Argument;
+import uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto;
+
+/**
+ * @author UO285176
+ *
+ */
+public class AddMechanic {
+
+	private MechanicBLDto mechanic = null;
+
+	public AddMechanic(MechanicBLDto mechanic) {
+		Argument.isNotNull(mechanic);
+		this.mechanic = mechanic;
+		this.mechanic.id = UUID.randomUUID().toString();
+		this.mechanic.version = 1L;
+	}
+
+	// Lógica de negocio para añadir a un mecánico
+	public MechanicBLDto execute() {
+		
+		return mechanic;
+	}
+
+}

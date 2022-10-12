@@ -1,0 +1,46 @@
+package uo.ri.cws.application.persistence.mechanic.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
+
+public class MechanicGatewayImpl implements MechanicGateway {
+
+	@Override
+	public void add(MechanicDALDto t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void remove(String id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update(MechanicDALDto t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Optional<MechanicDALDto> findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MechanicDALDto> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<MechanicDALDto> findByDni(String dni) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

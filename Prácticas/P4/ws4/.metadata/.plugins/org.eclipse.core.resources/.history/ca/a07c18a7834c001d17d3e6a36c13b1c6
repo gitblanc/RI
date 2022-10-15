@@ -1,0 +1,50 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.invoice.create.commands;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import assertion.Argument;
+import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto;
+import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
+import uo.ri.cws.application.business.util.command.Command;
+
+/**
+ * @author UO285176
+ *
+ */
+public class FindNotInvoicedWorkOrders implements Command<InvoiceBLDto>{
+	private static final String URL = "jdbc:hsqldb:hsql://localhost";
+	private static final String USER = "sa";
+	private static final String PASS = "";
+	WorkOrderForInvoicingBLDto workOrder = new WorkOrderForInvoicingBLDto();
+
+	/**
+	 * Process:
+	 * 
+	 * - Ask customer dni
+	 * 
+	 * - Display all uncharged workorder (state <> 'INVOICED'). For each workorder,
+	 * display id, vehicle id, date, state, amount and description
+	 */
+
+	private static final String SQL = "select a.id, a.description, a.date, a.state, a.amount "
+			+ "from TWorkOrders as a, TVehicles as v, TClients as c " + "where a.vehicle_id = v.id "
+			+ "	and v.client_id = c.id " + "and state <> 'INVOICED'" + " and dni like ?";
+
+	public FindNotInvoicedWorkOrders(String dni) {
+		Argument.isNotNull(dni);
+		workOrder.id = dni;
+	}
+
+	public List<WorkOrderForInvoicingBLDto> execute() {
+		
+	}
+}

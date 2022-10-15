@@ -1,0 +1,108 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.persistence.invoice.impl;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
+import uo.ri.cws.application.persistence.invoice.InvoiceGateway;
+
+/**
+ * @author UO285176
+ *
+ */
+public class InvoiceGatewayImpl implements InvoiceGateway {
+
+	private static final String TINVOICES_findNotInvoicedWorkOrdersByDni = "select a.id, a.description, a.date, a.state, a.amount "
+			+ "from TWorkOrders as a, TVehicles as v, TClients as c " + "where a.vehicle_id = v.id "
+			+ "	and v.client_id = c.id " + "and state <> 'INVOICED'" + " and dni like ?";
+
+	@Override
+	public void add(InvoiceDALDto t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void remove(String id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update(InvoiceDALDto t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Optional<InvoiceDALDto> findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<InvoiceDALDto> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<InvoiceDALDto> findByNumber(Long number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long getNextInvoiceNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<InvoiceDALDto> findNotInvoicedWorkOrdersByDni(String dni) {
+		List<WorkOrderForInvoicingBLDto> workOrders = new ArrayList<>();
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = DriverManager.getConnection(URL, USER, PASS);
+
+			pst = c.prepareStatement(SQL);
+			pst.setString(1, workOrder.id);
+
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				WorkOrderForInvoicingBLDto worker = new WorkOrderForInvoicingBLDto();
+				worker.id = rs.getString("id");
+				worker.description = rs.getString("description");
+				worker.state = rs.getString("state");
+				worker.date = rs.getTimestamp("date").toLocalDateTime();
+				worker.total = rs.getDouble("total");
+				workOrders.add(worker);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
+	}
+
+}

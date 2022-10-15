@@ -9,12 +9,15 @@ import java.util.Optional;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.invoice.InvoicingService;
 import uo.ri.cws.application.business.invoice.create.commands.FindNotInvoicedWorkOrders;
+import uo.ri.cws.application.business.util.command.CommandExecutor;
 
 /**
  * @author UO285176
  *
  */
-public class InvoicingServiceImpl implements InvoicingService{
+public class InvoicingServiceImpl implements InvoicingService {
+
+	CommandExecutor executor = new CommandExecutor();
 
 	@Override
 	public InvoiceBLDto createInvoiceFor(List<String> workOrderIds) throws BusinessException {
@@ -30,8 +33,7 @@ public class InvoicingServiceImpl implements InvoicingService{
 
 	@Override
 	public List<WorkOrderForInvoicingBLDto> findNotInvoicedWorkOrdersByClientDni(String dni) throws BusinessException {
-		FindNotInvoicedWorkOrders fniwo = new FindNotInvoicedWorkOrders(dni);
-		return fniwo.execute();
+		return executor.execute(new FindNotInvoicedWorkOrders(dni));
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class InvoicingServiceImpl implements InvoicingService{
 	@Override
 	public void settleInvoice(String invoiceId, List<Charge_BLDto> charges) throws BusinessException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

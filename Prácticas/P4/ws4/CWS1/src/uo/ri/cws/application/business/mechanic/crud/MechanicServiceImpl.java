@@ -25,15 +25,13 @@ public class MechanicServiceImpl implements MechanicService {
 
 	@Override
 	public void deleteMechanic(String idMechanic) throws BusinessException {
-		DeleteMechanic dm = new DeleteMechanic(idMechanic);
-		dm.execute();
+		executor.execute(new DeleteMechanic(idMechanic));
 
 	}
 
 	@Override
 	public void updateMechanic(MechanicBLDto mechanic) throws BusinessException {
-		UpdateMechanic um = new UpdateMechanic(mechanic);
-		um.execute();
+		executor.execute(new UpdateMechanic(mechanic));
 
 	}
 

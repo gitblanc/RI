@@ -1,0 +1,83 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.persistence.workorder.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
+
+/**
+ * @author UO285176
+ *
+ */
+public class WorkOrderGatewayImpl implements WorkOrderGateway {
+
+	@Override
+	public void add(WorkOrderDALDto t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void remove(String id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void update(WorkOrderDALDto t) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Optional<WorkOrderDALDto> findById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WorkOrderDALDto> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WorkOrderDALDto> findByMechanic(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WorkOrderDALDto> findNotInvoicedForVehicles(List<String> vehicleIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WorkOrderDALDto> findByVehicleId(String vehicleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WorkOrderDALDto> findByIds(List<String> arg) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WorkOrderDALDto> findByInvoice(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WorkOrderDALDto> findInvoiced() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

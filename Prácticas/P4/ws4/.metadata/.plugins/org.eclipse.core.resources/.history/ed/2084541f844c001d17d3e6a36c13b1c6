@@ -1,0 +1,37 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.invoice.create.commands;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import assertion.Argument;
+import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto;
+import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
+import uo.ri.cws.application.business.util.command.Command;
+import uo.ri.cws.application.persistence.PersistenceFactory;
+import uo.ri.cws.application.persistence.invoice.InvoiceGateway;
+
+/**
+ * @author UO285176
+ *
+ */
+public class FindNotInvoicedWorkOrders implements Command<InvoiceBLDto>{
+	
+	WorkOrderForInvoicingBLDto workOrder = new WorkOrderForInvoicingBLDto();
+
+	public FindNotInvoicedWorkOrders(String dni) {
+		Argument.isNotEmpty(dni, "The dni can't be null");
+		workOrder.id = dni;
+	}
+
+	public List<WorkOrderForInvoicingBLDto> execute() {
+		InvoiceGateway ig = PersistenceFactory.forInvoice();
+	}
+}

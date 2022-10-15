@@ -12,77 +12,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 import assertion.Argument;
+import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto;
 import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
+import uo.ri.cws.application.business.invoice.assembler.InvoicingAssembler;
+import uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto;
+import uo.ri.cws.application.business.util.BusinessCheck;
+import uo.ri.cws.application.business.util.command.Command;
+import uo.ri.cws.application.persistence.PersistenceFactory;
+import uo.ri.cws.application.persistence.invoice.InvoiceGateway;
+import uo.ri.cws.application.persistence.invoice.assembler.InvoiceAssembler;
+import uo.ri.cws.application.persistence.vehicle.VehicleGateway;
+import uo.ri.cws.application.persistence.vehicle.VehicleGateway.VehicleDALDto;
+import uo.ri.cws.application.persistence.vehicle.assembler.VehicleAssembler;
+import uo.ri.cws.application.persistence.workorder.WorkOrderGateway.WorkOrderDALDto;
+import uo.ri.cws.application.persistence.workorder.assembler.WorkOrderAssembler;
 
 /**
  * @author UO285176
  *
  */
-public class FindNotInvoicedWorkOrders {
-	private static final String URL = "jdbc:hsqldb:hsql://localhost";
-	private static final String USER = "sa";
-	private static final String PASS = "";
-	WorkOrderForInvoicingBLDto workOrder = new WorkOrderForInvoicingBLDto();
-
-	/**
-	 * Process:
-	 * 
-	 * - Ask customer dni
-	 * 
-	 * - Display all uncharged workorder (state <> 'INVOICED'). For each workorder,
-	 * display id, vehicle id, date, state, amount and description
-	 */
-
-	private static final String SQL = "select a.id, a.description, a.date, a.state, a.amount "
-			+ "from TWorkOrders as a, TVehicles as v, TClients as c " + "where a.vehicle_id = v.id "
-			+ "	and v.client_id = c.id " + "	and state <> 'INVOICED'" + "	and dni like ?";
-
+public class FindNotInvoicedWorkOrders implements Command<InvoiceBLDto>{
+	
+	//WorkOrderForInvoicingBLDto workOrder = new WorkOrderForInvoicingBLDto();
+	String dni = null;
 	public FindNotInvoicedWorkOrders(String dni) {
-		Argument.isNotNull(dni);
-		workOrder.id = dni;
+		this.dni = dni;
 	}
 
 	public List<WorkOrderForInvoicingBLDto> execute() {
-		List<WorkOrderForInvoicingBLDto> workOrders = new ArrayList<>();
-		Connection c = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
+		InvoiceGateway ig = PersistenceFactory.forInvoice();
+		//Comprobación de si el cliente existe
+		BusinessCheck.isTrue(!ig.findByDni(dni).isEmpty(), "The client of the invoice doesn't exist");
+		
+		List<VehicleDALDto> vehicles = obtainVehicles(workOrder.id);
+		
+		List<WorkOrderDALDto> workOrders = obtainNotInvoicedWorkOrders();
+		
+		List<WorkOrderForInvoicingBLDto> notInvoicedWorkOrders = InvoicingAssembler.toInvoicingWorkOrderList(workOrders);
+		
+		return notInvoicedWorkOrders;
+	}
 
-		try {
-			c = DriverManager.getConnection(URL, USER, PASS);
+	private List<WorkOrderDALDto> obtainNotInvoicedWorkOrders() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-			pst = c.prepareStatement(SQL);
-			pst.setString(1, workOrder.id);
-
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				WorkOrderForInvoicingBLDto worker = new WorkOrderForInvoicingBLDto();
-				worker.id = rs.getString("id");
-				worker.description = rs.getString("description");
-				worker.state = rs.getString("state");
-				worker.date = rs.getTimestamp("date").toLocalDateTime();
-				worker.total = rs.getDouble("total");
-				workOrders.add(worker);
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-			if (c != null)
-				try {
-					c.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-		}
-		return workOrders;
+	private List<VehicleDALDto> obtainVehicles(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

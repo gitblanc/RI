@@ -1,0 +1,36 @@
+/**
+ * 
+ */
+package uo.ri.cws.application.business.mechanic.crud;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import assertion.Argument;
+import uo.ri.cws.application.business.BusinessException;
+import uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto;
+import uo.ri.cws.application.business.util.command.Command;
+
+/**
+ * @author UO285176
+ *
+ */
+public class UpdateMechanic implements Command<MechanicBLDto> {
+	
+	private MechanicBLDto mechanic = null;
+
+	public UpdateMechanic(MechanicBLDto mechanic) {
+		Argument.isNotNull(mechanic);
+		this.mechanic = mechanic;
+	}
+
+	@Override
+	public MechanicBLDto execute() throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

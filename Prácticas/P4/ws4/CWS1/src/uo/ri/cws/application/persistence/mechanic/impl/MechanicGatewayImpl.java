@@ -14,9 +14,15 @@ import uo.ri.cws.application.persistence.mechanic.assembler.MechanicAssembler;
 
 public class MechanicGatewayImpl implements MechanicGateway {
 
-	private static String TMECHANICS_add = "insert into TMechanics(id, dni, name, surname, version) values (?, ?, ?, ?, ?)";
-	private static String TMECHANICS_findByDni = "select * from tmechanics where dni = ?";
+	private static final String TMECHANICS_add = "insert into TMechanics(id, dni, name, surname, version) values (?, ?, ?, ?, ?)";
+	private static final String TMECHANICS_findByDni = "select * from tmechanics where dni = ?";
 	private static final String TMECHANICS_findAll = "select id, dni, name, surname, version from TMechanics";
+	private static final String TMECHANICS_remove = "delete from TMechanics where id = ?";
+	private static final String TMECHANICS_findById = "select * from tmechanics where id = ?";
+	private static final String TMECHANICS_findAllWorkOrders = "select tm.id, tm.dni, tm.name, tm.surname, tm.version from tmechanics tm, tworkorders tw where tm.id = ? and tm.id = tw.mechanic_id";
+	private static final String TMECHANICS_findAllMechanicContracts = "select tm.id, tm.dni, tm.name, tm.surname, tm.version from tmechanics tm, tinterventions ti where tm.id = ? and tm.id = ti.mechanic_id";
+	private static final String TMECHANICS_update = "update TMechanics "
+			+ "set name = ?, surname = ?, version = version+1 " + "where id = ?";
 
 	@Override
 	public void add(MechanicDALDto mechanic) {
@@ -56,19 +62,99 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
 
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(TMECHANICS_remove);
+			pst.setString(1, id);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
 	}
 
 	@Override
-	public void update(MechanicDALDto t) {
-		// TODO Auto-generated method stub
+	public void update(MechanicDALDto mechanic) {
+		// Process
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
 
+		try {
+			c = Jdbc.getCurrentConnection();
+			pst = c.prepareStatement(TMECHANICS_update);
+			pst.setString(1, mechanic.name);
+			pst.setString(2, mechanic.surname);
+			pst.setString(3, mechanic.id);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
 	}
 
 	@Override
 	public Optional<MechanicDALDto> findById(String id) {
-		return null;
+		Optional<MechanicDALDto> mechanic = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(TMECHANICS_findById);
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+
+			mechanic = MechanicAssembler.toMechanicDALDto(rs);// Fijarse en que sea el Assembler de persistence y no de
+																// business
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+
+		}
+		return mechanic;
 	}
 
 	@Override
@@ -122,7 +208,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 																// business
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new PersistenceException("Database error");
 		} finally {
 			if (rs != null)
 				try {
@@ -137,6 +223,69 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 		}
 		return mechanic;
+	}
+
+	@Override
+	public List<MechanicDALDto> findAllMechanicWorkOrders(String id) {
+		List<MechanicDALDto> mechanics = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(TMECHANICS_findAllWorkOrders);
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+			mechanics = MechanicAssembler.toMechanicDALDtoList(rs);
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			// persistencia
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		} // En los tdg NO SE CIERRAN LAS CONEXIONES
+		return mechanics;
+	}
+
+	public List<MechanicDALDto> findAllMechanicContracts(String id) {
+		List<MechanicDALDto> mechanics = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(TMECHANICS_findAllMechanicContracts);
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+			mechanics = MechanicAssembler.toMechanicDALDtoList(rs);
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			// persistencia
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		} // En los tdg NO SE CIERRAN LAS CONEXIONES
+		return mechanics;
 	}
 
 }

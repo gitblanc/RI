@@ -24,20 +24,24 @@ public class AddMechanic implements Command<MechanicBLDto> {
 
 	public AddMechanic(MechanicBLDto mechanic) {
 		Argument.isNotNull(mechanic, "The mechanic cannot be null");
-		Argument.isNotEmpty(mechanic.dni, "The dni cannot be null");
+		Argument.isNotNull(mechanic.dni, "The mechanic dni cannot be null");
+		Argument.isNotEmpty(mechanic.dni, "The mechanic dni cannot be empty");
 		this.mechanic = mechanic;
 		this.mechanic.id = UUID.randomUUID().toString();
 		this.mechanic.version = 1L;
 	}
 
+	@Override
 	// Lógica de negocio para añadir a un mecánico
 	public MechanicBLDto execute() throws BusinessException {
 		MechanicGateway mg = PersistenceFactory.forMechanic();
 		// Comprobación de que el mecánico esté vacío
-		BusinessCheck.isTrue(mg.findByDni(mechanic.dni).isEmpty(), "The exists a mechanic with the same dni");
+		BusinessCheck.isTrue(mg.findByDni(mechanic.dni).isEmpty(), "There exists a mechanic with the same dni");
 		mg.add(MechanicAssembler.toDALDto(mechanic));
 
 		return mechanic;
 	}
+
+	
 
 }

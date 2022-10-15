@@ -12,9 +12,10 @@ public class UpdateMechanicAction implements Action {
 	public void execute() throws BusinessException {
 		MechanicBLDto mechanic = new MechanicBLDto();
 		// Get info
-		mechanic.id = Console.readString("Type mechahic id to update");
+		mechanic.id = Console.readString("Type mechanic id to update");
 		mechanic.name = Console.readString("Name");
 		mechanic.surname = Console.readString("Surname");
+		mechanic.dni = Console.readString("Dni");
 		MechanicService ms = BusinessFactory.forMechanicService();
 		ms.updateMechanic(mechanic);
 		// Print result

@@ -1472,3 +1472,8 @@ java.util.ConcurrentModificationException: null
 2022-10-15 15:23:29,453 [Worker-146: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
 2022-10-15 15:23:29,455 [Worker-146: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2022-10-15 15:23:29,455 [Worker-146: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 6 resources
+2022-10-16 13:18:16,747 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2022-10-16 13:18:22,663 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-16 13:18:22,669 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-16 13:18:22,672 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-16 13:18:22,673 [Worker-0: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 9 resources

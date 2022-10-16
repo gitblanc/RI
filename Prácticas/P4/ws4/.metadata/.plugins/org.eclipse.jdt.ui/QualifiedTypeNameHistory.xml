@@ -33,19 +33,19 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.invoice.impl.InvoiceGatewayImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.util.BusinessCheck"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.WorkOrderGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.impl.WorkOrderGatewayImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.client.assembler.ClientAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.assembler.WorkOrderAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.vehicle.VehicleGateway.VehicleDALDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.PersistenceFactory"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.client.ClientGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.client.impl.ClientGatewayImpl"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.vehicle.VehicleGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.vehicle.impl.VehicleGatewayImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.vehicle.assembler.VehicleAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.WorkOrderGateway.WorkOrderDALDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.invoice.assembler.InvoiceAssembler"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.vehicle.VehicleGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.assembler.InvoicingAssembler"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.WorkOrderGateway"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.PersistenceFactory"/>
 </qualifiedTypeNameHistroy>

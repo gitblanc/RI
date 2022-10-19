@@ -46,8 +46,8 @@ public class Printer {
 	}
 
 	public static void printInvoicingWorkOrders(List<WorkOrderForInvoicingBLDto> arg) {
-		Console.printf("\t%s \t%-40.40s \t%s \t%-12.12s \t%.2f\n",  
-				"Identifier", "description", "state", "total");
+		Console.printf("\t%s \t%-40.40s \t%s \t%-12.12s \t%s\n",  
+				"Identifier", "description", "date", "state", "total");
 		for (WorkOrderForInvoicingBLDto inv : arg)
 			printInvoicingWorkOrder(inv);
 	}

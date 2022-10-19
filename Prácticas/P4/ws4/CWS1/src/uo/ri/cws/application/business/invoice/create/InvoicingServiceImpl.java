@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.invoice.InvoicingService;
+import uo.ri.cws.application.business.invoice.create.commands.CreateInvoice;
 import uo.ri.cws.application.business.invoice.create.commands.FindNotInvoicedWorkOrders;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
@@ -21,13 +22,11 @@ public class InvoicingServiceImpl implements InvoicingService {
 
 	@Override
 	public InvoiceBLDto createInvoiceFor(List<String> workOrderIds) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return new CreateInvoice(workOrderIds).execute();
 	}
 
 	@Override
 	public List<WorkOrderForInvoicingBLDto> findWorkOrdersByClientDni(String dni) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -38,26 +37,21 @@ public class InvoicingServiceImpl implements InvoicingService {
 
 	@Override
 	public List<WorkOrderForInvoicingBLDto> findWorkOrdersByPlateNumber(String plate) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Optional<InvoiceBLDto> findInvoiceByNumber(Long number) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<PaymentMeanForInvoicingBLDto> findPayMeansByClientDni(String dni) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void settleInvoice(String invoiceId, List<Charge_BLDto> charges) throws BusinessException {
-		// TODO Auto-generated method stub
-
 	}
 
 }

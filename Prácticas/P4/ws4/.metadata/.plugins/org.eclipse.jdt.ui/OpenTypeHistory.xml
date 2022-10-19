@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.mechanic{MechanicGateway.java[MechanicGateway" modifiers="513" timestamp="1665838850829"/>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.invoice{InvoiceGateway.java[InvoiceGateway" modifiers="513" timestamp="1664958252280"/>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.workorder{WorkOrderGateway.java[WorkOrderGateway" modifiers="513" timestamp="1665837102406"/>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.vehicle{VehicleGateway.java[VehicleGateway" modifiers="513" timestamp="1664958252280"/>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.client{ClientGateway.java[ClientGateway" modifiers="513" timestamp="1664958252280"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.mechanic{MechanicGateway.java[MechanicGateway" modifiers="513" timestamp="1666084106000"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.invoice{InvoiceGateway.java[InvoiceGateway" modifiers="513" timestamp="1666084106000"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.workorder{WorkOrderGateway.java[WorkOrderGateway" modifiers="513" timestamp="1666084106000"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.vehicle{VehicleGateway.java[VehicleGateway" modifiers="513" timestamp="1666084106000"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.client{ClientGateway.java[ClientGateway" modifiers="513" timestamp="1666084106000"/>
 </typeInfoHistroy>

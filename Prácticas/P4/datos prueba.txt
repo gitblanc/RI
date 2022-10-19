@@ -1,0 +1,36 @@
+tdgcliente
+tdgvehiculos cliente
+tdgworkorder
+
+NO TIENE
+00ecf1a9-9085-4c5e-9de1-7b1a6f9c7412	786616197	PenÃ©lope70@Túnez.com	Luis	973824268	Marín Ortiz	1	SANTA EULALIA DE OSCOS	Av Pepín Rodríguez	42670
+
+
+
+TIENE
+8c28f04c-3135-459a-9782-ef4613ce52d5	518885962	Sofía21@Yugoslavia.com	Ildegarda	155730430	López Iglesias	1	RIBADEDEVA	Av de Atenas	91477													ID
+003fa014-e427-4bca-b0ab-995759d8d335	DODGE	DURANGO ADVENTURER	0065-FUK	1	8c28f04c-3135-459a-9782-ef4613ce52d5	72865637-54bc-4f6f-b79b-3ecb7c7b70ab
+
+
+<>INVOICED																VEHICLE ID
+
+008ed1c3-f1fc-4930-9f01-8a0f35c40bbe		2020-07-28 00:16:09.469	Fallan los SILENTBLOCS...	OPEN	1	[null]	[null]	3ab2f8db-51a8-400e-b679-cc141b384047
+3ab2f8db-51a8-400e-b679-cc141b384047	DODGE	DURANGO ADVENTURER	6293-AXV	1	5551a6e7-add2-4f49-b89a-8947e3f733ab	48091d77-1d74-4a1a-b3ff-58a1dace11eb
+5551a6e7-add2-4f49-b89a-8947e3f733ab	878250945	Gabino15@Islandia.com	Olimpia	176615375	Castro García	1	SANTO ADRIANO	Calle de Cabranes	21712
+
+
+
+<>INVOICED
+0291f339-d078-4309-82bf-1dbe906916a4		2020-07-28 00:02:26.916	Se rompio el compresor del climatizador, el aire acondicionado nio enfriaba nada...	ASSIGNED	1	[null]	d7860ddf-854e-46c6-83c5-bae09512a8a9	
+e384c2dc-6af8-4703-bb8d-1c7822c9f1e3	NISSAN	TSURU	6941-XPN	1	f2da0673-c6ba-42f1-8a27-ef40c45bd7ef	eff86644-3724-4d00-85ab-2e918092b74f
+f2da0673-c6ba-42f1-8a27-ef40c45bd7ef	393695303	Astrid58@Australia.com	Sofía	640770289	Ramos Martín	1	BIMENES	Av de Alemania	22380
+
+
+121cf317-bd7c-4191-8106-6cb9e6433223		2020-07-28 00:17:33.406	Eje torcido...	ASSIGNED	1	[null]	697a71c5-b330-4264-afc0-afd6957b21f3	938d365e-a0d0-45ba-9b89-56b9b7892785
+938d365e-a0d0-45ba-9b89-56b9b7892785	NISSAN	TSURU	0654-ZSC	1	ca51c26a-a10a-4b93-accf-f7336d6f0cdf	8d197ee1-3d80-43c1-990d-26cfbad236d7
+ca51c26a-a10a-4b93-accf-f7336d6f0cdf	261216259	Jordi25@Yugoslavia.com	Ana	384420093	Navarro Sanz	1	COAÃ‘A	Calle de AlbÃ©niz	09296
+
+
+
+
+47d4a98b-6af3-499c-96d0-2399f99322ac	vwxXmYiCD	Irsf-name	xMLZ-surname	1

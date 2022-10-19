@@ -14,31 +14,26 @@ import jdbc.Jdbc;
 import uo.ri.cws.application.persistence.PersistenceException;
 import uo.ri.cws.application.persistence.client.ClientGateway;
 import uo.ri.cws.application.persistence.client.assembler.ClientAssembler;
+import uo.ri.cws.application.persistence.util.Conf;
 
 /**
  * @author UO285176
  *
  */
 public class ClientGatewayImpl implements ClientGateway {
-	
-	public static final String TCLIENTS_findByDni = "select * from tclients where dni = ?";
-	public static final String TCLIENTS_findById = "select * from tclients where id = ?";
-	
+
 	@Override
 	public void add(ClientDALDto t) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void update(ClientDALDto t) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -52,10 +47,10 @@ public class ClientGatewayImpl implements ClientGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TCLIENTS_findById);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TCLIENTS_findById"));
 			pst.setString(1, id);
 			rs = pst.executeQuery();
-			
+
 			client = ClientAssembler.toClientDALDto(rs);
 		} catch (SQLException e) {
 			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
@@ -77,7 +72,7 @@ public class ClientGatewayImpl implements ClientGateway {
 
 	@Override
 	public List<ClientDALDto> findAll() {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
@@ -91,7 +86,7 @@ public class ClientGatewayImpl implements ClientGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TCLIENTS_findByDni);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TCLIENTS_findByDni"));
 			pst.setString(1, dni);
 			rs = pst.executeQuery();
 

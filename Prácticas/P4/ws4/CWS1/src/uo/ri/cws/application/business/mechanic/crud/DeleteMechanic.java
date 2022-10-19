@@ -33,6 +33,8 @@ public class DeleteMechanic implements Command<MechanicBLDto> {
 		// Comprobación de que no hay ningún work order para este mecánico
 		BusinessCheck.isTrue(mg.findAllMechanicWorkOrders(mechanic.id).isEmpty(),
 				"The mechanic still have some work orders");
+		// Comprobación de que el mecánico no tiene ningún contrato
+		BusinessCheck.isTrue(!mg.findAllMechanicContracts(mechanic.id).isEmpty(), "The mechanic still has a contract");
 		mg.remove(mechanic.id);
 		return null;
 	}

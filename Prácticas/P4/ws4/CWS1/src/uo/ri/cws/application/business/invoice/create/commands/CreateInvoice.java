@@ -17,6 +17,7 @@ import assertion.Argument;
 import console.Console;
 import math.Round;
 import uo.ri.cws.application.business.BusinessException;
+import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto;
 import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
 
 /**
@@ -45,15 +46,18 @@ public class CreateInvoice {
 
 	private static final String SQL_UPDATEVERSION_WORKORDERS = "update TWorkOrders set version=version+1 where id = ?";
 	private Connection connection;
-	private WorkOrderForInvoicingBLDto workOrder = new WorkOrderForInvoicingBLDto();
-	
-	public public CreateInvoice(String id) {
-		Argument.isNotNull(id);
-		workOrder.id = id;
+	private List<String> workOrderIds = new ArrayList<String>();
+
+	public CreateInvoice(List<String> workOrderIds) {
+		Argument.isNotNull(workOrderIds);
+		for(String s : workOrderIds) {
+			Argument.isNotNull(s, "The list of workOrdersIds can't contain null elements");
+			Argument.isNotEmpty(s, "The list of workOrdersIds can't contain empty elements");
+		}
+		this.workOrderIds = workOrderIds;
 	}
 
-	public void execute() throws BusinessException {
-		List<String> workOrderIds = new ArrayList<String>();
+	public InvoiceBLDto execute() throws BusinessException {
 		// type work order ids to be invoiced in the invoice
 		do {
 			workOrderIds.add(workOrder.id);
@@ -109,13 +113,6 @@ public class CreateInvoice {
 				} catch (SQLException e) {
 					/* ignore */ }
 		}
-	}
-
-	/*
-	 * read work order ids to invoice
-	 */
-	private boolean nextWorkorder() {
-		return Console.readString(" Any other workorder? (y/n) ").equalsIgnoreCase("y");
 	}
 
 	/*

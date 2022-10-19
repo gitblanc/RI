@@ -37,13 +37,11 @@ public class MechanicServiceImpl implements MechanicService {
 
 	@Override
 	public Optional<MechanicBLDto> findMechanicById(String idMechanic) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return executor.execute(new FindMechanicById(idMechanic));
 	}
 
 	@Override
 	public Optional<MechanicBLDto> findMechanicByDni(String dniMechanic) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

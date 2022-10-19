@@ -11,18 +11,9 @@ import jdbc.Jdbc;
 import uo.ri.cws.application.persistence.PersistenceException;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
 import uo.ri.cws.application.persistence.mechanic.assembler.MechanicAssembler;
+import uo.ri.cws.application.persistence.util.Conf;
 
 public class MechanicGatewayImpl implements MechanicGateway {
-
-	private static final String TMECHANICS_add = "insert into TMechanics(id, dni, name, surname, version) values (?, ?, ?, ?, ?)";
-	private static final String TMECHANICS_findByDni = "select * from tmechanics where dni = ?";
-	private static final String TMECHANICS_findAll = "select id, dni, name, surname, version from TMechanics";
-	private static final String TMECHANICS_remove = "delete from TMechanics where id = ?";
-	private static final String TMECHANICS_findById = "select * from tmechanics where id = ?";
-	private static final String TMECHANICS_findAllWorkOrders = "select tm.id, tm.dni, tm.name, tm.surname, tm.version from tmechanics tm, tworkorders tw where tm.id = ? and tm.id = tw.mechanic_id";
-	private static final String TMECHANICS_findAllMechanicContracts = "select tm.id, tm.dni, tm.name, tm.surname, tm.version from tmechanics tm, tinterventions ti where tm.id = ? and tm.id = ti.mechanic_id";
-	private static final String TMECHANICS_update = "update TMechanics "
-			+ "set name = ?, surname = ?, version = version+1 " + "where id = ?";
 
 	@Override
 	public void add(MechanicDALDto mechanic) {
@@ -34,7 +25,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TMECHANICS_add);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_add"));
 			pst.setString(1, mechanic.id);
 			pst.setString(2, mechanic.dni);
 			pst.setString(3, mechanic.name);
@@ -69,7 +60,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TMECHANICS_remove);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_remove"));
 			pst.setString(1, id);
 
 			pst.executeUpdate();
@@ -99,7 +90,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 		try {
 			c = Jdbc.getCurrentConnection();
-			pst = c.prepareStatement(TMECHANICS_update);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("MECHANICS_update"));
 			pst.setString(1, mechanic.name);
 			pst.setString(2, mechanic.surname);
 			pst.setString(3, mechanic.id);
@@ -132,7 +123,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TMECHANICS_findById);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_findById"));
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 
@@ -167,7 +158,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TMECHANICS_findAll);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_findAll"));
 
 			rs = pst.executeQuery();
 			mechanics = MechanicAssembler.toMechanicDALDtoList(rs);
@@ -200,7 +191,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TMECHANICS_findByDni);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_findByDni"));
 			pst.setString(1, dni);
 			rs = pst.executeQuery();
 
@@ -235,7 +226,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TMECHANICS_findAllWorkOrders);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_findAllWorkOrders"));
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 			mechanics = MechanicAssembler.toMechanicDALDtoList(rs);
@@ -266,7 +257,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(TMECHANICS_findAllMechanicContracts);
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_findAllMechanicContracts"));
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 			mechanics = MechanicAssembler.toMechanicDALDtoList(rs);

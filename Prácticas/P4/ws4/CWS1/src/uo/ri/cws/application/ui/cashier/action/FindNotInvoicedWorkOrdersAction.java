@@ -6,6 +6,7 @@ import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.BusinessFactory;
 import uo.ri.cws.application.business.invoice.InvoicingService;
 import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
+import uo.ri.cws.application.ui.util.Printer;
 
 public class FindNotInvoicedWorkOrdersAction implements Action {
 
@@ -14,8 +15,8 @@ public class FindNotInvoicedWorkOrdersAction implements Action {
 		WorkOrderForInvoicingBLDto workOrder = new WorkOrderForInvoicingBLDto();
 		workOrder.id = Console.readString("Client DNI ");
 		InvoicingService ms = BusinessFactory.forInvoicingService();
-		ms.findNotInvoicedWorkOrdersByClientDni(workOrder.id);
 		Console.println("\nClient's not invoiced work orders\n");  
+		Printer.printInvoicingWorkOrders(ms.findNotInvoicedWorkOrdersByClientDni(workOrder.id));
 	}
 
 }

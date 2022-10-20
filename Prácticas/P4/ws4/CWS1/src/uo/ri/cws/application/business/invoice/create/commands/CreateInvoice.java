@@ -19,12 +19,14 @@ import math.Round;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto;
 import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
+import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto.InvoiceState;
+import uo.ri.cws.application.business.util.command.Command;
 
 /**
  * @author UO285176
  *
  */
-public class CreateInvoice {
+public class CreateInvoice implements Command<InvoiceBLDto> {
 	private static final String URL = "jdbc:hsqldb:hsql://localhost";
 	private static final String USER = "sa";
 	private static final String PASSWORD = "";
@@ -50,7 +52,7 @@ public class CreateInvoice {
 
 	public CreateInvoice(List<String> workOrderIds) {
 		Argument.isNotNull(workOrderIds);
-		for(String s : workOrderIds) {
+		for (String s : workOrderIds) {
 			Argument.isNotNull(s, "The list of workOrdersIds can't contain null elements");
 			Argument.isNotEmpty(s, "The list of workOrdersIds can't contain empty elements");
 		}
@@ -58,42 +60,34 @@ public class CreateInvoice {
 	}
 
 	public InvoiceBLDto execute() throws BusinessException {
-		// type work order ids to be invoiced in the invoice
-		do {
-			workOrderIds.add(workOrder.id);
-		} while (nextWorkorder());
+		InvoiceBLDto invoice = new InvoiceBLDto();
+		
+		if (!checkWorkOrdersExist(workOrderIds))
+			throw new BusinessException("Workorder does not exist");
+		if (!checkWorkOrdersFinished(workOrderIds))
+			throw new BusinessException("Workorder is not finished yet");
 
-		try {
-			connection = DriverManager.getConnection(URL, USER, PASSWORD);
+		long numberInvoice = generateInvoiceNumber();
+		LocalDate dateInvoice = LocalDate.now();
+		double amount = calculateTotalInvoice(workOrderIds); // vat not included
+		double vat = vatPercentage(amount, dateInvoice);
+		double total = amount * (1 + vat / 100); // vat included
+		total = Round.twoCents(total);
 
-			if (!checkWorkOrdersExist(workOrderIds))
-				throw new BusinessException("Workorder does not exist");
-			if (!checkWorkOrdersFinished(workOrderIds))
-				throw new BusinessException("Workorder is not finished yet");
+		invoice.id = UUID.randomUUID().toString();
+		invoice.version = 1L;
+		invoice.date = dateInvoice;
+		invoice.number = numberInvoice;
+		invoice.state = InvoiceState.NOT_YET_PAID;
+		invoice.total = total;
+		invoice.vat = vat;
+		
+		String idInvoice = createInvoice(invoice);
+		linkWorkordersToInvoice(idInvoice, workOrderIds);
+		markWorkOrderAsInvoiced(workOrderIds);
+		updateVersion(workOrderIds);
 
-			long numberInvoice = generateInvoiceNumber();
-			LocalDate dateInvoice = LocalDate.now();
-			double amount = calculateTotalInvoice(workOrderIds); // vat not included
-			double vat = vatPercentage(amount, dateInvoice);
-			double total = amount * (1 + vat / 100); // vat included
-			total = Round.twoCents(total);
-
-			String idInvoice = createInvoice(numberInvoice, dateInvoice, vat, total);
-			linkWorkordersToInvoice(idInvoice, workOrderIds);
-			markWorkOrderAsInvoiced(workOrderIds);
-			updateVersion(workOrderIds);
-			displayInvoice(numberInvoice, dateInvoice, amount, vat, total);
-
-			connection.commit();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			if (connection != null)
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-		}
+		return invoice;
 	}
 
 	private void updateVersion(List<String> workOrderIds) throws SQLException {
@@ -218,7 +212,7 @@ public class CreateInvoice {
 	 * Compute total amount of the invoice (as the total of individual work orders'
 	 * amount
 	 */
-	private double calculateTotalInvoice(List<String> workOrderIDS) throws BusinessException, SQLException {
+	private double calculateTotalInvoice(List<String> workOrderIDS) throws BusinessException {
 
 		double totalInvoice = 0.0;
 		for (String workOrderID : workOrderIDS) {
@@ -273,7 +267,7 @@ public class CreateInvoice {
 	/*
 	 * Creates the invoice in the database; returns the id
 	 */
-	private String createInvoice(long numberInvoice, LocalDate dateInvoice, double vat, double total)
+	private String createInvoice(InvoiceBLDto invoice)
 			throws SQLException {
 
 		PreparedStatement pst = null;
@@ -283,13 +277,13 @@ public class CreateInvoice {
 			idInvoice = UUID.randomUUID().toString();
 
 			pst = connection.prepareStatement(SQL_INSERT_INVOICE);
-			pst.setString(1, idInvoice);
-			pst.setLong(2, numberInvoice);
-			pst.setDate(3, java.sql.Date.valueOf(dateInvoice));
-			pst.setDouble(4, vat);
-			pst.setDouble(5, total);
-			pst.setString(6, "NOT_YET_PAID");
-			pst.setLong(7, 1L);
+			pst.setString(1, invoice.id);
+			pst.setLong(2, invoice.number);
+			pst.setDate(3, java.sql.Date.valueOf(invoice.date));
+			pst.setDouble(4, invoice.vat);
+			pst.setDouble(5, invoice.total);
+			pst.setString(6, invoice.state.name());
+			pst.setLong(7, invoice.version);
 
 			pst.executeUpdate();
 

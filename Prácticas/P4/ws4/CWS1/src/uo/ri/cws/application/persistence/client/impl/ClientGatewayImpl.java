@@ -109,5 +109,4 @@ public class ClientGatewayImpl implements ClientGateway {
 		}
 		return client;
 	}
-
 }

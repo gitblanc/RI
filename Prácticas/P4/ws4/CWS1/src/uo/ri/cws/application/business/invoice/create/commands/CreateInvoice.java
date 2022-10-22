@@ -3,51 +3,30 @@
  */
 package uo.ri.cws.application.business.invoice.create.commands;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import assertion.Argument;
-import console.Console;
 import math.Round;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto;
-import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
 import uo.ri.cws.application.business.invoice.InvoicingService.InvoiceBLDto.InvoiceState;
+import uo.ri.cws.application.business.invoice.assembler.InvoicingAssembler;
 import uo.ri.cws.application.business.util.command.Command;
+import uo.ri.cws.application.persistence.PersistenceFactory;
+import uo.ri.cws.application.persistence.invoice.InvoiceGateway;
+import uo.ri.cws.application.persistence.invoice.InvoiceGateway.InvoiceDALDto;
+import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
+import uo.ri.cws.application.persistence.workorder.WorkOrderGateway.WorkOrderDALDto;
 
 /**
  * @author UO285176
  *
  */
 public class CreateInvoice implements Command<InvoiceBLDto> {
-	private static final String URL = "jdbc:hsqldb:hsql://localhost";
-	private static final String USER = "sa";
-	private static final String PASSWORD = "";
 
-	private static final String SQL_CHECK_WORKORDER_STATE = "select state from TWorkOrders where id = ?";
-
-	private static final String SQL_LAST_INVOICE_NUMBER = "select max(number) from TInvoices";
-
-	private static final String SQL_FIND_WORKORDER_AMOUNT = "select amount from TWorkOrders where id = ?";
-
-	private static final String SQL_INSERT_INVOICE = "insert into TInvoices(id, number, date, vat, amount, state, version) "
-			+ "	values(?, ?, ?, ?, ?, ?, ?)";
-
-	private static final String SQL_LINK_WORKORDER_TO_INVOICE = "update TWorkOrders set invoice_id = ? where id = ?";
-
-	private static final String SQL_MARK_WORKORDER_AS_INVOICED = "update TWorkOrders set state = 'INVOICED' where id = ?";
-
-	private static final String SQL_FIND_WORKORDERS = "select * from TWorkOrders where id = ?";
-
-	private static final String SQL_UPDATEVERSION_WORKORDERS = "update TWorkOrders set version=version+1 where id = ?";
-	private Connection connection;
 	private List<String> workOrderIds = new ArrayList<String>();
 
 	public CreateInvoice(List<String> workOrderIds) {
@@ -60,8 +39,8 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	}
 
 	public InvoiceBLDto execute() throws BusinessException {
-		InvoiceBLDto invoice = new InvoiceBLDto();
-		
+		InvoiceDALDto invoice = new InvoiceDALDto();
+
 		if (!checkWorkOrdersExist(workOrderIds))
 			throw new BusinessException("Workorder does not exist");
 		if (!checkWorkOrdersFinished(workOrderIds))
@@ -78,66 +57,35 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 		invoice.version = 1L;
 		invoice.date = dateInvoice;
 		invoice.number = numberInvoice;
-		invoice.state = InvoiceState.NOT_YET_PAID;
-		invoice.total = total;
+		invoice.state = InvoiceState.NOT_YET_PAID.name();
+		invoice.amount = total;
 		invoice.vat = vat;
-		
+
 		String idInvoice = createInvoice(invoice);
-		linkWorkordersToInvoice(idInvoice, workOrderIds);
+		linkWorkordersToInvoice(idInvoice, workOrderIds);// FALTA
 		markWorkOrderAsInvoiced(workOrderIds);
 		updateVersion(workOrderIds);
 
-		return invoice;
+		return InvoicingAssembler.toDto(invoice);
 	}
 
-	private void updateVersion(List<String> workOrderIds) throws SQLException {
-		PreparedStatement pst = null;
-
-		try {
-			pst = connection.prepareStatement(SQL_UPDATEVERSION_WORKORDERS);
-
-			for (String workOrderID : workOrderIds) {
-				pst.setString(1, workOrderID);
-				pst.executeUpdate();
-			}
-		} finally {
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
+	private void updateVersion(List<String> workOrderIds) {
+		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
+		WorkOrderDALDto workOrder = null;
+		for (String workOrderId : workOrderIds) {
+			workOrder = wg.findById(workOrderId).get();
+			workOrder.version = workOrder.version + 1;
 		}
 	}
 
 	/*
 	 * checks whether every work order exist
 	 */
-	private boolean checkWorkOrdersExist(List<String> workOrderIDS) throws SQLException, BusinessException {
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		try {
-			pst = connection.prepareStatement(SQL_FIND_WORKORDERS);
-
-			for (String workOrderID : workOrderIDS) {
-				pst.setString(1, workOrderID);
-
-				rs = pst.executeQuery();
-				if (rs.next() == false) {
-					return false;
-				}
-
-			}
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
+	private boolean checkWorkOrdersExist(List<String> workOrderIDS) throws BusinessException {
+		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
+		for (String id : workOrderIDS) {
+			if (wg.findById(id) == null || wg.findById(id).isEmpty())
+				return false;
 		}
 		return true;
 	}
@@ -145,35 +93,12 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	/*
 	 * checks whether every work order id is FINISHED
 	 */
-	private boolean checkWorkOrdersFinished(List<String> workOrderIDS) throws SQLException, BusinessException {
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-
-		try {
-			pst = connection.prepareStatement(SQL_CHECK_WORKORDER_STATE);
-
-			for (String workOrderID : workOrderIDS) {
-				pst.setString(1, workOrderID);
-
-				rs = pst.executeQuery();
-				rs.next();
-				String state = rs.getString(1);
-				if (!"FINISHED".equalsIgnoreCase(state)) {
-					return false;
-				}
-
+	private boolean checkWorkOrdersFinished(List<String> workOrderIDS) throws BusinessException {
+		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
+		for (String id : workOrderIDS) {
+			if (!wg.findById(id).get().state.equals("FINISHED")) {
+				return false;
 			}
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
 		}
 		return true;
 	}
@@ -181,31 +106,9 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	/*
 	 * Generates next invoice number (not to be confused with the inner id)
 	 */
-	private Long generateInvoiceNumber() throws SQLException {
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-
-		try {
-			pst = connection.prepareStatement(SQL_LAST_INVOICE_NUMBER);
-			rs = pst.executeQuery();
-
-			if (rs.next()) {
-				return rs.getLong(1) + 1; // +1, next
-			} else { // there is none yet
-				return 1L;
-			}
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-		}
+	private Long generateInvoiceNumber() {
+		InvoiceGateway ig = PersistenceFactory.forInvoice();
+		return ig.getNextInvoiceNumber();
 	}
 
 	/*
@@ -224,36 +127,9 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	/*
 	 * checks whether every work order id is FINISHED
 	 */
-	private Double getWorkOrderTotal(String workOrderID) throws SQLException, BusinessException {
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		Double money = 0.0;
-
-		try {
-			pst = connection.prepareStatement(SQL_FIND_WORKORDER_AMOUNT);
-			pst.setString(1, workOrderID);
-
-			rs = pst.executeQuery();
-			if (rs.next() == false) {
-				throw new BusinessException("Workorder " + workOrderID + " doesn't exist");
-			}
-
-			money = rs.getDouble(1);
-
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-		}
-		return money;
-
+	private Double getWorkOrderTotal(String workOrderID) throws BusinessException {
+		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
+		return wg.findById(workOrderID).get().amount;
 	}
 
 	/*
@@ -267,91 +143,35 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	/*
 	 * Creates the invoice in the database; returns the id
 	 */
-	private String createInvoice(InvoiceBLDto invoice)
-			throws SQLException {
-
-		PreparedStatement pst = null;
-		String idInvoice;
-
-		try {
-			idInvoice = UUID.randomUUID().toString();
-
-			pst = connection.prepareStatement(SQL_INSERT_INVOICE);
-			pst.setString(1, invoice.id);
-			pst.setLong(2, invoice.number);
-			pst.setDate(3, java.sql.Date.valueOf(invoice.date));
-			pst.setDouble(4, invoice.vat);
-			pst.setDouble(5, invoice.total);
-			pst.setString(6, invoice.state.name());
-			pst.setLong(7, invoice.version);
-
-			pst.executeUpdate();
-
-		} finally {
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-		}
-		return idInvoice;
+	private String createInvoice(InvoiceDALDto invoice) {
+		InvoiceGateway ig = PersistenceFactory.forInvoice();
+		ig.add(invoice);
+		return invoice.id;
 	}
 
 	/*
 	 * Set the invoice number field in work order table to the invoice number
 	 * generated
 	 */
-	private void linkWorkordersToInvoice(String invoiceId, List<String> workOrderIDS) throws SQLException {
-
-		PreparedStatement pst = null;
-		try {
-			pst = connection.prepareStatement(SQL_LINK_WORKORDER_TO_INVOICE);
-
-			for (String workOrderId : workOrderIDS) {
-				pst.setString(1, invoiceId);
-				pst.setString(2, workOrderId);
-
-				pst.executeUpdate();
-			}
-		} finally {
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
+	private void linkWorkordersToInvoice(String invoiceId, List<String> workOrderIDS) {
+		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
+		List<WorkOrderDALDto> workOrders = wg.findByIds(workOrderIDS);
+		for (WorkOrderDALDto workOrder : workOrders) {
+			workOrder.invoice_id = invoiceId;
+			wg.update(workOrder);
 		}
 	}
 
 	/*
 	 * Sets state to INVOICED for every workorder
 	 */
-	private void markWorkOrderAsInvoiced(List<String> ids) throws SQLException {
-
-		PreparedStatement pst = null;
-		try {
-			pst = connection.prepareStatement(SQL_MARK_WORKORDER_AS_INVOICED);
-
-			for (String id : ids) {
-				pst.setString(1, id);
-
-				pst.executeUpdate();
-			}
-		} finally {
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
+	private void markWorkOrderAsInvoiced(List<String> ids) {
+		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
+		WorkOrderDALDto workOrder = null;
+		for (String id : ids) {
+			workOrder = wg.findById(id).get();
+			workOrder.state = "INVOICED";
+			wg.update(workOrder);
 		}
-	}
-
-	private void displayInvoice(long numberInvoice, LocalDate dateInvoice, double totalInvoice, double vat,
-			double totalConIva) {
-
-		Console.printf("Invoice number: %d\n", numberInvoice);
-		Console.printf("\tDate: %1$td/%1$tm/%1$tY\n", dateInvoice);
-		Console.printf("\tAmount: %.2f €\n", totalInvoice);
-		Console.printf("\tVAT: %.1f %% \n", vat);
-		Console.printf("\tTotal (including VAT): %.2f €\n", totalConIva);
 	}
 }

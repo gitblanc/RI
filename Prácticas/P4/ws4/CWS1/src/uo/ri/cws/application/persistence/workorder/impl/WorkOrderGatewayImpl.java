@@ -33,13 +33,66 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 	}
 
 	@Override
-	public void update(WorkOrderDALDto t) {
+	public void update(WorkOrderDALDto workOrder) {
+		PreparedStatement pst = null;
+		Connection c = null;
+		try {
+			c = Jdbc.getCurrentConnection();
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TWORKORDERS_update"));
 
+			pst.setDouble(1, workOrder.amount);
+			pst.setDate(2, java.sql.Date.valueOf(workOrder.date.toLocalDate()));
+			pst.setString(3, workOrder.description);
+			pst.setString(4, workOrder.state);
+			pst.setLong(5, workOrder.version);
+			pst.setString(6, workOrder.invoice_id);
+			pst.setString(7, workOrder.mechanic_id);
+			pst.setString(8, workOrder.vehicle_id);
+			pst.setString(9, workOrder.id);
+
+			pst.executeQuery();
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
 	}
 
 	@Override
 	public Optional<WorkOrderDALDto> findById(String id) {
-		return null;
+		Optional<WorkOrderDALDto> workOrder = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Connection c = null;
+		try {
+			c = Jdbc.getCurrentConnection();
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TWORKORDERS_findByIds"));
+
+			pst.setString(1, id);
+
+			rs = pst.executeQuery();
+
+			workOrder = WorkOrderAssembler.toWorkOrderDALDto(rs);
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			// persistencia
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
+		return workOrder;
 	}
 
 	@Override
@@ -97,9 +150,39 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 	}
 
 	@Override
-	public List<WorkOrderDALDto> findByIds(List<String> arg) {
+	public List<WorkOrderDALDto> findByIds(List<String> workOrderIDS) {
+		List<WorkOrderDALDto> workorders = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
 
-		return null;
+		try {
+			c = Jdbc.getCurrentConnection();
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TWORKORDERS_findByIds"));
+
+			for (String id : workOrderIDS) {
+				pst.setString(1, id);
+				rs = pst.executeQuery();
+			}
+
+			workorders = WorkOrderAssembler.toWorkOrderDALDtoList(rs);
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			// persistencia
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
+		return workorders;
 	}
 
 	@Override
@@ -113,5 +196,4 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 
 		return null;
 	}
-
 }

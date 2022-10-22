@@ -22,7 +22,7 @@ public class InvoicingServiceImpl implements InvoicingService {
 
 	@Override
 	public InvoiceBLDto createInvoiceFor(List<String> workOrderIds) throws BusinessException {
-		return new CreateInvoice(workOrderIds).execute();
+		return executor.execute(new CreateInvoice(workOrderIds));
 	}
 
 	@Override

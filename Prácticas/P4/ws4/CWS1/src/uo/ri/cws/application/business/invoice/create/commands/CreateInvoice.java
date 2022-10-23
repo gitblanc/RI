@@ -62,7 +62,7 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 		invoice.vat = vat;
 
 		String idInvoice = createInvoice(invoice);
-		linkWorkordersToInvoice(idInvoice, workOrderIds);// FALTA
+		linkWorkordersToInvoice(idInvoice, workOrderIds);
 		markWorkOrderAsInvoiced(workOrderIds);
 		updateVersion(workOrderIds);
 

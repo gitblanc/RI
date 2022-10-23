@@ -37,7 +37,7 @@ public class InvoiceGatewayImpl implements InvoiceGateway {
 			pst.setLong(7, invoice.version);
 
 			pst.executeUpdate();
-			c.commit();
+//			c.commit();
 		} catch (SQLException e) {
 			throw new PersistenceException("Database error");
 		} finally {

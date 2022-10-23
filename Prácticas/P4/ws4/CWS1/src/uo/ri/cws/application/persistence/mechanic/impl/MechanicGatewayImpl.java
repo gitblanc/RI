@@ -93,7 +93,8 @@ public class MechanicGatewayImpl implements MechanicGateway {
 			pst = c.prepareStatement(Conf.getInstance().getProperty("MECHANICS_update"));
 			pst.setString(1, mechanic.name);
 			pst.setString(2, mechanic.surname);
-			pst.setString(3, mechanic.id);
+			pst.setString(3, mechanic.dni);
+			pst.setString(4, mechanic.id);
 
 			pst.executeUpdate();
 
@@ -247,36 +248,5 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		} // En los tdg NO SE CIERRAN LAS CONEXIONES
 		return mechanics;
 	}
-
-	public List<MechanicDALDto> findAllMechanicContracts(String id) {
-		List<MechanicDALDto> mechanics = null;
-		Connection c = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-
-		try {
-			c = Jdbc.getCurrentConnection();
-
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_findAllMechanicContracts"));
-			pst.setString(1, id);
-			rs = pst.executeQuery();
-			mechanics = MechanicAssembler.toMechanicDALDtoList(rs);
-		} catch (SQLException e) {
-			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
-			// persistencia
-		} finally {
-			if (rs != null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-			if (pst != null)
-				try {
-					pst.close();
-				} catch (SQLException e) {
-					/* ignore */ }
-		} // En los tdg NO SE CIERRAN LAS CONEXIONES
-		return mechanics;
-	}
-
+	
 }

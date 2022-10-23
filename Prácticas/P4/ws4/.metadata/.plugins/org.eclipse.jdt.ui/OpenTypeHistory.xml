@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.mechanic{MechanicGateway.java[MechanicGateway" modifiers="513" timestamp="1666084106000"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.mechanic{MechanicGateway.java[MechanicGateway" modifiers="513" timestamp="1666531426093"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.invoice{InvoiceGateway.java[InvoiceGateway" modifiers="513" timestamp="1666084106000"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.workorder{WorkOrderGateway.java[WorkOrderGateway" modifiers="513" timestamp="1666084106000"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.vehicle{VehicleGateway.java[VehicleGateway" modifiers="513" timestamp="1666084106000"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.client{ClientGateway.java[ClientGateway" modifiers="513" timestamp="1666084106000"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.contract{ContractGateway.java[ContractGateway" modifiers="513" timestamp="1666524940663"/>
 </typeInfoHistroy>

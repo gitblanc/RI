@@ -22,8 +22,8 @@ public class UpdateMechanic implements Command<MechanicBLDto> {
 
 	public UpdateMechanic(MechanicBLDto mechanic) {
 		Argument.isNotNull(mechanic, "There can't be a null mechanic");
-		Argument.isNotNull(mechanic.id, "The id of the mechanic can't be null");
 		Argument.isNotNull(mechanic.dni, "The dni of the mechanic can't be null");
+		Argument.isNotNull(mechanic.id, "The id of the mechanic can't be null");
 		Argument.isNotNull(mechanic.name, "The name of the mechanic can't be null");
 		Argument.isNotNull(mechanic.surname, "The surname of the mechanic can't be null");
 		Argument.isNotEmpty(mechanic.id, "The id of the mechanic can't be empty");
@@ -37,7 +37,7 @@ public class UpdateMechanic implements Command<MechanicBLDto> {
 	public MechanicBLDto execute() throws BusinessException {
 		MechanicGateway mg = PersistenceFactory.forMechanic();
 		// Comprobación de que el mecánico existe
-		BusinessCheck.isTrue(!mg.findById(mechanic.id).isEmpty(), "The mechanic doen't exist");
+		BusinessCheck.isTrue(!mg.findById(mechanic.id).isEmpty(), "The mechanic doesn't exist");
 		mg.update(MechanicAssembler.toDALDto(mechanic));
 		
 		return mechanic;

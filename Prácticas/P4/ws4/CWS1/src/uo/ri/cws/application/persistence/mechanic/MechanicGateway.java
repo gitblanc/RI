@@ -30,13 +30,6 @@ public interface MechanicGateway extends Gateway<MechanicDALDto> {
 	 */
 	List<MechanicDALDto> findAllMechanicWorkOrders(String id);
 
-	/**
-	 * Finds rows in the table
-	 * @param id
-	 * @return List<dto> from that record, probably null
-	 */
-	List<MechanicDALDto> findAllMechanicContracts(String id);
-
 	public class MechanicDALDto {
 
 		public String id;
@@ -47,5 +40,4 @@ public interface MechanicGateway extends Gateway<MechanicDALDto> {
 		public String surname;
 
 	}
-
 }

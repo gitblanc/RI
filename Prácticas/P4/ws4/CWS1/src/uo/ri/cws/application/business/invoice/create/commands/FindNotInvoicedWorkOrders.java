@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import assertion.Argument;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto;
 import uo.ri.cws.application.business.invoice.assembler.InvoicingAssembler;
@@ -28,6 +29,8 @@ public class FindNotInvoicedWorkOrders implements Command<List<WorkOrderForInvoi
 	String dni = null;
 
 	public FindNotInvoicedWorkOrders(String dni) {
+		Argument.isNotNull(dni, "The dni can't be null");
+		Argument.isNotEmpty(dni, "The dni can't be empty");
 		this.dni = dni;
 	}
 

@@ -42,7 +42,7 @@ public class MechanicServiceImpl implements MechanicService {
 
 	@Override
 	public Optional<MechanicBLDto> findMechanicByDni(String dniMechanic) throws BusinessException {
-		return null;
+		return executor.execute(new FindMechanicByDni(dniMechanic));
 	}
 
 	@Override

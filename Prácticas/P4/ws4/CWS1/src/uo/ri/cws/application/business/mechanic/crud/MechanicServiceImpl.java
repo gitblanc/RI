@@ -50,4 +50,22 @@ public class MechanicServiceImpl implements MechanicService {
 		return executor.execute(new FindAllMechanics()); // patron comando
 	}
 
+	@Override
+	public List<MechanicBLDto> findMechanicsInForce() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MechanicBLDto> findMechanicsWithContractInForceInContractType(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<MechanicBLDto> findMechanicsInProfessionalGroups(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

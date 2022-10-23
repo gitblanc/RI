@@ -5,5 +5,8 @@
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.workorder{WorkOrderGateway.java[WorkOrderGateway" modifiers="513" timestamp="1666084106000"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.vehicle{VehicleGateway.java[VehicleGateway" modifiers="513" timestamp="1666084106000"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.client{ClientGateway.java[ClientGateway" modifiers="513" timestamp="1666084106000"/>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.contract{ContractGateway.java[ContractGateway" modifiers="513" timestamp="1666524940663"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.contract{ContractGateway.java[ContractGateway" modifiers="513" timestamp="1666536511599"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.business.professionalgroup{ProfessionalGroupService.java[ProfessionalGroupService" modifiers="513" timestamp="1666520978476"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.professionalgroup{ProfessionalGroupGateway.java[ProfessionalGroupGateway" modifiers="513" timestamp="1666540804652"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.business.util.command{Command.java[Command" modifiers="513" timestamp="1666084106000"/>
 </typeInfoHistroy>

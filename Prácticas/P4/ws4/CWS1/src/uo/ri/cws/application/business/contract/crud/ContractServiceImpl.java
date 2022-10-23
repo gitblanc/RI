@@ -20,7 +20,7 @@ public class ContractServiceImpl implements ContractService {
 
 	@Override
 	public ContractBLDto add(ContractBLDto contract) throws BusinessException {
-		return executor.execute(new AddContract(contract));
+		return null;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ContractServiceImpl implements ContractService {
 	@Override
 	public List<ContractSummaryBLDto> findContractsByMechanic(String mechanicDni) throws BusinessException {
 
-		return null;
+		return executor.execute(new FindContractsByMechanicDni(mechanicDni));
 	}
 
 	@Override

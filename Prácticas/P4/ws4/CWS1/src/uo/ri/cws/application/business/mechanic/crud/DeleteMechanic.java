@@ -3,12 +3,17 @@
  */
 package uo.ri.cws.application.business.mechanic.crud;
 
+import java.util.List;
+
 import assertion.Argument;
 import uo.ri.cws.application.business.BusinessException;
+import uo.ri.cws.application.business.contract.ContractService.ContractState;
 import uo.ri.cws.application.business.mechanic.MechanicService.MechanicBLDto;
 import uo.ri.cws.application.business.util.BusinessCheck;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
+import uo.ri.cws.application.persistence.contract.ContractGateway;
+import uo.ri.cws.application.persistence.contract.ContractGateway.ContractSummaryDALDto;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
 
 /**
@@ -28,16 +33,22 @@ public class DeleteMechanic implements Command<MechanicBLDto> {
 	@Override
 	public MechanicBLDto execute() throws BusinessException {
 		MechanicGateway mg = PersistenceFactory.forMechanic();
+		ContractGateway cg = PersistenceFactory.forContract();
 		// Comprobación de que el mecánico no exista
 		BusinessCheck.isTrue(!mg.findById(mechanic.id).isEmpty(), "The mechanic doesn't exist");
 		// Comprobación de que no hay ningún work order para este mecánico
 		BusinessCheck.isTrue(mg.findAllMechanicWorkOrders(mechanic.id).isEmpty(),
 				"The mechanic still have some work orders");
-		//Comprobación de que el mecánico no tiene ninguna intervención
-//		BusinessCheck.isTrue(mg.findAllInterventions(mechanic.id).isEmpty(), "The mechanic still have some interventions");
-//		// Comprobación de que el mecánico no tiene ningún contrato
-//		BusinessCheck.isTrue(!mg.findAllMechanicContracts(mechanic.id).isEmpty(), "The mechanic still has a contract");
+		// Comprobación de que el mecánico no tiene ningún contrato
+		checkContracts(cg.findContractsByDni(mechanic.id));
 		mg.remove(mechanic.id);
 		return null;
+	}
+
+	private void checkContracts(List<ContractSummaryDALDto> contracts) throws BusinessException {
+		for(ContractSummaryDALDto c : contracts) {
+			BusinessCheck.isTrue(!c.state.equals(ContractState.IN_FORCE), "The contract is still active");
+			BusinessCheck.isTrue(!c.state.equals(ContractState.TERMINATED), "The contract is TERMINATED");
+		}
 	}
 }

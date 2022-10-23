@@ -10,6 +10,7 @@ import uo.ri.cws.application.business.mechanic.MechanicService;
 import uo.ri.cws.application.business.mechanic.crud.MechanicServiceImpl;
 import uo.ri.cws.application.business.payroll.PayrollService;
 import uo.ri.cws.application.business.professionalgroup.ProfessionalGroupService;
+import uo.ri.cws.application.business.professionalgroup.crud.ProfessionalGroupServiceImpl;
 
 public class BusinessFactory {
 
@@ -46,7 +47,7 @@ public class BusinessFactory {
 
 	public static ProfessionalGroupService forProfessionalGroupService() {
 
-		throw new NotYetImplementedException();
+		return new ProfessionalGroupServiceImpl();
 
 	}
 

@@ -17,7 +17,7 @@ import uo.ri.cws.application.persistence.contract.ContractGateway.ContractDALDto
  */
 public interface ContractGateway extends Gateway<ContractDALDto> {
 
-	List<ContractDALDto> findContractsByDni(String dni);
+	List<ContractSummaryDALDto> findContractsByDni(String dni);
 
 	Optional<ContractDALDto> findContractByProfessionalGroup(String group);
 
@@ -37,7 +37,7 @@ public interface ContractGateway extends Gateway<ContractDALDto> {
 		public ContractState state;
 	}
 
-	public class ContractSummaryDALto {
+	public class ContractSummaryDALDto {
 
 		public String id;
 		public long version;

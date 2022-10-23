@@ -4,6 +4,7 @@
 package uo.ri.cws.application.persistence.workorder.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,21 +39,17 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 		Connection c = null;
 		try {
 			c = Jdbc.getCurrentConnection();
-			//pst = c.prepareStatement(Conf.getInstance().getProperty("TWORKORDERS_update"));
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TWORKORDERS_updateInvoice"));
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TWORKORDERS_update"));
 
-//			pst.setDouble(1, workOrder.amount);
-//			pst.setDate(2, Date.valueOf(workOrder.date.toLocalDate()));
-//			pst.setString(3, workOrder.description);
-//			pst.setString(4, workOrder.state);
-//			pst.setLong(5, workOrder.version);
-//			pst.setString(6, workOrder.invoice_id);
-//			pst.setString(7, workOrder.mechanic_id);
-//			pst.setString(8, workOrder.vehicle_id);
-//			pst.setString(9, workOrder.id);
-			
-			pst.setString(1, workOrder.invoice_id);
-			pst.setString(2, workOrder.id);
+			pst.setDouble(1, workOrder.amount);
+			pst.setDate(2, Date.valueOf(workOrder.date.toLocalDate()));
+			pst.setString(3, workOrder.description);
+			pst.setString(4, workOrder.state);
+			pst.setLong(5, workOrder.version);
+			pst.setString(6, workOrder.invoice_id);
+			pst.setString(7, workOrder.mechanic_id);
+			pst.setString(8, workOrder.vehicle_id);
+			pst.setString(9, workOrder.id);
 			
 			pst.executeQuery();
 		} catch (SQLException e) {

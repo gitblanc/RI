@@ -90,7 +90,7 @@ public class MechanicGatewayImpl implements MechanicGateway {
 
 		try {
 			c = Jdbc.getCurrentConnection();
-			pst = c.prepareStatement(Conf.getInstance().getProperty("MECHANICS_update"));
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TMECHANICS_update"));
 			pst.setString(1, mechanic.name);
 			pst.setString(2, mechanic.surname);
 			pst.setString(3, mechanic.dni);

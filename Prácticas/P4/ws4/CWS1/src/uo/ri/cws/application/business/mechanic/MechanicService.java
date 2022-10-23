@@ -74,4 +74,10 @@ public interface MechanicService {
 		public String surname;
 
 	}
+
+	List<MechanicBLDto> findMechanicsInForce();
+
+	List<MechanicBLDto> findMechanicsWithContractInForceInContractType(String string);
+
+	List<MechanicBLDto> findMechanicsInProfessionalGroups(String string);
 }

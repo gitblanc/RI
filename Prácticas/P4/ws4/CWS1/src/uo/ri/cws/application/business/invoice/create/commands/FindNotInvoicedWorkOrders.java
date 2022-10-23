@@ -35,10 +35,10 @@ public class FindNotInvoicedWorkOrders implements Command<List<WorkOrderForInvoi
 	}
 
 	/**
-	 * ORIGINAL QUERY
-	 * "select a.id, a.description, a.date, a.state, a.amount " + "from TWorkOrders
-	 * as a, TVehicles as v, TClients as c " + "where a.vehicle_id = v.id " + " and
-	 * v.client_id = c.id " + "and state <> 'INVOICED'" + " and dni like ?";
+	 * ORIGINAL QUERY "select a.id, a.description, a.date, a.state, a.amount " +
+	 * "from TWorkOrders as a, TVehicles as v, TClients as c " + "where a.vehicle_id
+	 * = v.id " + " and v.client_id = c.id " + "and state <> 'INVOICED'" + " and dni
+	 * like ?";
 	 */
 	public List<WorkOrderForInvoicingBLDto> execute() throws BusinessException {
 		ClientGateway cg = PersistenceFactory.forClient();
@@ -49,10 +49,7 @@ public class FindNotInvoicedWorkOrders implements Command<List<WorkOrderForInvoi
 
 		List<VehicleDALDto> vehicles = obtainVehicles(client.get());
 		List<WorkOrderDALDto> workOrders = obtainWorkOrders(vehicles);
-		List<WorkOrderForInvoicingBLDto> notInvoicedWorkOrders = obtainNotInvoicedWorkOrders(workOrders);// workorders
-																											// filtrados
-																											// por el
-																											// estado
+		List<WorkOrderForInvoicingBLDto> notInvoicedWorkOrders = obtainNotInvoicedWorkOrders(workOrders);// workorders filtrados
 
 		return notInvoicedWorkOrders;
 	}

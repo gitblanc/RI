@@ -61,8 +61,6 @@ public class FindMechanicsInProfessionalGroup {
 		try {
 			service.findMechanicsInProfessionalGroups(id);
 			fail();
-		} catch (BusinessException ex) {
-			ctx.setException(ex);
 		} catch (IllegalArgumentException ex) {
 			ctx.setException(ex);
 		}

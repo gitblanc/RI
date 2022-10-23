@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 import uo.ri.cws.application.business.client.ClientService.ClientBLDto;
-import uo.ri.cws.application.business.paymentmean.PaymentMeanService.CashBLDto;
+import uo.ri.cws.application.business.paymentmean.PaymentMeanService.Cash_BLDto;
 
 public class AddClientSqlUnitOfWork {
 
 	private ClientBLDto dto;
-	private CashBLDto cash;
+	private Cash_BLDto cash;
 	private ConnectionData connectionData;
 	private PreparedStatement insertIntoClients;
 	private PreparedStatement insertIntoPaymentMeans;
@@ -38,7 +38,7 @@ public class AddClientSqlUnitOfWork {
 				+ " VALUES ( ?)";
 
 	private void insertCashPaymentMean() throws SQLException {
-		cash = new CashBLDto();
+		cash = new Cash_BLDto();
 			
 		cash.id = UUID.randomUUID().toString();
 		cash.version = 1L;

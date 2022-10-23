@@ -24,8 +24,8 @@ import uo.ri.cws.application.persistence.util.Conf;
 public class ContractGatewayImpl implements ContractGateway {
 
 	@Override
-	public List<ContractDALDto> findContractsByDni(String dni) {
-		List<ContractDALDto> contracts = null;
+	public List<ContractSummaryDALDto> findContractsByDni(String dni) {
+		List<ContractSummaryDALDto> contracts = null;
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -37,9 +37,10 @@ public class ContractGatewayImpl implements ContractGateway {
 			pst.setString(1, dni);
 			rs = pst.executeQuery();
 
-			contracts = ContractAssembler.toContractListDALDto(rs);// Fijarse en que sea el Assembler de persistence y
-																	// no de
-																	// business
+			contracts = ContractAssembler.toContractSummaryListDALDto(rs);// Fijarse en que sea el Assembler de
+																			// persistence y
+			// no de
+			// business
 
 		} catch (SQLException e) {
 			throw new PersistenceException("Database error");
@@ -60,8 +61,40 @@ public class ContractGatewayImpl implements ContractGateway {
 	}
 
 	@Override
-	public Optional<ContractDALDto> findContractByProfessionalGroup(String group) {
-		return null;
+	public Optional<ContractDALDto> findContractByProfessionalGroup(String id) {
+		Optional<ContractDALDto> contracts = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TCONTRACTS_findByGroupId"));
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+
+			contracts = ContractAssembler.toContractDALDto(rs);// Fijarse en que sea el Assembler de
+																			// persistence y
+			// no de
+			// business
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+
+		}
+		return contracts;
 	}
 
 	@Override

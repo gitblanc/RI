@@ -9,11 +9,11 @@ import io.cucumber.junit.CucumberOptions;
 
 @CucumberOptions(
 		features = {
-		"src/test/resources/uo/ri/cws/application/service/mechanic"
-		, "src/test/resources/uo/ri/cws/application/service/contract"
-		, "src/test/resources/uo/ri/cws/application/service/payroll"
-		, "src/test/resources/uo/ri/cws/application/service/professionalgroup"
-		, "src/test/resources/uo/ri/cws/application/service/contracttype"
+//		"src/test/resources/uo/ri/cws/application/service/mechanic"
+		//, "src/test/resources/uo/ri/cws/application/service/contract"
+//		, "src/test/resources/uo/ri/cws/application/service/payroll"
+		 "src/test/resources/uo/ri/cws/application/service/professionalgroup"
+//		, "src/test/resources/uo/ri/cws/application/service/contracttype"
 		}		
 		)
 

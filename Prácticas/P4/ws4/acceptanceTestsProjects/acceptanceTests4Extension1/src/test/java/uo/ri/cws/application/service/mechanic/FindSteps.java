@@ -52,8 +52,6 @@ public class FindSteps {
 		try {
 			service.findMechanicsWithContractInForceInContractType(id);
 			fail();
-		} catch (BusinessException ex) {
-			ctx.setException(ex);
 		} catch (IllegalArgumentException ex) {
 			ctx.setException(ex);
 		}

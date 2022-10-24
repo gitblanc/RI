@@ -10,7 +10,7 @@ import uo.ri.conf.Factory;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features= {		//"test/uo/ri/cws/application/service/mechanic",
+		features= {		"test/uo/ri/cws/application/service/mechanic",
 				"test/uo/ri/cws/application/service/invoice",
 		},
 	plugin = {"pretty", "html:target/cucumber-results.html"},

@@ -75,7 +75,7 @@ public interface MechanicService {
 
 	}
 
-	List<MechanicBLDto> findMechanicsInForce();
+	List<MechanicBLDto> findMechanicsInForce() throws BusinessException;
 
 	List<MechanicBLDto> findMechanicsWithContractInForceInContractType(String string);
 

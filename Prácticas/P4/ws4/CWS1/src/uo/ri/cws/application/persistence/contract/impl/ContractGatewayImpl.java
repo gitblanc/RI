@@ -75,7 +75,7 @@ public class ContractGatewayImpl implements ContractGateway {
 			rs = pst.executeQuery();
 
 			contracts = ContractAssembler.toContractDALDto(rs);// Fijarse en que sea el Assembler de
-																			// persistence y
+																// persistence y
 			// no de
 			// business
 
@@ -155,6 +155,38 @@ public class ContractGatewayImpl implements ContractGateway {
 	@Override
 	public List<ContractDALDto> findAll() {
 		return null;
+	}
+
+	@Override
+	public List<ContractDALDto> findContractsInForce() {
+		List<ContractDALDto> contracts = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance().getProperty("TCONTRACTS_findContractsInForce"));
+
+			rs = pst.executeQuery();
+			contracts = ContractAssembler.toContractListDALDto(rs);
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			// persistencia
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
+		return contracts;
 	}
 
 }

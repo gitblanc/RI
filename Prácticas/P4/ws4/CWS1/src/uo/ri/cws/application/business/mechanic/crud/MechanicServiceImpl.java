@@ -51,9 +51,8 @@ public class MechanicServiceImpl implements MechanicService {
 	}
 
 	@Override
-	public List<MechanicBLDto> findMechanicsInForce() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MechanicBLDto> findMechanicsInForce() throws BusinessException {
+		return executor.execute(new FindMechanicsInForce());
 	}
 
 	@Override

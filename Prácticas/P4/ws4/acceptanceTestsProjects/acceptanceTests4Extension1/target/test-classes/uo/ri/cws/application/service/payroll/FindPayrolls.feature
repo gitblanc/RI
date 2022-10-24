@@ -45,21 +45,21 @@ Feature: Find payrolls all scenarios
     	
 	@getAllPayrollsForMechanic
   	@IllegalArgumentException
-	  Scenario: Try to find a payroll with null mechanic dni
-	  	When I try to find payrolls with null mechanic dni
+	  Scenario: Try to find a payroll with null mechanic id
+	  	When I try to find payrolls with null mechanic id
   	  Then argument is rejected with an explaining message
 
 	  Scenario Outline: Try to find a payroll with invalid mechanic dni
-  	  When I try to find payrolls with mechanic <dni> argument
+  	  When I try to find payrolls with mechanic <id> argument
     	Then argument is rejected with an explaining message
  		Examples:
- 		|  dni  |
+ 		|  id  |
  		| ""   |
  		| "   "|
  			
   	@BusinessException
 		Scenario: Find payrolls for a non existent mechanic 
-    	When I try to find payrolls with a non existent dni
+    	When I try to find payrolls with a non existent id
 	    Then an error happens with an explaining message
  			
 		@PositiveCases

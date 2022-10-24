@@ -187,13 +187,13 @@ public class FindPayrollsSteps {
 		return list;
 	}
 
-	@When("I try to find payrolls with null mechanic dni")
+	@When("I try to find payrolls with null mechanic id")
 	public void i_try_to_find_payrolls_with_null_mechanic_id() {
 		tryGetPayrollsForMechanicAndKeepException(null);
 
 	}
 
-	@When("I try to find payrolls with a non existent dni")
+	@When("I try to find payrolls with a non existent id")
 	public void i_try_to_find_payrolls_with_a_non_existent_id() {
 		tryGetPayrollsForMechanicAndKeepException(UUID.randomUUID().toString());
 	}
@@ -207,7 +207,7 @@ public class FindPayrollsSteps {
 	@When("I search payrolls for the mechanic")
 	public void i_search_payrolls_for_the_mechanic() throws BusinessException {
 		MechanicBLDto m = (MechanicBLDto) ctx.get(Key.MECHANIC);
-		listSummary = service.getAllPayrollsForMechanic(m.dni);
+		listSummary = service.getAllPayrollsForMechanic(m.id);
 
 	}
 

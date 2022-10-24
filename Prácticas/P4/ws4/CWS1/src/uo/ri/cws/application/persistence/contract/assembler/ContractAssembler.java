@@ -3,7 +3,6 @@
  */
 package uo.ri.cws.application.persistence.contract.assembler;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -74,5 +73,14 @@ public class ContractAssembler {
 		else
 			value.state = ContractState.IN_FORCE;
 		return value;
+	}
+
+	public static List<ContractDALDto> toContractListDALDto(ResultSet rs) throws SQLException {
+		List<ContractDALDto> res = new ArrayList<>();
+		while (rs.next()) {
+			res.add(resultSetToContractDALDto(rs));
+		}
+
+		return res;
 	}
 }

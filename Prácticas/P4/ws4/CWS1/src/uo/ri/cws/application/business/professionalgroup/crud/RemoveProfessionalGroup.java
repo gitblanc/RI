@@ -34,8 +34,8 @@ public class RemoveProfessionalGroup implements Command<ProfessionalGroupBLDto> 
 		ProfessionalGroupGateway pg = PersistenceFactory.forProfessionalGroup();
 		ContractGateway cg = PersistenceFactory.forContract();
 		Optional<ProfessionalGroupDALDto> contract = pg.findByName(name);
-		BusinessCheck.isTrue(!contract.isEmpty(), "The group doesn't exist");
-		BusinessCheck.isTrue(cg.findContractByProfessionalGroup(name).isEmpty() || cg.findContractByProfessionalGroup(name) == null, "The group has contracts assigned");
+		BusinessCheck.isTrue(contract != null && !contract.isEmpty(), "The group doesn't exist");
+		BusinessCheck.isTrue(cg.findContractByProfessionalGroup(name) == null && cg.findContractByProfessionalGroup(name).isEmpty(), "The group has contracts assigned");
 		pg.remove(contract.get().id);
 		return null;
 	}

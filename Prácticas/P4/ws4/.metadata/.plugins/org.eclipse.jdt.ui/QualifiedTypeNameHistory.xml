@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.WorkOrderGateway.WorkOrderDALDto"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.InvoicingService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.BusinessFactory"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.BusinessException"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService"/>
     <fullyQualifiedTypeName name="exception.NotYetImplementedException"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.client.ClientService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contracttype.ContractTypeService"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.assembler.ContractAssembler"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.invoice.InvoicingService.WorkOrderForInvoicingBLDto"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
@@ -22,9 +18,7 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.workorder.WorkOrderService.WorkOrderBLDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.PayrollService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.PayrollService.PayrollBLDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService.ContractBLDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway.ContractDALDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.assembler.ContractAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService.ContractSummaryBLDto"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway.ContractSummaryDALDto"/>
@@ -47,7 +41,6 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.ProfessionalGroupService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.crud.ProfessionalGroupServiceImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.crud.RemoveProfessionalGroup"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.professionalgroup.ProfessionalGroupGateway.ProfessionalGroupDALDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.service.util.sql.FindProfessionalGroupByNameSqlUnitOfWork"/>
     <fullyQualifiedTypeName name="assertion.Argument"/>
@@ -55,9 +48,16 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.ProfessionalGroupService.ProfessionalGroupBLDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.util.command.Command"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.professionalgroup.ProfessionalGroupGateway"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.PersistenceFactory"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.assembler.ProfessionalGroupAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.professionalgroup.assembler.ProfessionalGroupAssembler"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.PersistenceFactory"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.assembler.ContractAssembler"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.assembler.ContractAssembler"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService.ContractBLDto"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.mechanic.assembler.MechanicAssembler"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.BusinessException"/>
 </qualifiedTypeNameHistroy>

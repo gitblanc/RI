@@ -20,7 +20,9 @@ public interface ContractGateway extends Gateway<ContractDALDto> {
 	List<ContractSummaryDALDto> findContractsByDni(String dni);
 
 	Optional<ContractDALDto> findContractByProfessionalGroup(String group);
-
+	
+	List<ContractDALDto> findContractsInForce();
+	
 	public class ContractDALDto {
 		public String id;
 		public long version;

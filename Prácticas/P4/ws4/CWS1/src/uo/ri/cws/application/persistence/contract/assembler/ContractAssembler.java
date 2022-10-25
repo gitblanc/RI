@@ -18,14 +18,16 @@ import uo.ri.cws.application.persistence.contract.ContractGateway.ContractSummar
  *
  */
 public class ContractAssembler {
-	public static Optional<ContractSummaryDALDto> toContractSummaryDALDto(ResultSet c) throws SQLException {
+	public static Optional<ContractSummaryDALDto> toContractSummaryDALDto(
+			ResultSet c) throws SQLException {
 		if (c.next()) {
 			return Optional.of(resultSetToContractSummaryDALDto(c));
 		} else
 			return Optional.ofNullable(null);
 	}
 
-	public static List<ContractSummaryDALDto> toContractSummaryListDALDto(ResultSet rs) throws SQLException {
+	public static List<ContractSummaryDALDto> toContractSummaryListDALDto(
+			ResultSet rs) throws SQLException {
 		List<ContractSummaryDALDto> res = new ArrayList<>();
 		while (rs.next()) {
 			res.add(resultSetToContractSummaryDALDto(rs));
@@ -34,7 +36,8 @@ public class ContractAssembler {
 		return res;
 	}
 
-	private static ContractSummaryDALDto resultSetToContractSummaryDALDto(ResultSet rs) throws SQLException {
+	private static ContractSummaryDALDto resultSetToContractSummaryDALDto(
+			ResultSet rs) throws SQLException {
 		ContractSummaryDALDto value = new ContractSummaryDALDto();
 
 		value.id = rs.getString("id");
@@ -49,21 +52,23 @@ public class ContractAssembler {
 		return value;
 	}
 
-	public static Optional<ContractDALDto> toContractDALDto(ResultSet m) throws SQLException {
+	public static Optional<ContractDALDto> toContractDALDto(ResultSet m)
+			throws SQLException {
 		if (m.next()) {
 			return Optional.of(resultSetToContractDALDto(m));
 		} else
 			return Optional.ofNullable(null);
 	}
 
-	private static ContractDALDto resultSetToContractDALDto(ResultSet rs) throws SQLException {
+	private static ContractDALDto resultSetToContractDALDto(ResultSet rs)
+			throws SQLException {
 		ContractDALDto value = new ContractDALDto();
 
 		value.id = rs.getString("id");
 		value.version = rs.getLong("version");
 		value.annualBaseWage = rs.getDouble("annualbasewage");
 		value.contractTypeName = rs.getString("contracttype_id");
-		value.endDate = rs.getDate("enddate").toLocalDate();
+		value.endDate = rs.getDate("ENDDATE").toLocalDate();
 		value.startDate = rs.getDate("startdate").toLocalDate();
 		value.professionalGroupName = rs.getString("professionalgroup_id");
 		value.dni = rs.getString("mechanic_id");
@@ -75,7 +80,8 @@ public class ContractAssembler {
 		return value;
 	}
 
-	public static List<ContractDALDto> toContractListDALDto(ResultSet rs) throws SQLException {
+	public static List<ContractDALDto> toContractListDALDto(ResultSet rs)
+			throws SQLException {
 		List<ContractDALDto> res = new ArrayList<>();
 		while (rs.next()) {
 			res.add(resultSetToContractDALDto(rs));

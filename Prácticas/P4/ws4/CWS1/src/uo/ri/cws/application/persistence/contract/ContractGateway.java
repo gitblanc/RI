@@ -53,4 +53,6 @@ public interface ContractGateway extends Gateway<ContractDALDto> {
 		// For summary only
 		public int numPayrolls;
 	}
+
+	Optional<ContractDALDto> findContractInForceById(String mechanicDni);
 }

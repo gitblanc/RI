@@ -34,7 +34,6 @@ INDEX VERSION 1.131+C:\Users\omenp\Desktop\3rd grade\RI\Prácticas\P4\ws4\.metada
 1691424598.index
 3248055195.index
 1871083893.index
-467342492.index
 1826366474.index
 3348966013.index
 3122451253.index

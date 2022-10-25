@@ -12,7 +12,8 @@ import uo.ri.cws.application.persistence.professionalgroup.ProfessionalGroupGate
  * @author UO285176
  *
  */
-public interface ProfessionalGroupGateway extends Gateway<ProfessionalGroupDALDto> {
+public interface ProfessionalGroupGateway
+		extends Gateway<ProfessionalGroupDALDto> {
 
 	public class ProfessionalGroupDALDto {
 		public String id;

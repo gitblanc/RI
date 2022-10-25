@@ -33,12 +33,20 @@ public class ContractGatewayImpl implements ContractGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TCONTRACTS_findByDni"));
+			pst = c.prepareStatement(
+					Conf.getInstance().getProperty("TCONTRACTS_findByDni"));
 			pst.setString(1, dni);
 			rs = pst.executeQuery();
 
-			contracts = ContractAssembler.toContractSummaryListDALDto(rs);// Fijarse en que sea el Assembler de
-																			// persistence y
+			contracts = ContractAssembler.toContractSummaryListDALDto(rs);// Fijarse
+																			// en
+																			// que
+																			// sea
+																			// el
+																			// Assembler
+																			// de
+																			// persistence
+																			// y
 			// no de
 			// business
 
@@ -70,11 +78,14 @@ public class ContractGatewayImpl implements ContractGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TCONTRACTS_findByGroupId"));
+			pst = c.prepareStatement(
+					Conf.getInstance().getProperty("TCONTRACTS_findByGroupId"));
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 
-			contracts = ContractAssembler.toContractDALDto(rs);// Fijarse en que sea el Assembler de
+			contracts = ContractAssembler.toContractDALDto(rs);// Fijarse en que
+																// sea el
+																// Assembler de
 																// persistence y
 			// no de
 			// business
@@ -106,7 +117,8 @@ public class ContractGatewayImpl implements ContractGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TCONTRACTS_add"));
+			pst = c.prepareStatement(
+					Conf.getInstance().getProperty("TCONTRACTS_add"));
 			pst.setString(1, contract.id);
 			pst.setLong(2, contract.version);
 			pst.setString(3, contract.dni);
@@ -121,7 +133,10 @@ public class ContractGatewayImpl implements ContractGateway {
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			throw new PersistenceException("Database error");// Esto hay que
+																// hacerlo en
+																// todos los
+																// errores de
 																// persistencia
 		} finally {
 			if (rs != null)
@@ -158,7 +173,7 @@ public class ContractGatewayImpl implements ContractGateway {
 	}
 
 	@Override
-	public List<ContractDALDto> findContractsInForce() {
+	public List<ContractDALDto> findContractsInForce(String id) {
 		List<ContractDALDto> contracts = null;
 		Connection c = null;
 		PreparedStatement pst = null;
@@ -167,12 +182,16 @@ public class ContractGatewayImpl implements ContractGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TCONTRACTS_findContractsInForce"));
-
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TCONTRACTS_findContractsInForce"));
+			pst.setString(1, id);
 			rs = pst.executeQuery();
 			contracts = ContractAssembler.toContractListDALDto(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			throw new PersistenceException("Database error");// Esto hay que
+																// hacerlo en
+																// todos los
+																// errores de
 			// persistencia
 		} finally {
 			if (rs != null)
@@ -187,6 +206,47 @@ public class ContractGatewayImpl implements ContractGateway {
 					/* ignore */ }
 		}
 		return contracts;
+	}
+
+	@Override
+	public Optional<ContractDALDto> findContractInForceById(String id) {
+		Optional<ContractDALDto> contract = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TCONTRACTS_findContractsInForceById"));
+			//Date pastMonthDate = LocalDate.now()
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+
+			contract = ContractAssembler.toContractDALDto(rs);// Fijarse en que
+																// sea el
+																// Assembler de
+																// persistence y
+																// no de
+																// business
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+
+		}
+		return contract;
 	}
 
 }

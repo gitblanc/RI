@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="uo.ri.util.assertion.ArgumentChecks"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Fix"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Assign"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.PaymentMean"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Intervene"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.WorkOrder"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.ToInvoice"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Pay"/>
+</qualifiedTypeNameHistroy>

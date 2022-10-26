@@ -12,7 +12,7 @@ import uo.ri.cws.application.persistence.payroll.PayrollGateway.PayrollSummaryDA
 public class PayrollAssembler {
 
 	public static Optional<PayrollBLDto> toBLDto(Optional<PayrollDALDto> arg) {
-		Optional<PayrollBLDto> result = arg.isEmpty()
+		Optional<PayrollBLDto> result = (arg.isEmpty() || arg == null)
 				? Optional.ofNullable(null)
 				: Optional.ofNullable(toPayrollBLDto(arg.get()));
 		return result;
@@ -50,6 +50,20 @@ public class PayrollAssembler {
 		p.date = rs.date;
 		p.netWage = rs.netWage;
 		return p;
+	}
+
+	private static PayrollSummaryBLDto toPayrollSummaryBLDtoDALD(
+			PayrollDALDto p2) {
+		PayrollSummaryBLDto p = new PayrollSummaryBLDto();
+		p.id = p2.id;
+		p.version = p2.version;
+		p.date = p2.date;
+		p.netWage = p2.netWage;
+		return p;
+	}
+
+	public static PayrollSummaryBLDto toSummaryBLDto(PayrollDALDto p) {
+		return toPayrollSummaryBLDtoDALD(p);
 	}
 
 }

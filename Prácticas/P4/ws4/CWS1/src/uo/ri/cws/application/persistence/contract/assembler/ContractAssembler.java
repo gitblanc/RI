@@ -68,7 +68,8 @@ public class ContractAssembler {
 		value.version = rs.getLong("version");
 		value.annualBaseWage = rs.getDouble("annualbasewage");
 		value.contractTypeName = rs.getString("contracttype_id");
-		value.endDate = rs.getDate("ENDDATE").toLocalDate();
+		if (rs.getDate("ENDDATE") != null)
+			value.endDate = rs.getDate("ENDDATE").toLocalDate();
 		value.startDate = rs.getDate("startdate").toLocalDate();
 		value.professionalGroupName = rs.getString("professionalgroup_id");
 		value.dni = rs.getString("mechanic_id");

@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item key="org.eclipse.jdt.uicleanup_pagemodify_dialog.last_focus" value="8"/>
+	<item key="org.eclipse.jdt.uiformatter_page.modify_dialog_tab_page.last_focus_index" value="-1"/>
+	<item key="org.eclipse.jdt.uicleanup_pagemodify_dialog.preferred_width" value="857"/>
+	<item key="org.eclipse.jdt.uicleanup_pagemodify_dialog.preferred_height" value="987"/>
+	<item key="org.eclipse.jdt.uicleanup_pagemodify_dialog.preferred_x" value="659"/>
+	<item key="org.eclipse.jdt.uicleanup_pagemodify_dialog.preferred_y" value="0"/>
+	<item key="ProjectSelectionDialog.show_all" value="true"/>
+	<item key="org.eclipse.jdt.ui.codeformatter.line_wrapping_tab_page.preview_line_width" value="40"/>
+	<item key="org.eclipse.jdt.uiformatter_page.last_focus_index" value="355"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_width" value="1194"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_height" value="760"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_x" value="490"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_y" value="54"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_left_width" value="517"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_rigth_width" value="636"/>
+	<item key="org.eclipse.jdt.uiformatter_page.preference_tree_expansion" value="10.0..0.0.011.1.1.1.1.1.1.1.1.1.1..11.1.1.1.1.1.1.1.1.1.1..11.1.1.1.1.1.1..11.1.1.1..11.1.1.1...01.1.1..111.1..1.1..111.1.1.1.1.1.1.1.1.1.1.1...11.1..1.."/>
+	<item key="org.eclipse.jdt.uiformatter_page.preference_scroll_position" value="1345"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item key="group_libraries" value="true"/>
 		<item key="layout" value="1"/>
@@ -84,5 +101,15 @@
 		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_HEIGHT" value="440"/>
 		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
 		<item key="org.eclipse.jdt.internal.ui.typehierarchy.HierarchyInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.text.QuickOutline">
+		<item key="GoIntoTopLevelTypeAction.isChecked" value="false"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_WIDTH" value="500"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_HEIGHT" value="440"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_SIZE" value="true"/>
+		<item key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_LOCATION" value="false"/>
+	</section>
+	<section name="JavaEditorCodeMiningConfigurationBlock">
+		<item key="expanded0" value="true"/>
 	</section>
 </section>

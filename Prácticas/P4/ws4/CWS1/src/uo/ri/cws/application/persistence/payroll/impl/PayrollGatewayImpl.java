@@ -105,7 +105,41 @@ public class PayrollGatewayImpl implements PayrollGateway {
 
 	@Override
 	public Optional<PayrollDALDto> findById(String id) {
-		return null;
+		Optional<PayrollDALDto> payroll = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(
+					Conf.getInstance().getProperty("TPAYROLLS_findById"));
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+
+			payroll = PayrollAssembler.toPayrollDALDto(rs);// Fijarse en que sea
+															// el Assembler de
+															// persistence y no
+															// de
+															// business
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+
+		}
+		return payroll;
 	}
 
 	@Override

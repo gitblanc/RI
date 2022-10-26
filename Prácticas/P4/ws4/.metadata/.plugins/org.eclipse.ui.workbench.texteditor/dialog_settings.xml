@@ -4,8 +4,9 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="pst.setString(7, workOrder.mechanic_id);"/>
+		<item key="selection" value="IN_FORCE"/>
 		<list key="findhistory">
+			<item value="IN_FORCE"/>
 			<item value="pst.setString(7, workOrder.mechanic_id);"/>
 			<item value="SQL_FIND_WORKORDER_AMOUNT"/>
 			<item value="SQL_LINK_WORKORDER_TO_INVOICE"/>

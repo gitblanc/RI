@@ -15,8 +15,8 @@ import uo.ri.cws.application.business.util.command.CommandExecutor;
  * @author UO285176
  *
  */
-public class PayrollServiceImpl implements PayrollService{
-	
+public class PayrollServiceImpl implements PayrollService {
+
 	CommandExecutor executor = new CommandExecutor();
 
 	@Override
@@ -27,13 +27,14 @@ public class PayrollServiceImpl implements PayrollService{
 	@Override
 	public void generatePayrolls(LocalDate present) throws BusinessException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void deleteLastPayrollFor(String mechanicId) throws BusinessException {
+	public void deleteLastPayrollFor(String mechanicId)
+			throws BusinessException {
 		executor.execute(new DeleteLastPayrollForMechanic(mechanicId));
-		
+
 	}
 
 	@Override
@@ -42,7 +43,8 @@ public class PayrollServiceImpl implements PayrollService{
 	}
 
 	@Override
-	public Optional<PayrollBLDto> getPayrollDetails(String id) throws BusinessException {
+	public Optional<PayrollBLDto> getPayrollDetails(String id)
+			throws BusinessException {
 		return executor.execute(new GetPayrollDetails(id));
 	}
 
@@ -52,15 +54,15 @@ public class PayrollServiceImpl implements PayrollService{
 	}
 
 	@Override
-	public List<PayrollSummaryBLDto> getAllPayrollsForMechanic(String id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PayrollSummaryBLDto> getAllPayrollsForMechanic(String id)
+			throws BusinessException {
+		return executor.execute(new GetAllPayrollsForMechanic(id));
 	}
 
 	@Override
-	public List<PayrollSummaryBLDto> getAllPayrollsForProfessionalGroup(String name) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PayrollSummaryBLDto> getAllPayrollsForProfessionalGroup(
+			String name) throws BusinessException {
+		return executor.execute(new GetAllPayrollsForProfessionalGroup(name));
 	}
 
 }

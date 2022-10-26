@@ -69,8 +69,8 @@ public class ContractGatewayImpl implements ContractGateway {
 	}
 
 	@Override
-	public Optional<ContractDALDto> findContractByProfessionalGroup(String id) {
-		Optional<ContractDALDto> contracts = null;
+	public List<ContractDALDto> findContractsByProfessionalGroup(String id) {
+		List<ContractDALDto> contracts = null;
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -83,7 +83,7 @@ public class ContractGatewayImpl implements ContractGateway {
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 
-			contracts = ContractAssembler.toContractDALDto(rs);// Fijarse en que
+			contracts = ContractAssembler.toContractListDALDto(rs);// Fijarse en que
 																// sea el
 																// Assembler de
 																// persistence y
@@ -173,7 +173,7 @@ public class ContractGatewayImpl implements ContractGateway {
 	}
 
 	@Override
-	public List<ContractDALDto> findContractsInForce(String id) {
+	public List<ContractDALDto> findContractsInForce() {
 		List<ContractDALDto> contracts = null;
 		Connection c = null;
 		PreparedStatement pst = null;
@@ -184,7 +184,7 @@ public class ContractGatewayImpl implements ContractGateway {
 
 			pst = c.prepareStatement(Conf.getInstance()
 					.getProperty("TCONTRACTS_findContractsInForce"));
-			pst.setString(1, id);
+			//pst.setString(1, id);
 			rs = pst.executeQuery();
 			contracts = ContractAssembler.toContractListDALDto(rs);
 		} catch (SQLException e) {

@@ -2453,3 +2453,20 @@ org.eclipse.core.runtime.CoreException: Launch configuration TestRunner referenc
 2022-10-25 21:49:17,595 [Worker-48: Launching TestRunner] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
 2022-10-25 21:49:17,969 [Worker-46: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2022-10-25 21:49:17,970 [Worker-46: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-25 21:49:17,971 [Worker-46: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-25 21:49:17,975 [Worker-46: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 9 resources
+2022-10-26 16:04:07,069 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2022-10-26 16:36:03,900 [Worker-18: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:36:03,904 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 16:36:03,906 [Worker-18: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:36:03,908 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
+2022-10-26 16:36:04,936 [Worker-38: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:36:04,938 [Worker-38: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 16:36:04,938 [Worker-38: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:36:04,942 [Worker-38: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
+2022-10-26 16:36:07,123 [Worker-18: Launching TestRunner] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:36:07,124 [Worker-18: Launching TestRunner] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 16:36:07,125 [Worker-18: Launching TestRunner] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:36:07,128 [Worker-18: Launching TestRunner] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
+2022-10-26 16:40:45,126 [Worker-18: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:40:45,127 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource

@@ -21,13 +21,12 @@ public class PayrollServiceImpl implements PayrollService {
 
 	@Override
 	public void generatePayrolls() throws BusinessException {
-		executor.execute(new GeneratePayroll());
+		executor.execute(new GeneratePayrolls(null));
 	}
 
 	@Override
 	public void generatePayrolls(LocalDate present) throws BusinessException {
-		// TODO Auto-generated method stub
-
+		executor.execute(new GeneratePayrolls(present));
 	}
 
 	@Override

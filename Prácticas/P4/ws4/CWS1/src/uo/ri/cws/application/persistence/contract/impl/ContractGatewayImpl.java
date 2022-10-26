@@ -38,17 +38,7 @@ public class ContractGatewayImpl implements ContractGateway {
 			pst.setString(1, dni);
 			rs = pst.executeQuery();
 
-			contracts = ContractAssembler.toContractSummaryListDALDto(rs);// Fijarse
-																			// en
-																			// que
-																			// sea
-																			// el
-																			// Assembler
-																			// de
-																			// persistence
-																			// y
-			// no de
-			// business
+			contracts = ContractAssembler.toContractSummaryListDALDto(rs);
 
 		} catch (SQLException e) {
 			throw new PersistenceException("Database error");
@@ -83,10 +73,13 @@ public class ContractGatewayImpl implements ContractGateway {
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 
-			contracts = ContractAssembler.toContractListDALDto(rs);// Fijarse en que
-																// sea el
-																// Assembler de
-																// persistence y
+			contracts = ContractAssembler.toContractListDALDto(rs);// Fijarse en
+																	// que
+																	// sea el
+																	// Assembler
+																	// de
+																	// persistence
+																	// y
 			// no de
 			// business
 
@@ -184,7 +177,7 @@ public class ContractGatewayImpl implements ContractGateway {
 
 			pst = c.prepareStatement(Conf.getInstance()
 					.getProperty("TCONTRACTS_findContractsInForce"));
-			//pst.setString(1, id);
+			// pst.setString(1, id);
 			rs = pst.executeQuery();
 			contracts = ContractAssembler.toContractListDALDto(rs);
 		} catch (SQLException e) {
@@ -220,7 +213,48 @@ public class ContractGatewayImpl implements ContractGateway {
 
 			pst = c.prepareStatement(Conf.getInstance()
 					.getProperty("TCONTRACTS_findContractsInForceById"));
-			//Date pastMonthDate = LocalDate.now()
+			// Date pastMonthDate = LocalDate.now()
+			pst.setString(1, id);
+			rs = pst.executeQuery();
+
+			contract = ContractAssembler.toContractDALDto(rs);// Fijarse en que
+																// sea el
+																// Assembler de
+																// persistence y
+																// no de
+																// business
+
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+
+		}
+		return contract;
+	}
+
+	@Override
+	public Optional<ContractDALDto> findContractById(String id) {
+		Optional<ContractDALDto> contract = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TCONTRACTS_findContractByDni"));
+			// Date pastMonthDate = LocalDate.now()
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 

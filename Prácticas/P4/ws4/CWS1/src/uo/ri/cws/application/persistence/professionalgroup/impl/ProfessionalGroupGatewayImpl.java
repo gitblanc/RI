@@ -31,7 +31,8 @@ public class ProfessionalGroupGatewayImpl implements ProfessionalGroupGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TPROFESSIONALGROUPS_add"));
+			pst = c.prepareStatement(
+					Conf.getInstance().getProperty("TPROFESSIONALGROUPS_add"));
 			pst.setString(1, group.id);
 			pst.setString(2, group.name);
 			pst.setDouble(3, group.productivityRate);
@@ -41,7 +42,10 @@ public class ProfessionalGroupGatewayImpl implements ProfessionalGroupGateway {
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			throw new PersistenceException("Database error");// Esto hay que
+																// hacerlo en
+																// todos los
+																// errores de
 																// persistencia
 		} finally {
 			if (rs != null)
@@ -66,7 +70,8 @@ public class ProfessionalGroupGatewayImpl implements ProfessionalGroupGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TPROFESSIONALGROUPS_remove"));
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TPROFESSIONALGROUPS_remove"));
 			pst.setString(1, id);
 
 			pst.executeUpdate();
@@ -95,12 +100,12 @@ public class ProfessionalGroupGatewayImpl implements ProfessionalGroupGateway {
 
 		try {
 			c = Jdbc.getCurrentConnection();
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TPROFESSIONALGROUPS_update"));
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TPROFESSIONALGROUPS_update"));
 			pst.setString(1, group.name);
 			pst.setDouble(2, group.productivityRate);
 			pst.setDouble(3, group.trieniumSalary);
-			pst.setLong(4, group.version);
-			pst.setString(5, group.id);
+			pst.setString(4, group.id);
 
 			pst.executeUpdate();
 
@@ -130,12 +135,22 @@ public class ProfessionalGroupGatewayImpl implements ProfessionalGroupGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TPROFESSIONALGROUPS_findById"));
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TPROFESSIONALGROUPS_findById"));
 			pst.setString(1, id);
 			rs = pst.executeQuery();
 
-			group = ProfessionalGroupAssembler.toProfessionalGroupDALDto(rs);// Fijarse en que sea el Assembler de
-																				// persistence y no de
+			group = ProfessionalGroupAssembler.toProfessionalGroupDALDto(rs);// Fijarse
+																				// en
+																				// que
+																				// sea
+																				// el
+																				// Assembler
+																				// de
+																				// persistence
+																				// y
+																				// no
+																				// de
 			// business
 
 		} catch (SQLException e) {
@@ -166,12 +181,17 @@ public class ProfessionalGroupGatewayImpl implements ProfessionalGroupGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TPROFESSIONALGROUPS_findAll"));
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TPROFESSIONALGROUPS_findAll"));
 
 			rs = pst.executeQuery();
-			groups = ProfessionalGroupAssembler.toProfessionalGroupDALDtoList(rs);
+			groups = ProfessionalGroupAssembler
+					.toProfessionalGroupDALDtoList(rs);
 		} catch (SQLException e) {
-			throw new PersistenceException("Database error");// Esto hay que hacerlo en todos los errores de
+			throw new PersistenceException("Database error");// Esto hay que
+																// hacerlo en
+																// todos los
+																// errores de
 			// persistencia
 		} finally {
 			if (rs != null)
@@ -198,12 +218,22 @@ public class ProfessionalGroupGatewayImpl implements ProfessionalGroupGateway {
 		try {
 			c = Jdbc.getCurrentConnection();
 
-			pst = c.prepareStatement(Conf.getInstance().getProperty("TPROFESSIONALGROUPS_findByName"));
+			pst = c.prepareStatement(Conf.getInstance()
+					.getProperty("TPROFESSIONALGROUPS_findByName"));
 			pst.setString(1, name);
 			rs = pst.executeQuery();
 
-			group = ProfessionalGroupAssembler.toProfessionalGroupDALDto(rs);// Fijarse en que sea el Assembler de
-																				// persistence y no de
+			group = ProfessionalGroupAssembler.toProfessionalGroupDALDto(rs);// Fijarse
+																				// en
+																				// que
+																				// sea
+																				// el
+																				// Assembler
+																				// de
+																				// persistence
+																				// y
+																				// no
+																				// de
 			// business
 
 		} catch (SQLException e) {

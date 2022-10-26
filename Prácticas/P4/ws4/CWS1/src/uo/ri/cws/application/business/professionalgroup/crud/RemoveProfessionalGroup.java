@@ -34,14 +34,14 @@ public class RemoveProfessionalGroup
 	public ProfessionalGroupBLDto execute() throws BusinessException {
 		ProfessionalGroupGateway pg = PersistenceFactory.forProfessionalGroup();
 		ContractGateway cg = PersistenceFactory.forContract();
-		Optional<ProfessionalGroupDALDto> contract = pg.findByName(name);
-		BusinessCheck.isTrue(contract != null && !contract.isEmpty(),
+		Optional<ProfessionalGroupDALDto> g = pg.findByName(name);
+		BusinessCheck.isTrue(g != null && !g.isEmpty(),
 				"The group doesn't exist");
 		BusinessCheck.isTrue(
 				cg.findContractsByProfessionalGroup(name) == null
 						&& cg.findContractsByProfessionalGroup(name).isEmpty(),
 				"The group has contracts assigned");
-		pg.remove(contract.get().id);
+		pg.remove(g.get().id);
 		return null;
 	}
 

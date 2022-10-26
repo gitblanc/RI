@@ -2470,3 +2470,27 @@ org.eclipse.core.runtime.CoreException: Launch configuration TestRunner referenc
 2022-10-26 16:36:07,128 [Worker-18: Launching TestRunner] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
 2022-10-26 16:40:45,126 [Worker-18: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
 2022-10-26 16:40:45,127 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 16:40:45,128 [Worker-18: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 16:40:45,132 [Worker-18: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
+2022-10-26 19:50:07,682 [Worker-62: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 19:50:07,683 [Worker-62: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 19:50:07,684 [Worker-62: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 19:50:07,688 [Worker-62: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
+2022-10-26 20:26:12,881 [Worker-96: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-26 20:26:12,882 [Worker-96: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 20:26:12,882 [Worker-96: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-26 20:26:12,883 [Worker-96: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 9 resources
+2022-10-26 20:27:03,591 [Worker-90: Launching TestRunner] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 20:27:03,592 [Worker-90: Launching TestRunner] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 20:27:03,593 [Worker-90: Launching TestRunner] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 20:27:03,596 [Worker-90: Launching TestRunner] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
+2022-10-26 20:28:40,089 [Worker-101: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-26 20:28:40,091 [Worker-101: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 20:28:40,092 [Worker-101: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-10-26 20:28:40,104 [Worker-101: Launching RunCucumberTests] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 9 resources
+2022-10-26 20:29:34,121 [Worker-100: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 20:29:34,123 [Worker-100: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2022-10-26 20:29:34,123 [Worker-100: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 20:29:34,126 [Worker-100: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 27 resources
+2022-10-26 20:30:14,549 [Worker-102: Launching TestRunner] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2022-10-26 20:30:14,550 [Worker-102: Launching TestRunner] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource

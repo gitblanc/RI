@@ -24,7 +24,8 @@ public class MechanicAssembler {
 		return dto;
 	}
 
-	public static List<MechanicBLDto> toMechanicDtoList(ResultSet rs) throws SQLException {
+	public static List<MechanicBLDto> toMechanicDtoList(ResultSet rs)
+			throws SQLException {
 		List<MechanicBLDto> res = new ArrayList<>();
 		while (rs.next()) {
 			res.add(toMechanicDto(rs));
@@ -33,7 +34,8 @@ public class MechanicAssembler {
 		return res;
 	}
 
-	public static WorkOrderForInvoicingBLDto toWorkOrderForInvoicingDto(ResultSet rs) throws SQLException {
+	public static WorkOrderForInvoicingBLDto toWorkOrderForInvoicingDto(
+			ResultSet rs) throws SQLException {
 		WorkOrderForInvoicingBLDto dto = new WorkOrderForInvoicingBLDto();
 
 		dto.id = rs.getString("id");
@@ -49,10 +51,16 @@ public class MechanicAssembler {
 	/*
 	 * Métodos que mapean Sesión 4
 	 */
-	public static Optional<MechanicBLDto> toBLDto(Optional<MechanicDALDto> arg) {
-		Optional<MechanicBLDto> result = arg.isEmpty() ? Optional.ofNullable(null)
+	public static Optional<MechanicBLDto> toBLDto(
+			Optional<MechanicDALDto> arg) {
+		Optional<MechanicBLDto> result = arg.isEmpty()
+				? Optional.ofNullable(null)
 				: Optional.ofNullable(toMechanicDto(arg.get()));
 		return result;
+	}
+
+	public static MechanicBLDto toBLDto(MechanicDALDto arg) {
+		return toMechanicDto(arg);
 	}
 
 	public static List<MechanicBLDto> toDtoList(List<MechanicDALDto> arg) {

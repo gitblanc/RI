@@ -19,6 +19,8 @@ public interface ContractGateway extends Gateway<ContractDALDto> {
 
 	List<ContractSummaryDALDto> findContractsByDni(String dni);
 
+	Optional<ContractDALDto> findContractById(String id);
+
 	List<ContractDALDto> findContractsByProfessionalGroup(String group);
 
 	List<ContractDALDto> findContractsInForce();

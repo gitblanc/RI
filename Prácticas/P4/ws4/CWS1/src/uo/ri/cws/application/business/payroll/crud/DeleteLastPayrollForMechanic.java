@@ -44,13 +44,13 @@ public class DeleteLastPayrollForMechanic implements Command<PayrollBLDto> {
 		// Miramos que el mecánico tenga un contrato en vigor
 		Optional<ContractDALDto> contract = cg
 				.findContractInForceById(mechanic.get().id);
-//		BusinessCheck.isTrue(!contract.isEmpty(),
-//				"The mechanic must have a contract");
 		// Encontramos las nóminas que tiene ese contrato asociado
 		List<PayrollDALDto> payrolls = pg.findByContractId(contract.get().id);
-		PayrollDALDto payroll = findLastPayroll(payrolls);
-		// Eliminamos la payroll
-		pg.remove(payroll.id);
+		if (!payrolls.isEmpty()) {
+			PayrollDALDto payroll = findLastPayroll(payrolls);
+			// Eliminamos la payroll
+			pg.remove(payroll.id);
+		}
 		return null;
 	}
 
@@ -60,9 +60,16 @@ public class DeleteLastPayrollForMechanic implements Command<PayrollBLDto> {
 	private PayrollDALDto findLastPayroll(List<PayrollDALDto> payrolls) {
 		PayrollDALDto payroll = payrolls.get(0);
 		for (int i = 1; i < payrolls.size(); i++) {
-			if (payrolls.get(i).date.getMonthValue() > payroll.date
-					.getMonthValue())
+			boolean condMonth = payrolls.get(i).date
+					.getMonthValue() > payroll.date.getMonthValue();
+			boolean condDay = payrolls.get(i).date
+					.getDayOfMonth() > payroll.date.getDayOfMonth();
+			if (condMonth) {
 				payroll = payrolls.get(i);
+			}
+			if (condMonth && condDay) {
+				payroll = payrolls.get(i);
+			}
 		}
 		return payroll;
 	}

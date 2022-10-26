@@ -5,10 +5,10 @@
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.workorder{WorkOrderGateway.java[WorkOrderGateway" modifiers="513" timestamp="1666547859858"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.vehicle{VehicleGateway.java[VehicleGateway" modifiers="513" timestamp="1666084106000"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.client{ClientGateway.java[ClientGateway" modifiers="513" timestamp="1666084106000"/>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.contract{ContractGateway.java[ContractGateway" modifiers="513" timestamp="1666728598606"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.contract{ContractGateway.java[ContractGateway" modifiers="513" timestamp="1666805508668"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.business.professionalgroup{ProfessionalGroupService.java[ProfessionalGroupService" modifiers="513" timestamp="1666520978476"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.professionalgroup{ProfessionalGroupGateway.java[ProfessionalGroupGateway" modifiers="513" timestamp="1666719511922"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence{Gateway.java[Gateway" modifiers="513" timestamp="1666084106000"/>
-    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.payroll{PayrollGateway.java[PayrollGateway" modifiers="513" timestamp="1666725376916"/>
+    <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.persistence.payroll{PayrollGateway.java[PayrollGateway" modifiers="513" timestamp="1666729753385"/>
     <typeInfo handle="=CWS1/src&lt;uo.ri.cws.application.business.util.command{Command.java[Command" modifiers="513" timestamp="1666084106000"/>
 </typeInfoHistroy>

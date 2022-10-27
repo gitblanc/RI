@@ -38,8 +38,7 @@ public class RemoveProfessionalGroup
 		BusinessCheck.isTrue(g != null && !g.isEmpty(),
 				"The group doesn't exist");
 		BusinessCheck.isTrue(
-				cg.findContractsByProfessionalGroup(name) == null
-						&& cg.findContractsByProfessionalGroup(name).isEmpty(),
+				cg.findContractsByProfessionalGroup(g.get().id).isEmpty(),
 				"The group has contracts assigned");
 		pg.remove(g.get().id);
 		return null;

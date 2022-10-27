@@ -21,7 +21,7 @@ public class GetAllPayrolls implements Command<List<PayrollSummaryBLDto>> {
 	@Override
 	public List<PayrollSummaryBLDto> execute() throws BusinessException {
 		PayrollGateway pg = PersistenceFactory.forPayRoll();
-		return PayrollAssembler.toBLDtoList(pg.findAllSummary());
+		return PayrollAssembler.toBLDtoList(pg.findAll());
 	}
 
 }

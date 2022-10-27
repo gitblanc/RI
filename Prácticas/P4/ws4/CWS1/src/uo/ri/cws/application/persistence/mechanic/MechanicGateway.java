@@ -1,6 +1,5 @@
 package uo.ri.cws.application.persistence.mechanic;
 
-import java.util.List;
 import java.util.Optional;
 
 import uo.ri.cws.application.persistence.Gateway;
@@ -22,13 +21,6 @@ public interface MechanicGateway extends Gateway<MechanicDALDto> {
 	 * @return dto from that record, probably null
 	 */
 	Optional<MechanicDALDto> findById(String id);
-
-	/**
-	 * Finds a row in the table
-	 * @param id
-	 * @return List<dto> from that record, probably null
-	 */
-	List<MechanicDALDto> findAllMechanicWorkOrders(String id);
 
 	public class MechanicDALDto {
 

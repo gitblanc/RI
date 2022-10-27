@@ -25,7 +25,8 @@ import uo.ri.cws.application.persistence.workorder.WorkOrderGateway.WorkOrderDAL
  * @author UO285176
  *
  */
-public class FindNotInvoicedWorkOrders implements Command<List<WorkOrderForInvoicingBLDto>> {
+public class FindNotInvoicedWorkOrders
+		implements Command<List<WorkOrderForInvoicingBLDto>> {
 	String dni = null;
 
 	public FindNotInvoicedWorkOrders(String dni) {
@@ -36,39 +37,47 @@ public class FindNotInvoicedWorkOrders implements Command<List<WorkOrderForInvoi
 
 	/**
 	 * ORIGINAL QUERY "select a.id, a.description, a.date, a.state, a.amount " +
-	 * "from TWorkOrders as a, TVehicles as v, TClients as c " + "where a.vehicle_id
-	 * = v.id " + " and v.client_id = c.id " + "and state <> 'INVOICED'" + " and dni
-	 * like ?";
+	 * "from TWorkOrders as a, TVehicles as v, TClients as c " + "where
+	 * a.vehicle_id = v.id " + " and v.client_id = c.id " + "and state <>
+	 * 'INVOICED'" + " and dni like ?";
 	 */
 	public List<WorkOrderForInvoicingBLDto> execute() throws BusinessException {
 		ClientGateway cg = PersistenceFactory.forClient();
 
 		// Comprobación de si el cliente existe
 		Optional<ClientDALDto> client = cg.findByDni(dni);
-		BusinessCheck.isTrue(!client.isEmpty(), "The client of the invoice doesn't exist");
+		BusinessCheck.isTrue(!client.isEmpty(),
+				"The client of the invoice doesn't exist");
 
 		List<VehicleDALDto> vehicles = obtainVehicles(client.get());
 		List<WorkOrderDALDto> workOrders = obtainWorkOrders(vehicles);
-		List<WorkOrderForInvoicingBLDto> notInvoicedWorkOrders = obtainNotInvoicedWorkOrders(workOrders);// workorders filtrados
+		List<WorkOrderForInvoicingBLDto> notInvoicedWorkOrders = obtainNotInvoicedWorkOrders(
+				workOrders);// workorders filtrados
 
 		return notInvoicedWorkOrders;
 	}
 
-	private List<WorkOrderForInvoicingBLDto> obtainNotInvoicedWorkOrders(List<WorkOrderDALDto> workOrders) {
+	private List<WorkOrderForInvoicingBLDto> obtainNotInvoicedWorkOrders(
+			List<WorkOrderDALDto> workOrders) {
 
 		return InvoicingAssembler.toInvoicingWorkOrderList(workOrders);
 	}
 
-	private List<WorkOrderDALDto> obtainWorkOrders(List<VehicleDALDto> vehicles) {
+	private List<WorkOrderDALDto> obtainWorkOrders(
+			List<VehicleDALDto> vehicles) {
 		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
+		List<WorkOrderDALDto> w = new ArrayList<>();
 		List<String> vehiclesIds = new ArrayList<>();
 		for (VehicleDALDto v : vehicles) {
 			vehiclesIds.add(v.id);
 		}
-		return wg.findNotInvoicedForVehicles(vehiclesIds);
+		if (!vehicles.isEmpty())
+			w = wg.findNotInvoicedForVehicles(vehiclesIds);
+		return w;
 	}
 
-	private List<VehicleDALDto> obtainVehicles(ClientDALDto client) throws BusinessException {
+	private List<VehicleDALDto> obtainVehicles(ClientDALDto client)
+			throws BusinessException {
 		VehicleGateway vg = PersistenceFactory.forVehicle();
 		return vg.findByClient(client.id);
 	}

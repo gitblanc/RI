@@ -29,17 +29,16 @@ public class PayrollAssembler {
 	private static PayrollDALDto resultSetToPayrollDALDto(ResultSet rs)
 			throws SQLException {
 		PayrollDALDto payroll = new PayrollDALDto();
-		payroll.id = rs.getString("id");
-		payroll.bonus = rs.getDouble("bonus");
-		payroll.date = rs.getDate("date").toLocalDate();
-		payroll.incomeTax = rs.getDouble("incometax");
-		payroll.monthlyWage = rs.getDouble("monthlywage");
-		payroll.nic = rs.getDouble("nic");
-		payroll.productivityBonus = rs.getDouble("productivitybonus");
-		payroll.trienniumPayment = rs.getDouble("trienniumPayment");
-		payroll.version = rs.getLong("version");
-		payroll.contractId = rs.getString("contract_Id");
-		payroll.netWage = calculateAbonos(rs);
+		payroll.id = rs.getString("ID");
+		payroll.bonus = rs.getDouble("BONUS");
+		payroll.date = rs.getDate("DATE").toLocalDate();
+		payroll.incomeTax = rs.getDouble("INCOMETAX");
+		payroll.monthlyWage = rs.getDouble("MONTHLYWAGE");
+		payroll.nic = rs.getDouble("NIC");
+		payroll.productivityBonus = rs.getDouble("PRODUCTIVITYBONUS");
+		payroll.trienniumPayment = rs.getDouble("TRIENNIUMPAYMENT");
+		payroll.version = rs.getLong("VERSION");
+		payroll.contractId = rs.getString("CONTRACT_ID");
 		return payroll;
 	}
 
@@ -69,19 +68,7 @@ public class PayrollAssembler {
 		p.id = rs.getString("id");
 		p.version = rs.getLong("version");
 		p.date = rs.getDate("date").toLocalDate();
-
-		p.netWage = calculateAbonos(rs);
 		return p;
-	}
-
-	private static double calculateAbonos(ResultSet rs) throws SQLException {
-		// Abonos -> monthlyWage + bonus productivityBonus + trienniumpayment
-		double salary = rs.getDouble("monthlyWage");
-		double bonus = rs.getDouble("bonus");
-		double pBonus = rs.getDouble("productivityBonus");
-		double trienn = rs.getDouble("trienniumPayment");
-
-		return salary + bonus + pBonus + trienn;
 	}
 
 }

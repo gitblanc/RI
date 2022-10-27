@@ -7,7 +7,6 @@ import java.util.Optional;
 import uo.ri.cws.application.business.payroll.PayrollService.PayrollBLDto;
 import uo.ri.cws.application.business.payroll.PayrollService.PayrollSummaryBLDto;
 import uo.ri.cws.application.persistence.payroll.PayrollGateway.PayrollDALDto;
-import uo.ri.cws.application.persistence.payroll.PayrollGateway.PayrollSummaryDALDto;
 
 public class PayrollAssembler {
 
@@ -30,25 +29,34 @@ public class PayrollAssembler {
 		payroll.trienniumPayment = x.trienniumPayment;
 		payroll.version = x.version;
 		payroll.contractId = x.contractId;
-		payroll.netWage = x.netWage;
+		payroll.netWage = calculateNetWage(x);
 		return payroll;
 	}
 
+	private static double calculateNetWage(PayrollDALDto p) {
+		// Abonos -> monthlyWage + bonus productivityBonus + trienniumpayment
+		double salary = p.monthlyWage;
+		double bonus = p.bonus;
+		double pBonus = p.productivityBonus;
+		double trienn = p.trienniumPayment;
+
+		return salary + bonus + pBonus + trienn - p.incomeTax - p.nic;
+	}
+
 	public static List<PayrollSummaryBLDto> toBLDtoList(
-			List<PayrollSummaryDALDto> arg) {
+			List<PayrollDALDto> arg) {
 		List<PayrollSummaryBLDto> result = new ArrayList<PayrollSummaryBLDto>();
-		for (PayrollSummaryDALDto mr : arg)
+		for (PayrollDALDto mr : arg)
 			result.add(toPayrollSummaryBLDto(mr));
 		return result;
 	}
 
-	private static PayrollSummaryBLDto toPayrollSummaryBLDto(
-			PayrollSummaryDALDto rs) {
+	private static PayrollSummaryBLDto toPayrollSummaryBLDto(PayrollDALDto rs) {
 		PayrollSummaryBLDto p = new PayrollSummaryBLDto();
 		p.id = rs.id;
 		p.version = rs.version;
 		p.date = rs.date;
-		p.netWage = rs.netWage;
+		p.netWage = calculateNetWage(rs);
 		return p;
 	}
 
@@ -58,7 +66,7 @@ public class PayrollAssembler {
 		p.id = p2.id;
 		p.version = p2.version;
 		p.date = p2.date;
-		p.netWage = p2.netWage;
+		p.netWage = calculateNetWage(p2);
 		return p;
 	}
 

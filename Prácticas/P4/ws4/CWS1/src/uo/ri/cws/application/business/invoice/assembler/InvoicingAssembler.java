@@ -19,6 +19,7 @@ public class InvoicingAssembler {
 		result.date = arg.date;
 		result.total = arg.amount;
 		result.vat = arg.vat;
+		result.version = arg.version;
 		return result;
 	}
 

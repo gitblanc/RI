@@ -47,39 +47,22 @@ public class DeleteLastPayrollForMechanic implements Command<PayrollBLDto> {
 		// Encontramos las nóminas que tiene ese contrato asociado
 		List<PayrollDALDto> payrolls = pg.findByContractId(contract.get().id);
 		if (!payrolls.isEmpty()) {
-			PayrollDALDto payroll = findLastPayroll(payrolls);
-			// Eliminamos la payroll
-			pg.remove(payroll.id);
-//			int month = obtainLastMonth(payrolls);
-//			deleteLastMonthPayrolls(payrolls, month);
+			PayrollDALDto lastPayroll = findLastPayroll(payrolls);
+			deleteLastMonthPayrolls(payrolls, lastPayroll);
+
 		}
 		return null;
 	}
 
-//	private int obtainLastMonth(List<PayrollDALDto> payrolls) {
-//		PayrollDALDto payroll = payrolls.get(0);
-//		int month = 0;
-//		for (int i = 1; i < payrolls.size(); i++) {
-//			boolean condMonth = payrolls.get(i).date
-//					.getMonthValue() > payroll.date.getMonthValue()
-//					&& payrolls.get(i).date.getYear() > payroll.date.getYear();
-//			if (condMonth) {
-//				payroll = payrolls.get(i);
-//				month = payrolls.get(i).date.getMonthValue();
-//			}
-//		}
-//		return month;
-//	}
-//
-//	private void deleteLastMonthPayrolls(List<PayrollDALDto> payrolls,
-//			int month) {
-//		PayrollGateway pg = PersistenceFactory.forPayRoll();
-//		for (PayrollDALDto p : payrolls) {
-//			if (p.date.getMonthValue() == month) {
-//				pg.remove(p.id);
-//			}
-//		}
-//	}
+	private void deleteLastMonthPayrolls(List<PayrollDALDto> payrolls,
+			PayrollDALDto last) {
+		PayrollGateway pg = PersistenceFactory.forPayRoll();
+		for (PayrollDALDto p : payrolls) {
+			if (p.date.getMonthValue() == last.date.getMonthValue()) {
+				pg.remove(p.id);
+			}
+		}
+	}
 
 	/*
 	 * Método que busca la última payroll
@@ -91,10 +74,9 @@ public class DeleteLastPayrollForMechanic implements Command<PayrollBLDto> {
 					.getMonthValue() > payroll.date.getMonthValue();
 			boolean condDay = payrolls.get(i).date
 					.getDayOfMonth() > payroll.date.getDayOfMonth();
-			if (condMonth && condDay) {
-				payroll = payrolls.get(i);
-			}
-			if (condMonth) {
+			boolean condYear = payrolls.get(i).date.getYear() > payroll.date
+					.getYear();
+			if (condMonth && condDay && condYear) {
 				payroll = payrolls.get(i);
 			}
 		}

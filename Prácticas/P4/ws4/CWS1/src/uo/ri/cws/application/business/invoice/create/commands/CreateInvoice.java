@@ -30,10 +30,14 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	private List<String> workOrderIds = new ArrayList<String>();
 
 	public CreateInvoice(List<String> workOrderIds) {
-		Argument.isNotNull(workOrderIds);
+		Argument.isNotNull(workOrderIds, "The workOrders can't be null");
+		Argument.isTrue(!workOrderIds.isEmpty(),
+				"The workOrders can't be empty");
 		for (String s : workOrderIds) {
-			Argument.isNotNull(s, "The list of workOrdersIds can't contain null elements");
-			Argument.isNotEmpty(s, "The list of workOrdersIds can't contain empty elements");
+			Argument.isNotNull(s,
+					"The list of workOrdersIds can't contain null elements");
+			Argument.isNotEmpty(s,
+					"The list of workOrdersIds can't contain empty elements");
 		}
 		this.workOrderIds = workOrderIds;
 	}
@@ -57,7 +61,7 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 		invoice.version = 1L;
 		invoice.date = dateInvoice;
 		invoice.number = numberInvoice;
-		invoice.state = InvoiceState.NOT_YET_PAID.name();
+		invoice.state = InvoiceState.NOT_YET_PAID.toString();
 		invoice.amount = total;
 		invoice.vat = vat;
 
@@ -81,7 +85,8 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	/*
 	 * checks whether every work order exist
 	 */
-	private boolean checkWorkOrdersExist(List<String> workOrderIDS) throws BusinessException {
+	private boolean checkWorkOrdersExist(List<String> workOrderIDS)
+			throws BusinessException {
 		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
 		for (String id : workOrderIDS) {
 			if (wg.findById(id) == null || wg.findById(id).isEmpty())
@@ -93,7 +98,8 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	/*
 	 * checks whether every work order id is FINISHED
 	 */
-	private boolean checkWorkOrdersFinished(List<String> workOrderIDS) throws BusinessException {
+	private boolean checkWorkOrdersFinished(List<String> workOrderIDS)
+			throws BusinessException {
 		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
 		for (String id : workOrderIDS) {
 			if (!wg.findById(id).get().state.equals("FINISHED")) {
@@ -112,10 +118,11 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	}
 
 	/*
-	 * Compute total amount of the invoice (as the total of individual work orders'
-	 * amount
+	 * Compute total amount of the invoice (as the total of individual work
+	 * orders' amount
 	 */
-	private double calculateTotalInvoice(List<String> workOrderIDS) throws BusinessException {
+	private double calculateTotalInvoice(List<String> workOrderIDS)
+			throws BusinessException {
 
 		double totalInvoice = 0.0;
 		for (String workOrderID : workOrderIDS) {
@@ -127,7 +134,8 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	/*
 	 * checks whether every work order id is FINISHED
 	 */
-	private Double getWorkOrderTotal(String workOrderID) throws BusinessException {
+	private Double getWorkOrderTotal(String workOrderID)
+			throws BusinessException {
 		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
 		return wg.findById(workOrderID).get().amount;
 	}
@@ -136,7 +144,8 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	 * returns vat percentage
 	 */
 	private double vatPercentage(double totalInvoice, LocalDate dateInvoice) {
-		return LocalDate.parse("2012-07-01").isBefore(dateInvoice) ? 21.0 : 18.0;
+		return LocalDate.parse("2012-07-01").isBefore(dateInvoice) ? 21.0
+				: 18.0;
 
 	}
 
@@ -153,12 +162,15 @@ public class CreateInvoice implements Command<InvoiceBLDto> {
 	 * Set the invoice number field in work order table to the invoice number
 	 * generated
 	 */
-	private void linkWorkordersToInvoice(String invoiceId, List<String> workOrderIDS) {
+	private void linkWorkordersToInvoice(String invoiceId,
+			List<String> workOrderIDS) {
 		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
 		List<WorkOrderDALDto> workOrders = wg.findByIds(workOrderIDS);
 		for (WorkOrderDALDto workOrder : workOrders) {
-			workOrder.invoice_id = invoiceId;
-			wg.update(workOrder);
+			if (!wg.findById(workOrder.id).isEmpty()) {
+				workOrder.invoice_id = invoiceId;
+				wg.update(workOrder);
+			}
 		}
 	}
 

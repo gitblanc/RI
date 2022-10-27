@@ -11,6 +11,7 @@ import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.contract.ContractGateway;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
+import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
 
 /**
  * @author UO285176
@@ -30,12 +31,12 @@ public class DeleteMechanic implements Command<MechanicBLDto> {
 	public MechanicBLDto execute() throws BusinessException {
 		MechanicGateway mg = PersistenceFactory.forMechanic();
 		ContractGateway cg = PersistenceFactory.forContract();
+		WorkOrderGateway wg = PersistenceFactory.forWorkOrder();
 		// Comprobación de que el mecánico no exista
 		BusinessCheck.isTrue(!mg.findById(mechanic.id).isEmpty(),
 				"The mechanic doesn't exist");
 		// Comprobación de que no hay ningún work order para este mecánico
-		BusinessCheck.isTrue(
-				mg.findAllMechanicWorkOrders(mechanic.id).isEmpty(),
+		BusinessCheck.isTrue(wg.findByMechanic(mechanic.id).isEmpty(),
 				"The mechanic still have some work orders");
 		// Comprobación de que el mecánico no tiene ningún contrato
 		BusinessCheck.isTrue(cg.findContractById(mechanic.id).isEmpty(),

@@ -19,8 +19,11 @@ public class MechanicServiceImpl implements MechanicService {
 	CommandExecutor executor = new CommandExecutor();
 
 	@Override
-	public MechanicBLDto addMechanic(MechanicBLDto mechanic) throws BusinessException {
-		return executor.execute(new AddMechanic(mechanic));// el executor llama al execute del addMechanic
+	public MechanicBLDto addMechanic(MechanicBLDto mechanic)
+			throws BusinessException {
+		return executor.execute(new AddMechanic(mechanic));// el executor llama
+															// al execute del
+															// addMechanic
 	}
 
 	@Override
@@ -30,18 +33,21 @@ public class MechanicServiceImpl implements MechanicService {
 	}
 
 	@Override
-	public void updateMechanic(MechanicBLDto mechanic) throws BusinessException {
+	public void updateMechanic(MechanicBLDto mechanic)
+			throws BusinessException {
 		executor.execute(new UpdateMechanic(mechanic));
 
 	}
 
 	@Override
-	public Optional<MechanicBLDto> findMechanicById(String idMechanic) throws BusinessException {
+	public Optional<MechanicBLDto> findMechanicById(String idMechanic)
+			throws BusinessException {
 		return executor.execute(new FindMechanicById(idMechanic));
 	}
 
 	@Override
-	public Optional<MechanicBLDto> findMechanicByDni(String dniMechanic) throws BusinessException {
+	public Optional<MechanicBLDto> findMechanicByDni(String dniMechanic)
+			throws BusinessException {
 		return executor.execute(new FindMechanicByDni(dniMechanic));
 	}
 
@@ -56,14 +62,13 @@ public class MechanicServiceImpl implements MechanicService {
 	}
 
 	@Override
-	public List<MechanicBLDto> findMechanicsWithContractInForceInContractType(String string) {
-		// TODO Auto-generated method stub
+	public List<MechanicBLDto> findMechanicsWithContractInForceInContractType(
+			String string) {
 		return null;
 	}
 
 	@Override
-	public List<MechanicBLDto> findMechanicsInProfessionalGroups(String string) {
-		// TODO Auto-generated method stub
+	public List<MechanicBLDto> findMechanicsInProfessionalGroups(String name) {
 		return null;
 	}
 

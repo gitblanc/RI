@@ -58,7 +58,8 @@ public class DeleteLastPayrollForMechanic implements Command<PayrollBLDto> {
 			PayrollDALDto last) {
 		PayrollGateway pg = PersistenceFactory.forPayRoll();
 		for (PayrollDALDto p : payrolls) {
-			if (p.date.getMonthValue() == last.date.getMonthValue()) {
+			if (p.date.getMonthValue() == last.date.getMonthValue()
+					&& p.date.getYear() == last.date.getYear()) {
 				pg.remove(p.id);
 			}
 		}
@@ -70,15 +71,9 @@ public class DeleteLastPayrollForMechanic implements Command<PayrollBLDto> {
 	private PayrollDALDto findLastPayroll(List<PayrollDALDto> payrolls) {
 		PayrollDALDto payroll = payrolls.get(0);
 		for (int i = 1; i < payrolls.size(); i++) {
-			boolean condMonth = payrolls.get(i).date
-					.getMonthValue() > payroll.date.getMonthValue();
-			boolean condDay = payrolls.get(i).date
-					.getDayOfMonth() > payroll.date.getDayOfMonth();
-			boolean condYear = payrolls.get(i).date.getYear() > payroll.date
-					.getYear();
-			if (condMonth && condDay && condYear) {
-				payroll = payrolls.get(i);
-			}
+			PayrollDALDto p = payrolls.get(i);
+			if (p.date.compareTo(payroll.date) > 0)
+				payroll = p;
 		}
 		return payroll;
 	}

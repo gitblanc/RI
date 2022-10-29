@@ -37,9 +37,8 @@ public class DeleteLastPayrolls implements Command<PayrollBLDto> {
 	 * Método que comprueba que el mes de la payroll sea el último
 	 */
 	private boolean checkLastMonthPayroll(PayrollDALDto p) {
-		return p.date.getMonthValue() == LocalDate.now().getMonthValue() ? true
-				: false;
-
+		return p.date.getMonthValue() == LocalDate.now().getMonthValue()
+				&& p.date.getYear() == LocalDate.now().getYear();
 	}
 
 }

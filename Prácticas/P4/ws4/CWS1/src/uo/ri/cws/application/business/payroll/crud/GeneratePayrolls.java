@@ -30,6 +30,7 @@ import uo.ri.cws.application.persistence.workorder.WorkOrderGateway.WorkOrderDAL
 public class GeneratePayrolls implements Command<PayrollBLDto> {
 
 	LocalDate date = null;
+	ContractGateway cg = PersistenceFactory.forContract();
 
 	public GeneratePayrolls() {
 		this(null);
@@ -44,8 +45,12 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 
 	@Override
 	public PayrollBLDto execute() throws BusinessException {
-		ContractGateway cg = PersistenceFactory.forContract();
+		listInForceContracts();
+		listTerminatedContracts();
+		return null;
+	}
 
+	private void listInForceContracts() throws BusinessException {
 		// Listamos todos los contratos de los mecánicos en vigor
 		List<ContractDALDto> contracts = cg.findContractsInForce();
 		// Si hay contratos
@@ -61,8 +66,11 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 				}
 			}
 		}
+	}
+
+	private void listTerminatedContracts() throws BusinessException {
 		// Listamos los contratos terminados
-		contracts = cg.findContractsTerminated();
+		List<ContractDALDto> contracts = cg.findContractsTerminated();
 		if (!contracts.isEmpty()) {
 			// Listamos las payrolls
 			for (ContractDALDto c : contracts) {
@@ -75,8 +83,6 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 				}
 			}
 		}
-		
-		return null;
 	}
 
 	private Optional<PayrollDALDto> findPayroll(List<PayrollDALDto> payrolls) {
@@ -111,10 +117,13 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 
 		double grossWage = p.monthlyWage + p.bonus + p.productivityBonus
 				+ p.trienniumPayment;// total bruto
-
 		// Descuentos
 		p.incomeTax = calculateIncomeTax(grossWage, c.annualBaseWage);// IRPF
 		p.nic = calculateNic(c.annualBaseWage);
+		p.netWage = Math
+				.floor((p.monthlyWage + p.bonus + p.productivityBonus
+						+ p.trienniumPayment - p.incomeTax - p.nic) * 100)
+				/ 100;
 		// Finalmente generamos la payroll
 		PersistenceFactory.forPayRoll().add(p);
 	}

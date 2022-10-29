@@ -48,28 +48,51 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 
 		// Listamos todos los contratos de los mecánicos en vigor
 		List<ContractDALDto> contracts = cg.findContractsInForce();
+		// Si hay contratos
 		if (!contracts.isEmpty()) {
 			// Listamos las payrolls
 			PayrollGateway pg = PersistenceFactory.forPayRoll();
 			for (ContractDALDto c : contracts) {
 				List<PayrollDALDto> payrolls = pg.findByContractId(c.id);
-
+				Optional<PayrollDALDto> payroll = findPayroll(payrolls);
 				// Si el contrato no tiene nóminas asignadas
-				if (payrolls.isEmpty()) {
+				if (payroll == null) {
 					generateNewPayroll(c);
 				}
 			}
 		}
+		// Listamos los contratos terminados
+		contracts = cg.findContractsTerminated();
+		if (!contracts.isEmpty()) {
+			// Listamos las payrolls
+			for (ContractDALDto c : contracts) {
+				PayrollGateway pg = PersistenceFactory.forPayRoll();
+				List<PayrollDALDto> payrolls = pg.findByContractId(c.id);
+				Optional<PayrollDALDto> payroll = findPayroll(payrolls);
+				// Si el contrato no tiene nóminas asignadas
+				if (payroll == null) {
+					generateNewPayroll(c);
+				}
+			}
+		}
+		
 		return null;
+	}
+
+	private Optional<PayrollDALDto> findPayroll(List<PayrollDALDto> payrolls) {
+		Optional<PayrollDALDto> payroll = null;
+		for (PayrollDALDto p : payrolls) {
+			if (p.date.getMonth() == this.date.getMonth()
+					&& p.date.getYear() == this.date.getYear())
+				payroll = Optional.ofNullable(p);
+		}
+		return payroll;
 	}
 
 	private void generateNewPayroll(ContractDALDto c) throws BusinessException {
 		PayrollDALDto p = new PayrollDALDto();
 		p.id = UUID.randomUUID().toString();
-		if (date == null)
-			p.date = LocalDate.now();
-		else
-			p.date = this.date;
+		p.date = this.date;
 		p.version = 1L;
 		p.contractId = c.id;
 
@@ -82,9 +105,10 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 		} else {
 			p.bonus = 0;
 		}
-		p.trienniumPayment = calculateTrienniumPayment(c);// triennium
 		p.productivityBonus = calculateProductivityBonus(c.dni,
 				c.professionalGroupName);// plus de productividad
+		p.trienniumPayment = calculateTrienniumPayment(c);// triennium
+
 		double grossWage = p.monthlyWage + p.bonus + p.productivityBonus
 				+ p.trienniumPayment;// total bruto
 
@@ -96,26 +120,28 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 	}
 
 	private double calculateNic(double annualBaseWage) {
+		double nic = 0;
 		double percentage = 0.05 * annualBaseWage;
-		return percentage / 12;
+		nic = percentage / 12;
+		return nic;
 	}
 
 	private double calculateIncomeTax(double grossWage, double annualBaseWage) {
 		double res = 0.0;
-		if (annualBaseWage <= 12450.0) {
+		if (annualBaseWage <= 12450) {
 			res = 0.19;
-		} else if (annualBaseWage <= 20200.0) {
+		} else if (annualBaseWage <= 20200) {
 			res = 0.24;
-		} else if (annualBaseWage <= 35200.0) {
+		} else if (annualBaseWage <= 35200) {
 			res = 0.3;
-		} else if (annualBaseWage <= 60000.0) {
+		} else if (annualBaseWage <= 60000) {
 			res = 0.37;
-		} else if (annualBaseWage <= 300000.0) {
+		} else if (annualBaseWage <= 300000) {
 			res = 0.45;
 		} else {
 			res = 0.47;
 		}
-		return res;
+		return Round.twoCents(res * grossWage);// IRPF
 	}
 
 	private double calculateTrienniumPayment(ContractDALDto c) {
@@ -144,20 +170,21 @@ public class GeneratePayrolls implements Command<PayrollBLDto> {
 	private double calculateProductivityBonus(String professionalGroupId,
 			List<WorkOrderDALDto> workOrders) {
 		double amount = calculateAmount(workOrders);
-		double percentage = obtainPercentage(professionalGroupId);
-		return Round.twoCents((amount * percentage) / 100);
+		return obtainProductivityBonus(professionalGroupId, amount);
 	}
 
-	private double obtainPercentage(String professionalGroupId) {
-		double porcentaje = 0;
+	private double obtainProductivityBonus(String professionalGroupId,
+			double amount) {
+		double productivityBonus = 0;
 		// Obtenemos el porcentaje en función del grupo profesional y lo
 		// aplicamos al amount
 		Optional<ProfessionalGroupDALDto> group = PersistenceFactory
 				.forProfessionalGroup().findById(professionalGroupId);
 		if (!group.isEmpty()) {
-			porcentaje = group.get().productivityRate;
+			double percentage = group.get().productivityRate;
+			productivityBonus = percentage * amount;
 		}
-		return porcentaje;
+		return Round.twoCents(productivityBonus / 100);
 	}
 
 	private double calculateAmount(List<WorkOrderDALDto> workOrders) {

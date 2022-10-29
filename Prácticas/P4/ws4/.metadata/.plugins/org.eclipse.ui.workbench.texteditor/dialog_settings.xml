@@ -6,6 +6,7 @@
 		<item key="isRegEx" value="false"/>
 		<item key="selection" value="IN_FORCE"/>
 		<list key="findhistory">
+			<item value="Work"/>
 			<item value="IN_FORCE"/>
 			<item value="pst.setString(7, workOrder.mechanic_id);"/>
 			<item value="SQL_FIND_WORKORDER_AMOUNT"/>

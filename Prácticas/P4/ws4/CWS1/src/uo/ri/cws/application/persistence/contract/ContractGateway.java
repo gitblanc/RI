@@ -24,6 +24,7 @@ public interface ContractGateway extends Gateway<ContractDALDto> {
 	List<ContractDALDto> findContractsByProfessionalGroup(String group);
 
 	List<ContractDALDto> findContractsInForce();
+	List<ContractDALDto> findContractsTerminated();
 
 	public class ContractDALDto {
 		public String id;

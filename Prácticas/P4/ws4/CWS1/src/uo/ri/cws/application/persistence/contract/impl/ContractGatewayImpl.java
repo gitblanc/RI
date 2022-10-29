@@ -177,7 +177,6 @@ public class ContractGatewayImpl implements ContractGateway {
 
 			pst = c.prepareStatement(Conf.getInstance()
 					.getProperty("TCONTRACTS_findContractsInForce"));
-			// pst.setString(1, id);
 			rs = pst.executeQuery();
 			contracts = ContractAssembler.toContractListDALDto(rs);
 		} catch (SQLException e) {
@@ -281,6 +280,41 @@ public class ContractGatewayImpl implements ContractGateway {
 
 		}
 		return contract;
+	}
+
+	@Override
+	public List<ContractDALDto> findContractsTerminated() {
+		List<ContractDALDto> contracts = null;
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		try {
+			c = Jdbc.getCurrentConnection();
+
+			pst = c.prepareStatement(Conf.getInstance().getProperty(
+					"TCONTRACTS_findContractsTerminated"));
+			rs = pst.executeQuery();
+			contracts = ContractAssembler.toContractListDALDto(rs);
+		} catch (SQLException e) {
+			throw new PersistenceException("Database error");// Esto hay que
+																// hacerlo en
+																// todos los
+																// errores de
+			// persistencia
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+			if (pst != null)
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					/* ignore */ }
+		}
+		return contracts;
 	}
 
 }

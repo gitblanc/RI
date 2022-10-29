@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.client.ClientService.ClientBLDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.workorder.WorkOrderService"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.workorder.WorkOrderService.WorkOrderBLDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.PayrollService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService.ContractSummaryBLDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.util.command.CommandExecutor"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.crud.AddProfessionalGroup"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.WorkOrderGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.invoice.InvoiceGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.client.ClientGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.vehicle.VehicleGateway"/>
@@ -40,24 +35,29 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.util.command.Command"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway.ContractSummaryDALDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.professionalgroup.ProfessionalGroupGateway"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.professionalgroup.ProfessionalGroupGateway.ProfessionalGroupDALDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.payroll.assembler.PayrollAssembler"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.assembler.PayrollAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.PayrollService.PayrollBLDto"/>
     <fullyQualifiedTypeName name="assertion.Argument"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.payroll.PayrollGateway.PayrollDALDto"/>
     <fullyQualifiedTypeName name="java.util.UUID"/>
-    <fullyQualifiedTypeName name="java.time.LocalDate"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.payroll.PayrollGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.mechanic.MechanicGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.mechanic.MechanicGateway.MechanicDALDto"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.mechanic.assembler.MechanicAssembler"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.PersistenceFactory"/>
-    <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway.ContractDALDto"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.util.BusinessCheck"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.assembler.PayrollAssembler"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.ContractGateway"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.payroll.PayrollGateway"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.payroll.PayrollGateway.PayrollDALDto"/>
+    <fullyQualifiedTypeName name="java.time.Month"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.WorkOrderGateway"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.WorkOrderGateway.WorkOrderDALDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService.ContractState"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.professionalgroup.ProfessionalGroupGateway.ProfessionalGroupDALDto"/>
+    <fullyQualifiedTypeName name="math.Round"/>
+    <fullyQualifiedTypeName name="java.time.Period"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.PersistenceFactory"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.util.BusinessCheck"/>
 </qualifiedTypeNameHistroy>

@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import uo.ri.util.assertion.ArgumentChecks;
+
 public class VehicleType {
     // natural attributes
     private String name;
@@ -13,6 +15,9 @@ public class VehicleType {
     private Set<Vehicle> vehicles = new HashSet<>();
 
     public VehicleType(String tipo, double precio) {
+	ArgumentChecks.isNotNull(tipo, "Tipo can't be null");
+	ArgumentChecks.isNotEmpty(tipo, "Tipo can't be empty");
+	ArgumentChecks.isTrue(precio > 0, "The price can't be negative");
 	this.name = tipo;
 	this.pricePerHour = precio;
     }

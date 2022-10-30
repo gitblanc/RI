@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import uo.ri.util.assertion.ArgumentChecks;
+
 public class Mechanic {
     // natural attributes
     private String dni;
@@ -15,7 +17,12 @@ public class Mechanic {
     private Set<Intervention> interventions = new HashSet<>();
 
     public Mechanic(String dni, String nombre, String apell) {
-	// FALTAN COMPROBACIONES
+	ArgumentChecks.isNotNull(dni, "The dni can't be null");
+	ArgumentChecks.isNotNull(nombre, "The name can't be null");
+	ArgumentChecks.isNotNull(apell, "The surname can't be null");
+	ArgumentChecks.isNotEmpty(dni, "The dni can't be empty");
+	ArgumentChecks.isNotEmpty(nombre, "The name can't be empty");
+	ArgumentChecks.isNotEmpty(apell, "The surname can't be empty");
 	this.dni = dni;
 	this.name = nombre;
 	this.surname = apell;

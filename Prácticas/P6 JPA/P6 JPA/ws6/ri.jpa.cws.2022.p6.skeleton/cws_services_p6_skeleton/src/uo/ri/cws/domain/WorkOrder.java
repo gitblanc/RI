@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import uo.ri.util.assertion.ArgumentChecks;
+
 public class WorkOrder {
     public enum WorkOrderState {
 	OPEN, ASSIGNED, FINISHED, INVOICED
@@ -23,10 +25,12 @@ public class WorkOrder {
     private Set<Intervention> interventions = new HashSet<>();
 
     public WorkOrder(Vehicle v, String desc) {
-	// VALIDAR FALTA
+	ArgumentChecks.isNotNull(v, "The vehicle can't be null");
+	ArgumentChecks.isNotNull(desc, "The description can't be null");
+	ArgumentChecks.isNotEmpty(desc, "The description can't be empty");
 	this.description = desc;
 	this.date = LocalDateTime.now();
-	// this.vehicle = v; NO - colase dedicada
+	// this.vehicle = v; NO - clase dedicada
 	Associations.Fix.link(v, this);
     }
 

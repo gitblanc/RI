@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import uo.ri.util.assertion.ArgumentChecks;
+
 public class Intervention {
     // natural attributes
     private LocalDateTime date;
@@ -16,7 +18,9 @@ public class Intervention {
     private Set<Substitution> substitutions = new HashSet<>();
 
     public Intervention(Mechanic mecanico, WorkOrder workOrder, int time) {
-	// FALTA VALIDACIONES
+	ArgumentChecks.isNotNull(mecanico, "The mechanic can't be null");
+	ArgumentChecks.isNotNull(workOrder, "The workOrder can't be null");
+	ArgumentChecks.isTrue(time >= 0, "The tiem can't be negative");
 	this.date = LocalDateTime.now();
 	this.minutes = time;
 	Associations.Intervene.link(workOrder, this, mecanico);

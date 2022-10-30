@@ -8,8 +8,9 @@
 	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_left_width" value="517"/>
 	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_rigth_width" value="636"/>
 	<item key="org.eclipse.jdt.uiformatter_page.preference_tree_expansion" value="00.0..0.0.000.0.0.0.0.0.0.0.0.0.0..00.0.0.0.0.0.0.0.0.0.0..00.0.0.0.0.0.0..00.0.0.0..00.0.0.0...00.0.0..000.0..0.0..110.0.0.0.0.1.0.0.0.0.0.0...00.0..0.."/>
-	<item key="org.eclipse.jdt.uiformatter_page.preference_scroll_position" value="180"/>
+	<item key="org.eclipse.jdt.uiformatter_page.preference_scroll_position" value="110"/>
 	<item key="org.eclipse.jdt.uiformatter_page.last_focus_index" value="383"/>
+	<item key="ProjectSelectionDialog.show_all" value="true"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item key="group_libraries" value="true"/>
 		<item key="layout" value="2"/>
@@ -70,5 +71,8 @@
 		<item key="GenerateJavadoc" value="false"/>
 	</section>
 	<section name="JavaElementSearchActions">
+	</section>
+	<section name="JavaEditorCodeMiningConfigurationBlock">
+		<item key="expanded0" value="true"/>
 	</section>
 </section>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="uo.ri.util.assertion.ArgumentChecks"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Fix"/>
     <fullyQualifiedTypeName name="java.util.Set"/>
     <fullyQualifiedTypeName name="java.util.HashSet"/>
@@ -13,4 +12,7 @@
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Pay"/>
+    <fullyQualifiedTypeName name="uo.ri.util.assertion.ArgumentChecks"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Invoice"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Cash"/>
 </qualifiedTypeNameHistroy>

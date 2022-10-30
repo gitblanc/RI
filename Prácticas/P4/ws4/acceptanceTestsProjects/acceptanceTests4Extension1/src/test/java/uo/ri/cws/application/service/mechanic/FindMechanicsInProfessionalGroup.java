@@ -26,38 +26,41 @@ public class FindMechanicsInProfessionalGroup {
 		this.ctx = ctx;
 	}
 
-
 	@When("I try to find mechanics for a null professional group id")
-	public void i_try_to_find_mechanics_with_null_argument() {
+	public void i_try_to_find_mechanics_with_null_argument()
+			throws BusinessException {
 		tryFindMechanicsByIdAndKeepException(null);
 
 	}
 
 	@When("I try to find mechanics for a wrong professional group id {string}")
-	public void i_try_to_find_mechanics_with_wrong_argument(String id) {
+	public void i_try_to_find_mechanics_with_wrong_argument(String id)
+			throws BusinessException {
 		tryFindMechanicsByIdAndKeepException(id);
 
 	}
-	
+
 	@When("I search mechanics in a non existing professional group")
-	public void i_search_mechanis_in_a_non_existent_id() throws BusinessException {
-		mechanics  = service.findMechanicsInProfessionalGroups(UUID.randomUUID().toString());
+	public void i_search_mechanis_in_a_non_existent_id()
+			throws BusinessException {
+		mechanics = service.findMechanicsInProfessionalGroups(
+				UUID.randomUUID().toString());
 	}
 
-	
 	@When("I search mechanics in professional group I")
-	public void i_search_mechanis_professional_group_i() throws BusinessException {
-		mechanics  = service.findMechanicsInProfessionalGroups("I");
+	public void i_search_mechanis_professional_group_i()
+			throws BusinessException {
+		mechanics = service.findMechanicsInProfessionalGroups("I");
 		ctx.put(Key.MECHANICS, mechanics);
 	}
-	
-	
+
 	@Then("zero mechanics are found")
 	public void no_mechanic_found() {
 		assertTrue(mechanics.isEmpty());
 	}
-	
-	private void tryFindMechanicsByIdAndKeepException(String id) {
+
+	private void tryFindMechanicsByIdAndKeepException(String id)
+			throws BusinessException {
 		try {
 			service.findMechanicsInProfessionalGroups(id);
 			fail();

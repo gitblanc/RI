@@ -36,6 +36,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Util"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CWS1"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/uo285176"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

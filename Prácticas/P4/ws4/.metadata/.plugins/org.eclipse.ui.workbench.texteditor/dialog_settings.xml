@@ -4,14 +4,15 @@
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="IN_FORCE"/>
+		<item key="selection" value=""/>
 		<list key="findhistory">
+			<item value="// TODO Auto-generated method stub"/>
+			<item value="netW"/>
 			<item value="Work"/>
 			<item value="IN_FORCE"/>
 			<item value="pst.setString(7, workOrder.mechanic_id);"/>
 			<item value="SQL_FIND_WORKORDER_AMOUNT"/>
 			<item value="SQL_LINK_WORKORDER_TO_INVOICE"/>
-			<item value="// TODO Auto-generated method stub"/>
 			<item value="findByI"/>
 		</list>
 		<list key="replacehistory">

@@ -25,13 +25,13 @@ public class FindSteps {
 	}
 
 	@When("I try to find a mechanic with null contract type")
-	public void i_try_to_find_null_argument() {
+	public void i_try_to_find_null_argument() throws BusinessException {
 		tryFindAndKeepException(null);
 
 	}
 
 	@When("I try to find mechanics with contract type {string}")
-	public void i_try_to_find_group_with_argument(String id) {
+	public void i_try_to_find_group_with_argument(String id) throws BusinessException {
 		tryFindAndKeepException(id);
 
 	}
@@ -48,7 +48,7 @@ public class FindSteps {
 
 	}
 
-	private void tryFindAndKeepException(String id) {
+	private void tryFindAndKeepException(String id) throws BusinessException {
 		try {
 			service.findMechanicsWithContractInForceInContractType(id);
 			fail();

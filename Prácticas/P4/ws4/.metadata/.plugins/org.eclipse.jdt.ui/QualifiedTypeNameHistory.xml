@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.vehicle.impl.VehicleGatewayImpl"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.impl.ContractGatewayImpl"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.Gateway"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.professionalgroup.impl.ProfessionalGroupGatewayImpl"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.workorder.impl.WorkOrderGatewayImpl"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.ProfessionalGroupService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.crud.ProfessionalGroupServiceImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.professionalgroup.crud.RemoveProfessionalGroup"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.service.util.sql.FindProfessionalGroupByNameSqlUnitOfWork"/>
@@ -15,7 +9,6 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.assembler.ContractAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService.ContractBLDto"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.PayrollService.PayrollSummaryBLDto"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.payroll.impl.PayrollGatewayImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contract.assembler.ContractAssembler"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.crud.PayrollServiceImpl"/>
@@ -60,4 +53,11 @@
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contracttype.ContractTypeGateway"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.persistence.contracttype.impl.ContractTypeGatewayImpl"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.business.contract.ContractService.ContractState"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.PayrollService"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.business.payroll.PayrollService.PayrollSummaryBLDto"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.ui.manager.action.ListAllPayrollsAction"/>
+    <fullyQualifiedTypeName name="console.Console"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.ui.manager.action.DetailPayrollAction"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.ui.manager.action.ListAllMechanicPayrollsAction"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.ui.manager.action.ListAllPayrollsByGroupAction"/>
 </qualifiedTypeNameHistroy>

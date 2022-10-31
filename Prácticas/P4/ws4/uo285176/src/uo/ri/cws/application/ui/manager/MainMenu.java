@@ -10,6 +10,7 @@ public class MainMenu extends BaseMenu {
 			{ "Mechanics management", 			MechanicMenu.class }, 
 			{ "Spare parts management", 			SparePartMenu.class },
 			{ "Vehicle types management", 	VehicleTypeMenu.class },
+			{"Payroll management", PayrollMenu.class}
 		};
 	}
 

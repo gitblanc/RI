@@ -1,0 +1,7 @@
+CONDICIONES:
+
+- los atributos pueden ser naturales o accidentales
+- los constructores han de settear la identidad natural como mínimo
+- hay que hacer getters para todos los atributos (setters bajo amenaza)
+- vamos a necesitar el hashcode y el equals (que se hará siempre sobre la identidad)
+- el toString() vamos a imprimir los atributos naturales, no los accidentales

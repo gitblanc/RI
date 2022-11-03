@@ -1,0 +1,32 @@
+package uo.ri.cws;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+/**
+ * Fuerza a que se cargen los parámetros de configuración, se analizen todos los
+ * mapeos y, si procede, se crea la BDD
+ */
+public class LoadEntityManagerFactory {
+
+	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("carworkshop");
+		/**
+		 * Condiciones de las clases que están en el mapeador
+		 * 
+		 * Ha de tener la marca @Entity 
+		 * Ha de contener [@Transient] (el atributo no
+		 * tiene que tener equivalencia en la tabla)
+		 * Añadir @Embeddable a un atributo natural de otra clase
+		 * Añadir @Id a la clase anterior
+		 * 
+		 */
+
+		emf.createEntityManager().close();
+		emf.close();
+
+		System.out.println("--> Si no hay excepciones todo va bien");
+		System.out.println("\n\t (O no hay ninguna clase mapeada)");
+	}
+
+}

@@ -1,0 +1,51 @@
+package uo.ri.cws.domain;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import uo.ri.util.assertion.ArgumentChecks;
+
+@Entity
+@Table(name="tsubstitutions", uniqueConstraints = @UniqueConstraint(columnNames = {"sparepart_id", "intervention_id"}))
+public class Substitution {
+    // natural attributes
+	@Basic(optional=false) private int quantity;
+
+    // accidental attributes
+	@ManyToOne(optional=false) private SparePart sparePart;
+	@ManyToOne(optional=false) private Intervention intervention;
+
+    public Substitution(SparePart sparePart, Intervention intervention,
+	    int quantity) {
+	ArgumentChecks.isNotNull(sparePart, "The squarePart can't be null");
+	ArgumentChecks
+		.isNotNull(intervention, "The intervention can't be null");
+	this.sparePart = sparePart;
+	this.intervention = intervention;
+	this.quantity = quantity;
+    }
+
+    void _setSparePart(SparePart sparePart) {
+	this.sparePart = sparePart;
+    }
+
+    void _setIntervention(Intervention intervention) {
+	this.intervention = intervention;
+    }
+
+    public int getQuantity() {
+	return quantity;
+    }
+
+    public SparePart getSparePart() {
+	return sparePart;
+    }
+
+    public Intervention getIntervention() {
+	return intervention;
+    }
+
+}

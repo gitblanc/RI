@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PayTests" project="uo285176" tests="4" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="uo.ri.cws.associations.PayTests" incomplete="true">
+    <testcase name="testClientCahsUnlinked" classname="uo.ri.cws.associations.PayTests" incomplete="true"/>
+    <testcase name="testInvoiceChargeLinked" classname="uo.ri.cws.associations.PayTests" incomplete="true"/>
+    <testcase name="testClientChargeLinked" classname="uo.ri.cws.associations.PayTests" incomplete="true"/>
+    <testcase name="testInvoiceCashUnlinked" classname="uo.ri.cws.associations.PayTests" incomplete="true"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,14 @@
+/**
+ * 
+ */
+package uo.ri.cws.infrastructure.persistence.jpa;
+
+import uo.ri.cws.application.util.command.CommandExecutor;
+
+/**
+ * @author UO285176
+ *
+ */
+public class MyCommandExecutor implements CommandExecutor{
+
+}

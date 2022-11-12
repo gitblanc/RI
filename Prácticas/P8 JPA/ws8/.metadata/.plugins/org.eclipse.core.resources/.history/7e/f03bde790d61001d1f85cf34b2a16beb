@@ -1,0 +1,32 @@
+package uo.ri.cws.application.service.mechanic.crud.command;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import uo.ri.conf.Factory;
+import uo.ri.cws.application.repository.MechanicRepository;
+import uo.ri.cws.application.service.BusinessException;
+import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.util.BusinessChecks;
+import uo.ri.cws.application.util.DtoAssembler;
+import uo.ri.cws.application.util.command.Command;
+import uo.ri.cws.domain.Mechanic;
+import uo.ri.cws.infrastructure.persistence.jpa.util.Jpa;
+
+public class FindAllMechanics implements Command<List<MechanicDto>>{
+	
+	private MechanicRepository repo = Factory.repository.forMechanic();
+	
+	public List<MechanicDto> execute() throws BusinessException {
+		List<MechanicDto> result = null;
+		
+		List<Mechanic> l = repo.findAll();
+		
+		result = DtoAssembler.toMechanicDtoList(mechanics);
+
+		return result;
+	}
+
+}

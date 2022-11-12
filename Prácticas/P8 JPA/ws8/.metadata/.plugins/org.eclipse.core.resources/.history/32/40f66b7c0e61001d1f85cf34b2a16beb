@@ -1,0 +1,25 @@
+package uo.ri.cws.application.service.mechanic.crud.command;
+
+import uo.ri.cws.application.service.BusinessException;
+import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.util.command.Command;
+import uo.ri.util.assertion.ArgumentChecks;
+
+public class UpdateMechanic implements Command<Void>{
+
+	private MechanicDto dto;
+
+	public UpdateMechanic(MechanicDto dto) {
+		ArgumentChecks.isNotNull(dto, "The dto can't be null");
+		ArgumentChecks.isNotNull(dto.id, "The id can't be null");
+		ArgumentChecks.isNotNull(dto.name, "The name can't be null");
+		ArgumentChecks.isNotNull(dto.surname, "The surname can't be null");
+		this.dto = dto;
+	}
+
+	public Void execute() throws BusinessException {
+
+		return null;
+	}
+
+}

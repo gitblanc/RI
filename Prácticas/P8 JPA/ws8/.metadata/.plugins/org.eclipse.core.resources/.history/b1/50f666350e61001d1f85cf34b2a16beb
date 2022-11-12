@@ -1,0 +1,20 @@
+package uo.ri.cws.application.service.mechanic.crud.command;
+
+import uo.ri.cws.application.service.BusinessException;
+import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.util.command.Command;
+
+public class UpdateMechanic {
+
+	private MechanicDto dto;
+
+	public UpdateMechanic(MechanicDto dto) implements Command<Void>{
+		this.dto = dto;
+	}
+
+	public Void execute() throws BusinessException {
+
+		return null;
+	}
+
+}

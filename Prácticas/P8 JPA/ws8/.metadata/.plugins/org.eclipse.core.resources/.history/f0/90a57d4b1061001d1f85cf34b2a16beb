@@ -1,0 +1,37 @@
+package uo.ri.cws.application.service.mechanic.crud.command;
+
+import uo.ri.conf.Factory;
+import uo.ri.cws.application.repository.MechanicRepository;
+import uo.ri.cws.application.service.BusinessException;
+import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.util.BusinessChecks;
+import uo.ri.cws.application.util.command.Command;
+import uo.ri.cws.domain.Mechanic;
+import uo.ri.util.assertion.ArgumentChecks;
+
+public class UpdateMechanic implements Command<Void> {
+
+	private MechanicDto dto;
+	private MechanicRepository repo = Factory.repository.forMechanic();
+
+	public UpdateMechanic(MechanicDto dto) {
+		ArgumentChecks.isNotNull(dto, "The mechanic can't be null");
+		ArgumentChecks.isNotNull(dto.dni, "The mechanic dni can't be null");
+		ArgumentChecks.isNotEmpty(dto.dni, "The mechanic dni can't be empty");
+		ArgumentChecks.isNotBlank(dto.dni, "The mechanic dni can't be blank");
+		ArgumentChecks.isNotNull(dto.name, "The mechanic name can't be null");
+		ArgumentChecks.isNotEmpty(dto.name, "The mechanic name can't be empty");
+		ArgumentChecks.isNotBlank(dto.name, "The mechanic name can't be blank");
+		ArgumentChecks.isNotNull(dto.surname, "The mechanic surname can't be null");
+		ArgumentChecks.isNotEmpty(dto.surname, "The mechanic surname can't be empty");
+		ArgumentChecks.isNotBlank(dto.surname, "The mechanic surname can't be blank");
+		this.dto = dto;
+	}
+
+	public Void execute() throws BusinessException {
+		BusinessChecks.isTrue(!repo.findByDni(this.dto.dni).isEmpty(), "The mechanic must exist");
+		repo.update(m.get());
+		return null;
+	}
+
+}

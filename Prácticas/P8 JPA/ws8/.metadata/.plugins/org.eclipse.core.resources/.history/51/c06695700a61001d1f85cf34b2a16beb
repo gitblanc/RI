@@ -1,0 +1,34 @@
+package uo.ri.cws.application.service.mechanic.crud.command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+import uo.ri.cws.application.service.BusinessException;
+import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.util.BusinessChecks;
+import uo.ri.cws.application.util.DtoAssembler;
+import uo.ri.cws.domain.Mechanic;
+
+public class FindAllMechanics {
+
+	public List<MechanicDto> execute() throws BusinessException {
+		List<MechanicDto> result = null;
+		// Comprobar que no hay un mecanico con el mismo dni
+		TypedQuery<Mechanic> tq = em.createNamedQuery("Mechanic.findAll", Mechanic.class);
+		// Obtenemos los resultados NO USAR getSingleResult()
+		List<Mechanic> mechanics = tq.getResultList();
+
+		BusinessChecks.isTrue(mechanics.isEmpty(), "There can't be two mechanics with same dni");
+
+		result = DtoAssembler.toMechanicDtoList(mechanics);
+
+		return result;
+	}
+
+}

@@ -1,0 +1,46 @@
+/**
+ * 
+ */
+package uo.ri.cws.infrastructure.persistence.jpa;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import uo.ri.cws.application.service.BusinessException;
+import uo.ri.cws.application.util.command.Command;
+import uo.ri.cws.application.util.command.CommandExecutor;
+import uo.ri.cws.infrastructure.persistence.jpa.util.Jpa;
+
+/**
+ * @author UO285176
+ *
+ */
+public class MyCommandExecutor implements CommandExecutor {
+
+	@Override
+	public <T> T execute(Command<T> cmd) throws BusinessException {
+		T result = null;
+		// NECESITAMOS un Entity manager NO DE ESTA FORMA
+//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("carworkshop");
+//		EntityManager em = emf.createEntityManager();
+
+		EntityManager em = Jpa.createEntityManager();
+		EntityTransaction t = em.getTransaction();
+
+		try {
+			t.begin();
+
+			result = cmd.execute();
+
+			t.commit();// antes del return hacemos el commit
+		} catch (Exception e) {
+			if (t.isActive())
+				t.rollback();
+			throw e;
+		} finally {
+			Jpa.close();
+		}
+		return result;
+	}
+
+}

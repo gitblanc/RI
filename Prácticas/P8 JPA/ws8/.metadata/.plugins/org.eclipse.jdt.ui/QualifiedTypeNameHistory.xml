@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="javax.persistence.Entity"/>
+    <fullyQualifiedTypeName name="javax.persistence.Transient"/>
+    <fullyQualifiedTypeName name="javax.persistence.Embeddable"/>
+    <fullyQualifiedTypeName name="javax.persistence.Table"/>
+    <fullyQualifiedTypeName name="javax.persistence.Basic"/>
+    <fullyQualifiedTypeName name="javax.persistence.Column"/>
+    <fullyQualifiedTypeName name="javax.persistence.UniqueConstraint"/>
+    <fullyQualifiedTypeName name="javax.persistence.Inheritance"/>
+    <fullyQualifiedTypeName name="javax.persistence.InheritanceType"/>
+    <fullyQualifiedTypeName name="javax.persistence.OneToMany"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.base.BaseEntity"/>
+    <fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
+    <fullyQualifiedTypeName name="javax.persistence.EntityManagerFactory"/>
+    <fullyQualifiedTypeName name="javax.persistence.Persistence"/>
+    <fullyQualifiedTypeName name="javax.persistence.TypedQuery"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="javax.persistence.EntityTransaction"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.util.DtoAssembler"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.util.command.Command"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.infrastructure.persistence.jpa.MyCommandExecutor"/>
+    <fullyQualifiedTypeName name="uo.ri.util.jdbc.Jdbc"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.infrastructure.persistence.jpa.util.Jpa"/>
+    <fullyQualifiedTypeName name="javax.persistence.EntityManager"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.infrastructure.persistence.jpa.util.BaseJpaRepository"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.infrastructure.persistence.jpa.repository.MechanicJpaRepository"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.repository.MechanicRepository"/>
+    <fullyQualifiedTypeName name="uo.ri.conf.Factory"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.util.command.CommandExecutor"/>
+    <fullyQualifiedTypeName name="uo.ri.util.assertion.ArgumentChecks"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Mechanic"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.application.util.BusinessChecks"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+</qualifiedTypeNameHistroy>

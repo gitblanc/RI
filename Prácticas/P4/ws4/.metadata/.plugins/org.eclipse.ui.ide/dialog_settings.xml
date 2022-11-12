@@ -17,6 +17,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\omenp\Desktop\3rd grade\RI\Prácticas\P4\ws4"/>
 			<item value="/Users/blanc/Desktop/3rd grade/RI/Prácticas/P4/ws4"/>
 			<item value="C:\Users\omenp\Desktop\3rd grade\RI\Prácticas\P4\ws4\acceptanceTestsProjects"/>
 			<item value="C:\Users\omenp\Desktop\3rd grade\RI\Prácticas\P4\ws4\acceptanceTests4Extension1"/>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="SubstituteTests" project="uo285176" tests="4" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="uo.ri.cws.associations.SubstituteTests" incomplete="true">
+    <testcase name="testSafeReturnOnSparePart" classname="uo.ri.cws.associations.SubstituteTests" time="0.081"/>
+    <testcase name="testSafeReturnOnIntervention" classname="uo.ri.cws.associations.SubstituteTests" time="0.0"/>
+    <testcase name="testSustitutionSparePartUnlinked" classname="uo.ri.cws.associations.SubstituteTests" incomplete="true"/>
+    <testcase name="testSustitutionInterventionLinked" classname="uo.ri.cws.associations.SubstituteTests" incomplete="true"/>
+  </testsuite>
+</testrun>

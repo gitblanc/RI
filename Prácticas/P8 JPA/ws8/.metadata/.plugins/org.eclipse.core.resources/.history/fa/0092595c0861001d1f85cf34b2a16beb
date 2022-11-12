@@ -1,0 +1,48 @@
+package uo.ri.cws.application.service.mechanic.crud.command;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.util.BusinessChecks;
+import uo.ri.cws.domain.Mechanic;
+
+public class FindAllMechanics {
+
+	public List<MechanicDto> execute() {
+		// NECESITAMOS un Entity manager
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("carworkshop");
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction t = em.getTransaction();
+		try {
+			t.begin();
+
+			// Comprobar que no hay un mecanico con el mismo dni
+			TypedQuery<Mechanic> tq = em.createNamedQuery("Mechanic.findByDni", Mechanic.class).setParameter(1,
+					dto.dni);
+			// Obtenemos los resultados NO USAR getSingleResult()
+			List<Mechanic> result = tq.getResultList();
+			BusinessChecks.isTrue(result.isEmpty(), "There can't be two mechanics with same dni");
+
+			// el emf ha de hablar con la bbdd y guardar la informacion
+			Mechanic m = new Mechanic(dto.dni, dto.name, dto.surname);
+			em.persist(m);
+			dto.id = m.getId();
+
+			t.commit();// antes del return hacemos el commit
+		} catch (Exception e) {
+			if (t.isActive())
+				t.rollback();
+			throw e;
+		} finally {
+			em.close();
+			emf.close();
+		}
+	}
+
+}

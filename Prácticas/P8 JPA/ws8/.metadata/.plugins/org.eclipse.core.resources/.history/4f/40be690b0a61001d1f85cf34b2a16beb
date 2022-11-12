@@ -1,0 +1,22 @@
+/**
+ * 
+ */
+package uo.ri.cws.infrastructure.persistence.jpa;
+
+import uo.ri.cws.application.service.BusinessException;
+import uo.ri.cws.application.util.command.Command;
+import uo.ri.cws.application.util.command.CommandExecutor;
+
+/**
+ * @author UO285176
+ *
+ */
+public class MyCommandExecutor implements CommandExecutor{
+
+	@Override
+	public <T> T execute(Command<T> cmd) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

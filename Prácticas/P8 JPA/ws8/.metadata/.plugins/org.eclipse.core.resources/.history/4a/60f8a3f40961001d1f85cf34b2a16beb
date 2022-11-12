@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package uo.ri.cws.infrastructure.persistence.jpa;
+
+/**
+ * @author UO285176
+ *
+ */
+public class MyCommandExecutor {
+
+}

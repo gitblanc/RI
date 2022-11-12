@@ -1,0 +1,44 @@
+package uo.ri.cws.domain;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tvouchers")
+public class Voucher extends PaymentMean {
+	@Column(unique = true)
+	private String code;
+	@Basic(optional = false)
+	private double available = 0.0;
+	@Basic(optional = false)
+	private String description;
+
+	public Voucher() {
+	}
+
+	/**
+	 * Augments the accumulated (super.pay(amount) ) and decrements the available
+	 * 
+	 * @throws IllegalStateException if not enough available to pay
+	 */
+	@Override
+	public void pay(double amount) {
+		super.pay(amount);
+		this.available -= amount;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public double getAvailable() {
+		return available;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+}

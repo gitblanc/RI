@@ -54,14 +54,14 @@ public class Printer {
 
 	public static void printPayrollsSummary(
 			List<PayrollSummaryBLDto> allPayrolls) {
-		Console.printf("\t%s \t%s \t%s \t%s \t%s\n", "Identifier", "version",
+		Console.printf("\t%s \t%s \t%s \t%s\n", "Identifier", "version",
 				"date", "netWage");
 		for (PayrollSummaryBLDto p : allPayrolls)
 			printPayrollSummary(p);
 	}
 
 	private static void printPayrollSummary(PayrollSummaryBLDto p) {
-		Console.printf("\t%s \t%s \t%s \t%s \t%.2f\n", p.id, p.version, p.date,
+		Console.printf("\t%s \t%s \t%s \t%.2f\n", p.id, p.version, p.date,
 				p.netWage);
 	}
 

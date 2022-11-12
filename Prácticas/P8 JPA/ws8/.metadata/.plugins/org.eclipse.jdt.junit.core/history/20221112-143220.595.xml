@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ToInvoiceTests" project="uo285176" tests="3" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="uo.ri.cws.associations.ToInvoiceTests" incomplete="true">
-    <testcase name="testLinkOnInvoice" classname="uo.ri.cws.associations.ToInvoiceTests" incomplete="true"/>
-    <testcase name="testSafeReturn" classname="uo.ri.cws.associations.ToInvoiceTests" incomplete="true"/>
-    <testcase name="testUnlinkOnInvoice" classname="uo.ri.cws.associations.ToInvoiceTests" incomplete="true"/>
-  </testsuite>
-</testrun>

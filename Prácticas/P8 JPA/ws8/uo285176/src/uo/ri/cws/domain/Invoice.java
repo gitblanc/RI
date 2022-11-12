@@ -83,6 +83,8 @@ public class Invoice extends BaseEntity {
 		for (WorkOrder w : workOrders) {
 			newAmount += w.getAmount();
 		}
+
+		this.vat = LocalDate.parse("2012-07-01").isBefore(this.date) ? 21.0 : 18.0;
 		this.amount = Round.twoCents(newAmount * (1 + this.vat / 100));
 	}
 

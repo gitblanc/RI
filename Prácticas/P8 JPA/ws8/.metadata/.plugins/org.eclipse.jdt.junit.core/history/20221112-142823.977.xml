@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="AssignTests" project="uo285176" tests="3" started="3" failures="0" errors="0" ignored="0">
-  <testsuite name="uo.ri.cws.associations.AssignTests" time="0.063">
-    <testcase name="testSafeReturn" classname="uo.ri.cws.associations.AssignTests" time="0.062"/>
-    <testcase name="testLinkOnAssign" classname="uo.ri.cws.associations.AssignTests" time="0.001"/>
-    <testcase name="testUnlinkOnAssign" classname="uo.ri.cws.associations.AssignTests" time="0.0"/>
-  </testsuite>
-</testrun>

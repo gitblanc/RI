@@ -20,6 +20,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\omenp\Desktop\3rd grade\RI\Prácticas\P8 JPA\ws8\acceptance_tests.cws_extension1"/>
 			<item value="D:\3rd grade\RI\Prácticas\P7 JPA\ri.jpa.cws.2022.p7.skeleton.zip"/>
 		</list>
 	</section>

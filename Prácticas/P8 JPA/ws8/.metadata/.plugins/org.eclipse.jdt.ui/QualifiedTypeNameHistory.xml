@@ -32,20 +32,21 @@
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Mechanic"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.util.BusinessChecks"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.domain.WorkOrder.WorkOrderState"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.ToInvoice"/>
     <fullyQualifiedTypeName name="uo.ri.util.assertion.Assert"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.PaymentMean"/>
     <fullyQualifiedTypeName name="uo.ri.util.math.Round"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Intervention"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.SparePart"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.domain.Invoice.InvoiceState"/>
-    <fullyQualifiedTypeName name="java.lang.IllegalStateException"/>
     <fullyQualifiedTypeName name="com.sun.jdi.connect.Connector.Argument"/>
-    <fullyQualifiedTypeName name="uo.ri.util.assertion.ArgumentChecks"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Substitute"/>
-    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.ToCharge"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.service.mechanic.MechanicCrudService"/>
     <fullyQualifiedTypeName name="uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto"/>
+    <fullyQualifiedTypeName name="java.lang.IllegalStateException"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Assign"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.WorkOrder.WorkOrderState"/>
+    <fullyQualifiedTypeName name="uo.ri.util.assertion.ArgumentChecks"/>
+    <fullyQualifiedTypeName name="uo.ri.cws.domain.Invoice.InvoiceState"/>
 </qualifiedTypeNameHistroy>

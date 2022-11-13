@@ -100,4 +100,8 @@ public class Intervention extends BaseEntity {
 		return mechanic;
 	}
 
+	public double getAmount() {
+		return workOrder.getAmount();
+	}
+
 }

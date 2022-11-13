@@ -83,7 +83,6 @@ public class Invoice extends BaseEntity {
 		for (WorkOrder w : workOrders) {
 			newAmount += w.getAmount();
 		}
-
 		this.vat = LocalDate.parse("2012-07-01").isBefore(this.date) ? 21.0 : 18.0;
 		this.amount = Round.twoCents(newAmount * (1 + this.vat / 100));
 	}
@@ -97,8 +96,8 @@ public class Invoice extends BaseEntity {
 	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
 	 */
 	public void addWorkOrder(WorkOrder workOrder) {
-//		if (this.state.equals(InvoiceState.NOT_YET_PAID))
-//			throw new IllegalStateException();
+		if (!this.state.equals(InvoiceState.NOT_YET_PAID))
+			throw new IllegalStateException();
 		Associations.ToInvoice.link(this, workOrder);
 		computeAmount();
 	}
@@ -111,8 +110,8 @@ public class Invoice extends BaseEntity {
 	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
 	 */
 	public void removeWorkOrder(WorkOrder workOrder) {
-//		if (this.state.equals(InvoiceState.NOT_YET_PAID))
-//			throw new IllegalStateException();
+		if (!this.state.equals(InvoiceState.NOT_YET_PAID))
+			throw new IllegalStateException();
 		Associations.ToInvoice.unlink(this, workOrder);
 		computeAmount();
 	}
@@ -125,7 +124,10 @@ public class Invoice extends BaseEntity {
 	 *                               total of the invoice
 	 */
 	public void settle() {
-
+		//¿Que es el total?
+		if (this.state.equals(InvoiceState.PAID) || this.amount < 0)
+			throw new IllegalStateException();
+		this.state = InvoiceState.PAID;
 	}
 
 	public Set<WorkOrder> getWorkOrders() {
@@ -190,5 +192,9 @@ public class Invoice extends BaseEntity {
 		return Double.doubleToLongBits(amount) == Double.doubleToLongBits(other.amount)
 				&& Objects.equals(date, other.date) && Objects.equals(number, other.number) && state == other.state
 				&& Double.doubleToLongBits(vat) == Double.doubleToLongBits(other.vat);
+	}
+
+	public boolean isNotSettled() {
+		return this.state.equals(InvoiceState.NOT_YET_PAID);
 	}
 }

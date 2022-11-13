@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import uo.ri.util.assertion.ArgumentChecks;
+
 @Entity
 @Table(name = "tvouchers")
 public class Voucher extends PaymentMean {
@@ -20,6 +22,26 @@ public class Voucher extends PaymentMean {
 	public Voucher() {
 	}
 
+	public Voucher(String code, String descrip, double cash) {
+		ArgumentChecks.isNotNull(code);
+		ArgumentChecks.isNotEmpty(code);
+		ArgumentChecks.isNotNull(descrip);
+		ArgumentChecks.isNotEmpty(descrip);
+		ArgumentChecks.isTrue(cash >= 0);
+		this.code = code;
+		this.description = descrip;
+		this.available = cash;
+	}
+
+	public Voucher(String code, double av) {
+		ArgumentChecks.isNotNull(code);
+		ArgumentChecks.isNotEmpty(code);
+		ArgumentChecks.isTrue(av >= 0);
+		this.code = code;
+		this.available = av;
+		this.description = "no-description";
+	}
+
 	/**
 	 * Augments the accumulated (super.pay(amount) ) and decrements the available
 	 * 
@@ -27,6 +49,8 @@ public class Voucher extends PaymentMean {
 	 */
 	@Override
 	public void pay(double amount) {
+		if (available - amount < 0)
+			throw new IllegalStateException();
 		super.pay(amount);
 		this.available -= amount;
 	}

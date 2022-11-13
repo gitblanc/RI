@@ -86,7 +86,9 @@ public class WorkOrder extends BaseEntity {
 	 *                               work order is not linked with the invoice
 	 */
 	public void markAsInvoiced() {
-
+		if (!this.state.equals(WorkOrderState.FINISHED) || this.invoice == null)
+			throw new IllegalStateException();
+		this.state = WorkOrderState.INVOICED;
 	}
 
 	/**
@@ -99,7 +101,11 @@ public class WorkOrder extends BaseEntity {
 	 *                               mechanic
 	 */
 	public void markAsFinished() {
-
+//		if (!this.state.equals(WorkOrderState.ASSIGNED) || this.mechanic == null)
+//			throw new IllegalStateException();
+//		this.state = WorkOrderState.FINISHED;
+//		this.amount = this.invoice.getAmount();
+//		Associations.Assign.unlink(mechanic, this);
 	}
 
 	/**
@@ -111,7 +117,9 @@ public class WorkOrder extends BaseEntity {
 	 *                               work order is still linked with the invoice
 	 */
 	public void markBackToFinished() {
-
+		if (!this.state.equals(WorkOrderState.INVOICED) || this.invoice != null)
+			throw new IllegalStateException();
+		this.state = WorkOrderState.FINISHED;
 	}
 
 	/**
@@ -124,7 +132,10 @@ public class WorkOrder extends BaseEntity {
 	 *                               mechanic
 	 */
 	public void assignTo(Mechanic mechanic) {
-
+		if (!this.state.equals(WorkOrderState.OPEN) || this.mechanic != null)
+			throw new IllegalStateException();
+		Associations.Assign.link(mechanic, this);
+		this.state = WorkOrderState.ASSIGNED;
 	}
 
 	/**
@@ -135,7 +146,10 @@ public class WorkOrder extends BaseEntity {
 	 * @throws IllegalStateException if - The work order is not in ASSIGNED state
 	 */
 	public void desassign() {
-
+		if (!this.state.equals(WorkOrderState.ASSIGNED))
+			throw new IllegalStateException();
+		Associations.Assign.unlink(mechanic, this);
+		this.state = WorkOrderState.OPEN;
 	}
 
 	/**
@@ -146,7 +160,9 @@ public class WorkOrder extends BaseEntity {
 	 * @throws IllegalStateException if - The work order is not in FINISHED state
 	 */
 	public void reopen() {
-
+		if (!this.state.equals(WorkOrderState.FINISHED))
+			throw new IllegalStateException();
+		this.state = WorkOrderState.OPEN;
 	}
 
 	public Set<Intervention> getInterventions() {

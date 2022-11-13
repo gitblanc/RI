@@ -28,12 +28,22 @@ public class CreditCard extends PaymentMean {
 
 	public CreditCard(String string) {
 		super();
-		// FALTAN VALIDACIONES
 		ArgumentChecks.isNotNull(string);
 		ArgumentChecks.isNotEmpty(string);
 		this.number = string;
 		this.type = "UNKNOWN";
 		this.validThru = LocalDate.now().plusDays(1);
+	}
+
+	public CreditCard(String number, String type, LocalDate date) {
+		ArgumentChecks.isNotNull(number);
+		ArgumentChecks.isNotEmpty(number);
+		ArgumentChecks.isNotNull(type);
+		ArgumentChecks.isNotEmpty(type);
+		ArgumentChecks.isNotNull(date);
+		setValidThru(date);
+		this.number = number;
+		this.type = type;
 	}
 
 	public String getNumber() {
@@ -72,6 +82,16 @@ public class CreditCard extends PaymentMean {
 	@Override
 	public String toString() {
 		return "CreditCard [number=" + number + ", type=" + type + ", validThru=" + validThru + "]";
+	}
+
+	public boolean isValidNow() {
+		return this.validThru.compareTo(LocalDate.now()) >= 0;
+	}
+
+	public void setValidThru(LocalDate date) {
+		if (date.compareTo(LocalDate.now()) < 0)// the credit card validity is over
+			throw new IllegalStateException();
+		this.validThru = date;
 	}
 
 }

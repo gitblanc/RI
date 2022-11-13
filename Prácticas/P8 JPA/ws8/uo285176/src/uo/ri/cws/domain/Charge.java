@@ -65,12 +65,12 @@ public class Charge extends BaseEntity {
 		this.invoice = invoice;
 	}
 
-	public Cash getPaymentMean() {
-		return (Cash) (this.paymentMean);
+	public PaymentMean getPaymentMean() {
+		return this.paymentMean;
 	}
 	
-	Cash _getPaymentMean() {
-		return (Cash) (this.paymentMean);
+	PaymentMean _getPaymentMean() {
+		return this.paymentMean;
 	}
 
 	void _setPaymentMean(PaymentMean p) {

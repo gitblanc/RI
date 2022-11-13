@@ -29,6 +29,7 @@ public class Substitution extends BaseEntity {
 	public Substitution(SparePart sparePart, Intervention intervention, int quantity) {
 		ArgumentChecks.isNotNull(sparePart, "The squarePart can't be null");
 		ArgumentChecks.isNotNull(intervention, "The intervention can't be null");
+		ArgumentChecks.isTrue(quantity > 0);
 		Associations.Substitute.link(sparePart, this, intervention);
 	}
 
@@ -58,6 +59,10 @@ public class Substitution extends BaseEntity {
 
 	Intervention _getIntervention() {
 		return this.intervention;
+	}
+
+	public double getAmount() {
+		return _getIntervention().getAmount();
 	}
 
 }

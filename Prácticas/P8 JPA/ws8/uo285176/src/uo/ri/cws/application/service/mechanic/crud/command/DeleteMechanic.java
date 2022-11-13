@@ -6,10 +6,11 @@ import uo.ri.conf.Factory;
 import uo.ri.cws.application.repository.MechanicRepository;
 import uo.ri.cws.application.service.BusinessException;
 import uo.ri.cws.application.util.BusinessChecks;
+import uo.ri.cws.application.util.command.Command;
 import uo.ri.cws.domain.Mechanic;
 import uo.ri.util.assertion.ArgumentChecks;
 
-public class DeleteMechanic {
+public class DeleteMechanic  implements Command<Void>{
 
 	private String mechanicId;
 

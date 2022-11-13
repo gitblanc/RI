@@ -39,7 +39,7 @@ public class Invoice extends BaseEntity {
 	// accidental attributes
 	@OneToMany(mappedBy = "invoice")
 	private Set<WorkOrder> workOrders = new HashSet<>();
-	@OneToMany() // falta
+	@OneToMany(mappedBy = "invoice")
 	private Set<Charge> charges = new HashSet<>();
 
 	Invoice() {

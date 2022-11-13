@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
@@ -30,14 +29,15 @@ public class Client extends BaseEntity {
 	private String email;
 	@Basic(optional = false)
 	private String phone;
-	Address address;
+
+	Address address;// tabla embeddable
 
 	/*
 	 * Atributos accidentales
 	 */
 	@OneToMany(mappedBy = "client")
 	private Set<Vehicle> vehicles = new HashSet<>();
-	@Transient
+	@OneToMany(mappedBy = "client")
 	private Set<PaymentMean> payments = new HashSet<>();
 
 	Client() {
@@ -53,6 +53,12 @@ public class Client extends BaseEntity {
 		this.dni = dni;
 		this.name = nombre;
 		this.surname = apellidos;
+	}
+
+	public Client(String dni) {
+		ArgumentChecks.isNotNull(dni, "The dni can't be null");
+		ArgumentChecks.isNotEmpty(dni, "The dni can't be empty");
+		this.dni = dni;
 	}
 
 	public String getDni() {
@@ -116,5 +122,10 @@ public class Client extends BaseEntity {
 
 	Set<PaymentMean> _getPaymentMeans() {
 		return payments;
+	}
+
+	public void setAddress(Address address) {
+		ArgumentChecks.isNotNull(address);
+		this.address = address;
 	}
 }

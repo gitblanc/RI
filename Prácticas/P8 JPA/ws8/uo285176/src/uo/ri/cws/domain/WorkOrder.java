@@ -55,6 +55,10 @@ public class WorkOrder extends BaseEntity {
 		Associations.Fix.link(v, this);
 	}
 
+	public WorkOrder(Vehicle vehicle) {
+		Associations.Fix.link(vehicle, this);
+	}
+
 	@Override
 	public String toString() {
 		return "WorkOrder [date=" + date + ", vehicle=" + vehicle + "]";

@@ -2,6 +2,7 @@ package uo.ri.cws.domain;
 
 import java.util.Objects;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -14,6 +15,7 @@ import uo.ri.util.assertion.Assert;
 @Entity
 @Table(name = "tcharges")
 public class Charge extends BaseEntity {
+	@Basic(optional = false)
 	// natural attributes
 	private double amount = 0.0;
 

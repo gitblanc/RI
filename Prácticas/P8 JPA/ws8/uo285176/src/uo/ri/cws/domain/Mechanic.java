@@ -45,6 +45,12 @@ public class Mechanic extends BaseEntity {
 		this.surname = apell;
 	}
 
+	public Mechanic(String dni) {
+		ArgumentChecks.isNotNull(dni, "The dni can't be null");
+		ArgumentChecks.isNotEmpty(dni, "The dni can't be empty");
+		this.dni = dni;
+	}
+
 	@Override
 	public String toString() {
 		return "Mechanic [dni=" + dni + ", surname=" + surname + ", name=" + name + "]";

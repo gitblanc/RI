@@ -37,8 +37,8 @@
 	
 	<named-query name="Mechanic.findAll">
 		<query>
-			select *
-			from Mechanic
+			select m
+			from Mechanic m
 		</query>
 	</named-query>
 

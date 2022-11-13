@@ -9,6 +9,7 @@ import uo.ri.cws.application.service.mechanic.MechanicCrudService;
 import uo.ri.cws.application.service.mechanic.crud.command.AddMechanic;
 import uo.ri.cws.application.service.mechanic.crud.command.DeleteMechanic;
 import uo.ri.cws.application.service.mechanic.crud.command.FindAllMechanics;
+import uo.ri.cws.application.service.mechanic.crud.command.FindMechanicById;
 import uo.ri.cws.application.service.mechanic.crud.command.UpdateMechanic;
 import uo.ri.cws.application.util.command.CommandExecutor;
 
@@ -28,7 +29,7 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 
 	@Override
 	public void deleteMechanic(String iddto) throws BusinessException {
-		new DeleteMechanic(iddto).execute();
+		executor.execute(new DeleteMechanic(iddto));
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 
 	@Override
 	public Optional<MechanicDto> findMechanicById(String id) throws BusinessException {
-		return null;
+		return executor.execute(new FindMechanicById(id));
 	}
 
 }

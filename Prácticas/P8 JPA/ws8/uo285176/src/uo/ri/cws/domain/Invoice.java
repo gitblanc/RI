@@ -99,6 +99,7 @@ public class Invoice extends BaseEntity {
 		if (!this.state.equals(InvoiceState.NOT_YET_PAID))
 			throw new IllegalStateException();
 		Associations.ToInvoice.link(this, workOrder);
+		workOrder.markAsInvoiced();
 		computeAmount();
 	}
 
@@ -114,6 +115,7 @@ public class Invoice extends BaseEntity {
 			throw new IllegalStateException();
 		Associations.ToInvoice.unlink(this, workOrder);
 		computeAmount();
+		workOrder.markBackToFinished();
 	}
 
 	/**
@@ -124,7 +126,7 @@ public class Invoice extends BaseEntity {
 	 *                               total of the invoice
 	 */
 	public void settle() {
-		//¿Que es el total?
+		// ¿Que es el total?
 		if (this.state.equals(InvoiceState.PAID) || this.amount < 0)
 			throw new IllegalStateException();
 		this.state = InvoiceState.PAID;

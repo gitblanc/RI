@@ -101,7 +101,25 @@ public class Intervention extends BaseEntity {
 	}
 
 	public double getAmount() {
-		return workOrder.getAmount();
+		return computeAmount();
+	}
+
+	private double computeAmount() {
+		return getRepuestos() + getManoDeObra();
+	}
+
+	private double getManoDeObra() {
+		int time = this.minutes;
+		double pricePerMinute = workOrder.getVehicle().getVehicleType().getPricePerHour() / 60.0;
+		return Math.round(time * pricePerMinute * 100.00) / 100.00;
+	}
+
+	private double getRepuestos() {
+		double res = 0;
+		for (Substitution s : substitutions) {
+			res += s.getQuantity() * s.getSparePart().getPrice();
+		}
+		return Math.round(res * 100.00) / 100.00;
 	}
 
 }

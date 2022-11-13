@@ -62,7 +62,6 @@ public class WorkOrderTests {
 		new Intervention(another, workOrder, 30);
 
 		workOrder.markAsFinished();
-
 		assertTrue( workOrder.getAmount() == 275.0 );
 	}
 

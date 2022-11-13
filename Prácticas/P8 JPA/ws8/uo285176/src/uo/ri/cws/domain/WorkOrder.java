@@ -101,11 +101,18 @@ public class WorkOrder extends BaseEntity {
 	 *                               mechanic
 	 */
 	public void markAsFinished() {
-//		if (!this.state.equals(WorkOrderState.ASSIGNED) || this.mechanic == null)
-//			throw new IllegalStateException();
-//		this.state = WorkOrderState.FINISHED;
-//		this.amount = this.invoice.getAmount();
-//		Associations.Assign.unlink(mechanic, this);
+		if (!this.state.equals(WorkOrderState.ASSIGNED) || this.mechanic == null)
+			throw new IllegalStateException();
+		this.state = WorkOrderState.FINISHED;
+		this.amount = computeAmount();
+	}
+
+	private double computeAmount() {
+		double newAmount = 0;
+		for (Intervention i : interventions) {
+			newAmount += i.getAmount();
+		}
+		return Math.round(newAmount * 100.00) / 100.00;
 	}
 
 	/**
@@ -154,14 +161,15 @@ public class WorkOrder extends BaseEntity {
 
 	/**
 	 * In order to assign a work order to another mechanic is first have to be moved
-	 * back to OPEN state.
+	 * back to OPEN state and unlink
 	 * 
 	 * @see UML_State diagrams on the problem statement document
 	 * @throws IllegalStateException if - The work order is not in FINISHED state
 	 */
 	public void reopen() {
 		if (!this.state.equals(WorkOrderState.FINISHED))
-			throw new IllegalStateException();
+			throw new IllegalStateException("State not finished");
+		Associations.Assign.unlink(mechanic, this);
 		this.state = WorkOrderState.OPEN;
 	}
 

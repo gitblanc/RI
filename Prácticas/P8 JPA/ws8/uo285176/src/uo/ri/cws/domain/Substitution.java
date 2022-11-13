@@ -31,6 +31,7 @@ public class Substitution extends BaseEntity {
 		ArgumentChecks.isNotNull(intervention, "The intervention can't be null");
 		ArgumentChecks.isTrue(quantity > 0);
 		Associations.Substitute.link(sparePart, this, intervention);
+		this.quantity = quantity;
 	}
 
 	void _setSparePart(SparePart sparePart) {

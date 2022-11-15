@@ -1,0 +1,19 @@
+Tareas
+
+1.- Control de versiones en todos los UPDATE
+2.- BusinessChecks para lanzar BusinessExceptions
+	ArgumentChecks para las IllegalArgumentException
+	StateChecks para las IllegalStateException
+3.- Lo que no implementemos ha de lanzar NotYetImplementedException
+4.- No modificar las interfaces de servicio
+5.- Los test de la carpeta test (mirar los ext de la extensión) han de COMPILAR
+6.- Añadir un README.txt -> poner UO y modelo que nos tocase, anotaciones, y cosas extra
+7.- Quitar warnings
+8.- Editar los sangrados PREFERENCES > JAVA > EDITOR > HABILITAR FORMATTER
+9.- Quitar //TODO
+10.- Hay que entregar la CHECKLIST
+
+
+Notas:
+Hay que implementar TODAS las entidades
+Han de pasar todos los test de ext (incluso los que no tengo que implementar) usar Math.floor() para truncar a 2 decimales

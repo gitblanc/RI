@@ -16,10 +16,7 @@ public class AdminMain {
 			.run()
 			.close();
 	}
-	
-	/*
-	 * Se crean las factorías
-	 */
+
 	private AdminMain configure() {
 		Factory.service = new BusinessFactory();
 		Factory.repository = new JpaRepositoryFactory();

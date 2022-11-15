@@ -34,6 +34,9 @@ public class UpdateMechanic implements Command<Void> {
 		Optional<Mechanic> m = repo.findById(dto.id);
 		BusinessChecks.isTrue(m.isPresent(), "The mechanic must exist");
 		Mechanic me = m.get();
+
+		BusinessChecks.hasVersion(me, dto.version);//IMPORTANTE control de versiones
+
 		me.setName(dto.name);
 		me.setSurname(dto.surname);
 		return null;

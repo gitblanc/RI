@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<item key="ProjectSelectionDialog.show_all" value="true"/>
+	<item key="org.eclipse.jdt.ui.codeformatter.line_wrapping_tab_page.preview_line_width" value="40"/>
+	<item key="org.eclipse.jdt.uiformatter_page.last_focus_index" value="355"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_width" value="1194"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_height" value="760"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_x" value="0"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.preferred_y" value="0"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_left_width" value="517"/>
+	<item key="org.eclipse.jdt.uiformatter_pagemodify_dialog.sash_form_rigth_width" value="636"/>
+	<item key="org.eclipse.jdt.uiformatter_page.preference_tree_expansion" value="10.0..0.0.000.0.0.0.0.0.0.0.0.0.0..00.0.0.0.0.0.0.0.0.0.0..00.0.0.0.0.0.0..00.0.0.0..00.0.0.0...00.0.0..000.0..0.0..100.0.0.0.0.0.0.0.0.0.0.0...00.0..0.."/>
+	<item key="org.eclipse.jdt.uiformatter_page.preference_scroll_position" value="0"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item key="group_libraries" value="true"/>
 		<item key="layout" value="1"/>

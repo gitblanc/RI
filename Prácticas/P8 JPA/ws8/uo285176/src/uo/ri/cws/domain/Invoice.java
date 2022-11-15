@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,184 +21,191 @@ import uo.ri.util.math.Round;
 @Entity
 @Table(name = "tinvoices")
 public class Invoice extends BaseEntity {
-	public enum InvoiceState {
-		NOT_YET_PAID, PAID
+
+    public enum InvoiceState {
+	NOT_YET_PAID, PAID
+    }
+
+    // natural attributes
+    @Column(unique = true)
+    private Long number;
+    @Basic(optional = false)
+    private LocalDate date;
+    @Basic(optional = false)
+    private double amount;
+
+    @Basic(optional = false)
+    private double vat;
+    @Enumerated(EnumType.STRING)
+    @Basic(optional = false)
+    private InvoiceState state = InvoiceState.NOT_YET_PAID;
+
+    // accidental attributes
+    @OneToMany(mappedBy = "invoice")
+    private Set<WorkOrder> workOrders = new HashSet<>();
+    @OneToMany(mappedBy = "invoice")
+    private Set<Charge> charges = new HashSet<>();
+
+    Invoice() {
+    }
+
+    public Invoice(Long number) {
+	// call full constructor with sensible defaults
+	this(number, LocalDate.now());
+    }
+
+    public Invoice(Long number, LocalDate date) {
+	// call full constructor with sensible defaults
+	this(number, date, List.of());
+    }
+
+    public Invoice(Long number, List<WorkOrder> workOrders) {
+	this(number, LocalDate.now(), workOrders);
+    }
+
+    // full constructor
+    public Invoice(Long number, LocalDate date, List<WorkOrder> workOrders) {
+	// check arguments (always), through IllegalArgumentException
+	ArgumentChecks.isNotNull(number, "The number can't be null");
+	ArgumentChecks.isNotNull(date, "The date can't be null");
+	ArgumentChecks.isNotNull(workOrders, "The workorders can't be null");
+	// store the number
+	this.number = number;
+	// store a copy of the date
+	this.date = date;
+	// add every work order calling addWorkOrder( w )
+	for (WorkOrder w : workOrders) {
+	    addWorkOrder(w);
 	}
+    }
 
-	// natural attributes
-	@Column(unique = true)
-	private Long number;
-	@Basic(optional = false)
-	private LocalDate date;
-	@Basic(optional = false)
-	private double amount;
-
-	@Basic(optional = false)
-	private double vat;
-	@Basic(optional = false)
-	private InvoiceState state = InvoiceState.NOT_YET_PAID;
-
-	// accidental attributes
-	@OneToMany(mappedBy = "invoice")
-	private Set<WorkOrder> workOrders = new HashSet<>();
-	@OneToMany(mappedBy = "invoice")
-	private Set<Charge> charges = new HashSet<>();
-
-	Invoice() {
+    /**
+     * Computes amount and vat (vat depends on the date)
+     */
+    private void computeAmount() {
+	double newAmount = 0.0;
+	for (WorkOrder w : workOrders) {
+	    newAmount += w.getAmount();
 	}
+	this.vat = LocalDate.parse("2012-07-01").isBefore(this.date) ? 21.0
+		: 18.0;
+	this.amount = Round.twoCents(newAmount * (1 + this.vat / 100));
+    }
 
-	public Invoice(Long number) {
-		// call full constructor with sensible defaults
-		this(number, LocalDate.now());
-	}
+    /**
+     * Adds (double links) the workOrder to the invoice and updates the amount
+     * and vat
+     * 
+     * @param workOrder
+     * @see UML_State diagrams on the problem statement document
+     * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
+     */
+    public void addWorkOrder(WorkOrder workOrder) {
+	if (!this.state.equals(InvoiceState.NOT_YET_PAID))
+	    throw new IllegalStateException();
+	Associations.ToInvoice.link(this, workOrder);
+	workOrder.markAsInvoiced();
+	computeAmount();
+    }
 
-	public Invoice(Long number, LocalDate date) {
-		// call full constructor with sensible defaults
-		this(number, date, List.of());
-	}
+    /**
+     * Removes a work order from the invoice and recomputes amount and vat
+     * 
+     * @param workOrder
+     * @see UML_State diagrams on the problem statement document
+     * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
+     */
+    public void removeWorkOrder(WorkOrder workOrder) {
+	if (!this.state.equals(InvoiceState.NOT_YET_PAID))
+	    throw new IllegalStateException();
+	Associations.ToInvoice.unlink(this, workOrder);
+	computeAmount();
+	workOrder.markBackToFinished();
+    }
 
-	public Invoice(Long number, List<WorkOrder> workOrders) {
-		this(number, LocalDate.now(), workOrders);
-	}
+    /**
+     * Marks the invoice as PAID, but
+     * 
+     * @throws IllegalStateException if - Is already settled - Or the amounts
+     *                               paid with charges to payment means do not
+     *                               cover the total of the invoice
+     */
+    public void settle() {
+	// ¿Que es el total?
+	if (this.state.equals(InvoiceState.PAID) || this.amount < 0)
+	    throw new IllegalStateException();
+	this.state = InvoiceState.PAID;
+    }
 
-	// full constructor
-	public Invoice(Long number, LocalDate date, List<WorkOrder> workOrders) {
-		// check arguments (always), through IllegalArgumentException
-		ArgumentChecks.isNotNull(number, "The number can't be null");
-		ArgumentChecks.isNotNull(date, "The date can't be null");
-		ArgumentChecks.isNotNull(workOrders, "The workorders can't be null");
-		// store the number
-		this.number = number;
-		// store a copy of the date
-		this.date = date;
-		// add every work order calling addWorkOrder( w )
-		for (WorkOrder w : workOrders) {
-			addWorkOrder(w);
-		}
-	}
+    public Set<WorkOrder> getWorkOrders() {
+	return new HashSet<>(workOrders);
+    }
 
-	/**
-	 * Computes amount and vat (vat depends on the date)
-	 */
-	private void computeAmount() {
-		double newAmount = 0.0;
-		for (WorkOrder w : workOrders) {
-			newAmount += w.getAmount();
-		}
-		this.vat = LocalDate.parse("2012-07-01").isBefore(this.date) ? 21.0 : 18.0;
-		this.amount = Round.twoCents(newAmount * (1 + this.vat / 100));
-	}
+    Set<WorkOrder> _getWorkOrders() {
+	return this.workOrders;
+    }
 
-	/**
-	 * Adds (double links) the workOrder to the invoice and updates the amount and
-	 * vat
-	 * 
-	 * @param workOrder
-	 * @see UML_State diagrams on the problem statement document
-	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
-	 */
-	public void addWorkOrder(WorkOrder workOrder) {
-		if (!this.state.equals(InvoiceState.NOT_YET_PAID))
-			throw new IllegalStateException();
-		Associations.ToInvoice.link(this, workOrder);
-		workOrder.markAsInvoiced();
-		computeAmount();
-	}
+    public Set<Charge> getCharges() {
+	return new HashSet<>(charges);
+    }
 
-	/**
-	 * Removes a work order from the invoice and recomputes amount and vat
-	 * 
-	 * @param workOrder
-	 * @see UML_State diagrams on the problem statement document
-	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
-	 */
-	public void removeWorkOrder(WorkOrder workOrder) {
-		if (!this.state.equals(InvoiceState.NOT_YET_PAID))
-			throw new IllegalStateException();
-		Associations.ToInvoice.unlink(this, workOrder);
-		computeAmount();
-		workOrder.markBackToFinished();
-	}
+    Set<Charge> _getCharges() {
+	return charges;
+    }
 
-	/**
-	 * Marks the invoice as PAID, but
-	 * 
-	 * @throws IllegalStateException if - Is already settled - Or the amounts paid
-	 *                               with charges to payment means do not cover the
-	 *                               total of the invoice
-	 */
-	public void settle() {
-		// ¿Que es el total?
-		if (this.state.equals(InvoiceState.PAID) || this.amount < 0)
-			throw new IllegalStateException();
-		this.state = InvoiceState.PAID;
-	}
+    public Long getNumber() {
+	return number;
+    }
 
-	public Set<WorkOrder> getWorkOrders() {
-		return new HashSet<>(workOrders);
-	}
+    public LocalDate getDate() {
+	return date;
+    }
 
-	Set<WorkOrder> _getWorkOrders() {
-		return this.workOrders;
-	}
+    public double getAmount() {
+	return amount;
+    }
 
-	public Set<Charge> getCharges() {
-		return new HashSet<>(charges);
-	}
+    public double getVat() {
+	return vat;
+    }
 
-	Set<Charge> _getCharges() {
-		return charges;
-	}
+    public InvoiceState getState() {
+	return state;
+    }
 
-	public Long getNumber() {
-		return number;
-	}
+    @Override
+    public String toString() {
+	return "Invoice [number=" + number + ", date=" + date + ", amount="
+		+ amount + ", vat=" + vat + ", state=" + state + "]";
+    }
 
-	public LocalDate getDate() {
-		return date;
-	}
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = super.hashCode();
+	result = prime * result
+		+ Objects.hash(amount, date, number, state, vat);
+	return result;
+    }
 
-	public double getAmount() {
-		return amount;
-	}
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (!super.equals(obj))
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Invoice other = (Invoice) obj;
+	return Double.doubleToLongBits(amount) == Double
+		.doubleToLongBits(other.amount)
+		&& Objects.equals(date, other.date)
+		&& Objects.equals(number, other.number) && state == other.state
+		&& Double.doubleToLongBits(vat) == Double
+			.doubleToLongBits(other.vat);
+    }
 
-	public double getVat() {
-		return vat;
-	}
-
-	public InvoiceState getState() {
-		return state;
-	}
-
-	@Override
-	public String toString() {
-		return "Invoice [number=" + number + ", date=" + date + ", amount=" + amount + ", vat=" + vat + ", state="
-				+ state + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(amount, date, number, state, vat);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Invoice other = (Invoice) obj;
-		return Double.doubleToLongBits(amount) == Double.doubleToLongBits(other.amount)
-				&& Objects.equals(date, other.date) && Objects.equals(number, other.number) && state == other.state
-				&& Double.doubleToLongBits(vat) == Double.doubleToLongBits(other.vat);
-	}
-
-	public boolean isNotSettled() {
-		return this.state.equals(InvoiceState.NOT_YET_PAID);
-	}
+    public boolean isNotSettled() {
+	return this.state.equals(InvoiceState.NOT_YET_PAID);
+    }
 }

@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 import uo.ri.cws.domain.base.BaseEntity;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tpaymentmeans")
 public abstract class PaymentMean extends BaseEntity {
 	// natural attributes
@@ -24,7 +27,7 @@ public abstract class PaymentMean extends BaseEntity {
 	@OneToMany(mappedBy = "paymentMean")
 	private Set<Charge> charges = new HashSet<>();
 
-	public PaymentMean() {
+	PaymentMean() {
 	}
 
 	@Override

@@ -6,15 +6,13 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import uo.ri.util.assertion.ArgumentChecks;
+import uo.ri.util.assertion.StateChecks;
 
 @Entity
 @Table(name = "tcreditcards")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class CreditCard extends PaymentMean {
 	@Column(unique = true)
 	private String number;
@@ -41,7 +39,7 @@ public class CreditCard extends PaymentMean {
 		ArgumentChecks.isNotNull(type);
 		ArgumentChecks.isNotEmpty(type);
 		ArgumentChecks.isNotNull(date);
-		setValidThru(date);
+		this.validThru = date;
 		this.number = number;
 		this.type = type;
 	}
@@ -94,4 +92,9 @@ public class CreditCard extends PaymentMean {
 		this.validThru = date;
 	}
 
+	@Override
+	public void pay(double amount) {
+		StateChecks.isTrue(isValidNow(), "The date is not valid");
+		super.pay(amount);
+	}
 }

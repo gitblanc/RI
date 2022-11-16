@@ -69,19 +69,24 @@ public class Mechanic extends BaseEntity {
 
     @Override
     public int hashCode() {
-	return Objects.hash(dni);
+	final int prime = 31;
+	int result = super.hashCode();
+	result = prime * result + Objects.hash(dni, name, surname);
+	return result;
     }
 
     @Override
     public boolean equals(Object obj) {
 	if (this == obj)
 	    return true;
-	if (obj == null)
+	if (!super.equals(obj))
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
 	Mechanic other = (Mechanic) obj;
-	return Objects.equals(dni, other.dni);
+	return Objects.equals(dni, other.dni)
+		&& Objects.equals(name, other.name)
+		&& Objects.equals(surname, other.surname);
     }
 
     public String getDni() {

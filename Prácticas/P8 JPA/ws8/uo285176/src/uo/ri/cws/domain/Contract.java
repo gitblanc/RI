@@ -66,19 +66,23 @@ public class Contract extends BaseEntity {
     }
 
     public Contract(Mechanic mechanic, ContractType type,
-	    ProfessionalGroup group, LocalDate endDate, double wage) {
+	    ProfessionalGroup group, double wage) {
 	ArgumentChecks.isNotNull(mechanic);
 	ArgumentChecks.isNotNull(type);
 	ArgumentChecks.isNotNull(group);
-	ArgumentChecks.isNotNull(endDate);
 	ArgumentChecks.isTrue(wage >= 0);
 	this.state = ContractState.IN_FORCE;
 	this.startDate = LocalDate.now();
-	this.endDate = endDate;
 	this.annualBaseWage = wage;
-	Associations.Type.link(this, type);
 	Associations.Hire.link(this, mechanic);
+	Associations.Type.link(this, type);
 	Associations.Group.link(this, group);
+    }
+
+    public Contract(Mechanic mechanic, ContractType type,
+	    ProfessionalGroup group, LocalDate endDate, double wage) {
+	this(mechanic, type, group, wage);
+	this.endDate = endDate;
     }
 
     private void calculateSettlement() {
@@ -103,20 +107,6 @@ public class Contract extends BaseEntity {
 	}
 	media += professionalGroup.getTrienniumPayment();
 	return Round.twoCents(media / 365);
-    }
-
-    public Contract(Mechanic mechanic, ContractType type,
-	    ProfessionalGroup group, double wage) {
-	ArgumentChecks.isNotNull(mechanic);
-	ArgumentChecks.isNotNull(type);
-	ArgumentChecks.isNotNull(group);
-	ArgumentChecks.isTrue(wage >= 0);
-	this.state = ContractState.IN_FORCE;
-	this.startDate = LocalDate.now();
-	this.annualBaseWage = wage;
-	Associations.Type.link(this, type);
-	Associations.Hire.link(this, mechanic);
-	Associations.Group.link(this, group);
     }
 
     public LocalDate getStartDate() {
@@ -198,6 +188,20 @@ public class Contract extends BaseEntity {
 		+ settlement + ", state=" + state + "]";
     }
 
+    public Set<Payroll> getPayrolls() {
+	return new HashSet<Payroll>(payrolls);
+    }
+
+    Set<Payroll> _getPayrolls() {
+	return this.payrolls;
+    }
+
+    public void terminate() {
+	calculateSettlement();
+	Associations.Fire.link(this);
+	this.state = ContractState.TERMINATED;
+    }
+
     @Override
     public int hashCode() {
 	final int prime = 31;
@@ -223,20 +227,6 @@ public class Contract extends BaseEntity {
 			.doubleToLongBits(other.settlement)
 		&& Objects.equals(startDate, other.startDate)
 		&& state == other.state;
-    }
-
-    public Set<Payroll> getPayrolls() {
-	return new HashSet<Payroll>(payrolls);
-    }
-
-    Set<Payroll> _getPayrolls() {
-	return this.payrolls;
-    }
-
-    public void terminate() {
-	calculateSettlement();
-	Associations.Fire.link(this);
-	this.state = ContractState.TERMINATED;
     }
 
 }

@@ -28,9 +28,9 @@ public class ProfessionalGroup extends BaseEntity {
     @Column(unique = true)
     private String name;
     @Basic(optional = false)
-    private double productivityRate;
+    private double productivityBonusPercentage;
     @Basic(optional = false)
-    private double trienniumSalary;
+    private double trienniumPayment;
 
     // accidentales
     @OneToMany(mappedBy = "professionalGroup")
@@ -46,8 +46,8 @@ public class ProfessionalGroup extends BaseEntity {
 	ArgumentChecks.isTrue(productivityRate >= 0);
 	ArgumentChecks.isTrue(triennium >= 0);
 	this.name = name;
-	this.productivityRate = productivityRate;
-	this.trienniumSalary = triennium;
+	this.productivityBonusPercentage = productivityRate;
+	this.trienniumPayment = triennium;
     }
 
     public String getName() {
@@ -55,14 +55,14 @@ public class ProfessionalGroup extends BaseEntity {
     }
 
     public double getTrienniumPayment() {
-	return trienniumSalary;
+	return trienniumPayment;
     }
 
     @Override
     public String toString() {
-	return "ProfessionalGroup [name=" + name + ", productivityRate="
-		+ productivityRate + ", trienniumSalary=" + trienniumSalary
-		+ "]";
+	return "ProfessionalGroup [name=" + name
+		+ ", productivityBonusPercentage=" + productivityBonusPercentage
+		+ ", trienniumPayment=" + trienniumPayment + "]";
     }
 
     public Set<Contract> getContracts() {
@@ -77,8 +77,8 @@ public class ProfessionalGroup extends BaseEntity {
     public int hashCode() {
 	final int prime = 31;
 	int result = super.hashCode();
-	result = prime * result
-		+ Objects.hash(name, productivityRate, trienniumSalary);
+	result = prime * result + Objects.hash(name,
+		productivityBonusPercentage, trienniumPayment);
 	return result;
     }
 
@@ -92,14 +92,15 @@ public class ProfessionalGroup extends BaseEntity {
 	    return false;
 	ProfessionalGroup other = (ProfessionalGroup) obj;
 	return Objects.equals(name, other.name)
-		&& Double.doubleToLongBits(productivityRate) == Double
-			.doubleToLongBits(other.productivityRate)
-		&& Double.doubleToLongBits(trienniumSalary) == Double
-			.doubleToLongBits(other.trienniumSalary);
+		&& Double.doubleToLongBits(
+			productivityBonusPercentage) == Double.doubleToLongBits(
+				other.productivityBonusPercentage)
+		&& Double.doubleToLongBits(trienniumPayment) == Double
+			.doubleToLongBits(other.trienniumPayment);
     }
 
     public double getProductivityBonusPercentage() {
-	return productivityRate;
+	return productivityBonusPercentage;
     }
 
 }

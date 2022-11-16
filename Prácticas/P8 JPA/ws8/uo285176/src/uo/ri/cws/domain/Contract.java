@@ -82,11 +82,11 @@ public class Contract extends BaseEntity {
     }
 
     private void calculateSettlement() {
-	int C = Math.abs(this.startDate.getYear() - this.endDate.getYear());
+	int C = LocalDate.now().getYear() - getStartDate().getYear();
 	double B = this.contractType.getCompensationDays();
-	// double A = this.annualBaseWage / 365;
-	double A = calcularMedia();
-	double aux = A * B * C;
+	double A = (this.annualBaseWage / 365);
+//	double A = calcularMedia();
+	double aux = Math.floor(A * B * C);
 	if (aux < 1) {// comprobamos el año completo
 	    this.settlement = 0.00;
 	} else {
@@ -95,11 +95,11 @@ public class Contract extends BaseEntity {
     }
 
     private double calcularMedia() {
-	double media = this.annualBaseWage;
+	double media = 0;
 	Payroll[] p = getPayrolls().toArray(new Payroll[getPayrolls().size()]);
 	int cont = 0;
 	for (int i = p.length - 1; cont == 12 || i > -1; i--, cont++) {
-	    media += p[i].getMonthlyWage() / 12;
+	    media += p[i].getTrienniumPayment();
 	}
 	media += professionalGroup.getTrienniumPayment();
 	return Round.twoCents(media / 365);

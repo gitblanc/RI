@@ -26,28 +26,22 @@ public class FireMappingTests {
 
     @Before
     public void setUp() {
-	factory = Persistence
-		.createEntityManagerFactory("carworkshop");
-	unitOfWork = UnitOfWork
-		.over(factory);
+	factory = Persistence.createEntityManagerFactory("carworkshop");
+	unitOfWork = UnitOfWork.over(factory);
 
 	mechanic = new Mechanic("mechanic-dni");
 
 	type = new ContractType("contract-type-name", 2.0);
 	group = new ProfessionalGroup("professional-group-name", 300.0, 10.0);
 	contract = new Contract(mechanic, type, group, 3000.0);
-	contract
-		.terminate();
-	unitOfWork
-		.persist(contract, group, type, mechanic);
+	contract.terminate();
+	unitOfWork.persist(contract, group, type, mechanic);
     }
 
     @After
     public void tearDown() {
-	unitOfWork
-		.remove(contract, group, type, mechanic);
-	factory
-		.close();
+	unitOfWork.remove(contract, group, type, mechanic);
+	factory.close();
     }
 
     /**
@@ -56,24 +50,13 @@ public class FireMappingTests {
     @Test
     public void testContractTerminatedRecoversMechanic() {
 
-	Contract restored = unitOfWork
-		.findById(Contract.class, contract
-			.getId());
+	Contract restored = unitOfWork.findById(Contract.class,
+		contract.getId());
 
-	assertTrue(restored
-		.getMechanic()
-		.isPresent());
-	assertTrue(restored
-		.getMechanic()
-		.get()
-		.equals(mechanic));
-	assertTrue(restored
-		.getFiredMechanic()
-		.isPresent());
-	assertTrue(restored
-		.getFiredMechanic()
-		.get()
-		.equals(mechanic));
+	assertTrue(restored.getMechanic().isPresent());
+	assertTrue(restored.getMechanic().get().equals(mechanic));
+	assertTrue(restored.getFiredMechanic().isPresent());
+	assertTrue(restored.getFiredMechanic().get().equals(mechanic));
     }
 
     /**
@@ -82,15 +65,10 @@ public class FireMappingTests {
     @Test
     public void testMechanicRecoversContractInForce() {
 
-	Mechanic restored = unitOfWork
-		.findById(Mechanic.class, mechanic
-			.getId());
+	Mechanic restored = unitOfWork.findById(Mechanic.class,
+		mechanic.getId());
 
-	assertTrue(restored
-		.getTerminatedContracts()
-		.size() == 1);
-	assertTrue(restored
-		.getTerminatedContracts()
-		.contains(contract));
+	assertTrue(restored.getTerminatedContracts().size() == 1);
+	assertTrue(restored.getTerminatedContracts().contains(contract));
     }
 }

@@ -38,7 +38,7 @@ public class Invoice extends BaseEntity {
     private double vat;
     @Enumerated(EnumType.STRING)
     @Basic(optional = false)
-    private InvoiceState state = InvoiceState.NOT_YET_PAID;
+    private InvoiceState status = InvoiceState.NOT_YET_PAID;
 
     // accidental attributes
     @OneToMany(mappedBy = "invoice")
@@ -101,7 +101,7 @@ public class Invoice extends BaseEntity {
      * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
      */
     public void addWorkOrder(WorkOrder workOrder) {
-	if (!this.state.equals(InvoiceState.NOT_YET_PAID))
+	if (!this.status.equals(InvoiceState.NOT_YET_PAID))
 	    throw new IllegalStateException();
 	Associations.ToInvoice.link(this, workOrder);
 	workOrder.markAsInvoiced();
@@ -116,7 +116,7 @@ public class Invoice extends BaseEntity {
      * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
      */
     public void removeWorkOrder(WorkOrder workOrder) {
-	if (!this.state.equals(InvoiceState.NOT_YET_PAID))
+	if (!this.status.equals(InvoiceState.NOT_YET_PAID))
 	    throw new IllegalStateException();
 	Associations.ToInvoice.unlink(this, workOrder);
 	computeAmount();
@@ -132,9 +132,9 @@ public class Invoice extends BaseEntity {
      */
     public void settle() {
 	// ¿Que es el total?
-	if (this.state.equals(InvoiceState.PAID) || this.amount < 0)
+	if (this.status.equals(InvoiceState.PAID) || this.amount < 0)
 	    throw new IllegalStateException();
-	this.state = InvoiceState.PAID;
+	this.status = InvoiceState.PAID;
     }
 
     public Set<WorkOrder> getWorkOrders() {
@@ -170,13 +170,13 @@ public class Invoice extends BaseEntity {
     }
 
     public InvoiceState getState() {
-	return state;
+	return status;
     }
 
     @Override
     public String toString() {
 	return "Invoice [number=" + number + ", date=" + date + ", amount="
-		+ amount + ", vat=" + vat + ", state=" + state + "]";
+		+ amount + ", vat=" + vat + ", status=" + status + "]";
     }
 
     @Override
@@ -184,7 +184,7 @@ public class Invoice extends BaseEntity {
 	final int prime = 31;
 	int result = super.hashCode();
 	result = prime * result
-		+ Objects.hash(amount, date, number, state, vat);
+		+ Objects.hash(amount, date, number, status, vat);
 	return result;
     }
 
@@ -200,12 +200,13 @@ public class Invoice extends BaseEntity {
 	return Double.doubleToLongBits(amount) == Double
 		.doubleToLongBits(other.amount)
 		&& Objects.equals(date, other.date)
-		&& Objects.equals(number, other.number) && state == other.state
+		&& Objects.equals(number, other.number)
+		&& status == other.status
 		&& Double.doubleToLongBits(vat) == Double
 			.doubleToLongBits(other.vat);
     }
 
     public boolean isNotSettled() {
-	return this.state.equals(InvoiceState.NOT_YET_PAID);
+	return this.status.equals(InvoiceState.NOT_YET_PAID);
     }
 }

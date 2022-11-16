@@ -14,25 +14,33 @@ import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
 
 @Entity
-@Table(name="tvehicletypes")
+@Table(name = "tvehicletypes")
 public class VehicleType extends BaseEntity {
     // natural attributes
-	@Column(unique=true) private String name;
-	@Basic(optional=false) private double pricePerHour;
+    @Column(unique = true)
+    private String name;
+    @Basic(optional = false)
+    private double pricePerHour;
 
     // accidental attributes
-	@OneToMany(mappedBy="type")
+    @OneToMany(mappedBy = "vehicleType")
     private Set<Vehicle> vehicles = new HashSet<>();
 
-	public VehicleType() {
-	}
-	
+    public VehicleType() {
+    }
+
     public VehicleType(String tipo, double precio) {
 	ArgumentChecks.isNotNull(tipo, "Tipo can't be null");
 	ArgumentChecks.isNotEmpty(tipo, "Tipo can't be empty");
 	ArgumentChecks.isTrue(precio > 0, "The price can't be negative");
 	this.name = tipo;
 	this.pricePerHour = precio;
+    }
+
+    public VehicleType(String name) {
+	ArgumentChecks.isNotNull(name, "Tipo can't be null");
+	ArgumentChecks.isNotEmpty(name, "Tipo can't be empty");
+	this.name = name;
     }
 
     @Override

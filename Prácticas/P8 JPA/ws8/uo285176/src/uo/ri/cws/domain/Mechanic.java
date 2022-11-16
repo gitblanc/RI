@@ -2,6 +2,7 @@ package uo.ri.cws.domain;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -31,8 +32,9 @@ public class Mechanic extends BaseEntity {
     @OneToMany(mappedBy = "mechanic")
     private Set<Intervention> interventions = new HashSet<>();
     @OneToMany(mappedBy = "firedMechanic")
-    private Set<Contract> firedMechanics = new HashSet<>();// lista de contratos
-							   // terminados
+    private Set<Contract> terminatedContracts = new HashSet<>();// lista de
+								// contratos
+    // terminados
     @OneToOne(mappedBy = "mechanic")
     private Contract contract;// contrato en vigor
 
@@ -55,6 +57,8 @@ public class Mechanic extends BaseEntity {
 	ArgumentChecks.isNotNull(dni, "The dni can't be null");
 	ArgumentChecks.isNotEmpty(dni, "The dni can't be empty");
 	this.dni = dni;
+	this.name = "";
+	this.surname = "";
     }
 
     @Override
@@ -114,6 +118,26 @@ public class Mechanic extends BaseEntity {
 
     public void setSurname(String surname2) {
 	this.surname = surname2;
+    }
+
+    public Optional<Contract> getContractInForce() {
+	return Optional.ofNullable(contract);
+    }
+
+    public Set<Contract> getTerminatedContracts() {
+	return new HashSet<Contract>(terminatedContracts);
+    }
+
+    public Set<Contract> _getTerminatedContracts() {
+	return terminatedContracts;
+    }
+
+    public boolean isInForce() {
+	return contract != null;
+    }
+
+    public void _setContractInForce(Contract c) {
+	this.contract = c;
     }
 
 }

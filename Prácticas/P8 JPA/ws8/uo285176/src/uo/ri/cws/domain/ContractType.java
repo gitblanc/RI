@@ -3,11 +3,14 @@
  */
 package uo.ri.cws.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import uo.ri.cws.domain.base.BaseEntity;
@@ -26,6 +29,10 @@ public class ContractType extends BaseEntity {
     private String name;
     @Basic(optional = false)
     private double compensationDays;
+
+    // accidentales
+    @OneToMany(mappedBy = "contractType")
+    private Set<Contract> contracts = new HashSet<>();
 
     ContractType() {
     }
@@ -50,6 +57,14 @@ public class ContractType extends BaseEntity {
     public String toString() {
 	return "ContractType [name=" + name + ", compensationDays="
 		+ compensationDays + "]";
+    }
+
+    public Set<Contract> getContracts() {
+	return new HashSet<Contract>(contracts);
+    }
+
+    Set<Contract> _getContracts() {
+	return contracts;
     }
 
     @Override

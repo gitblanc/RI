@@ -33,44 +33,30 @@ public class TypeTests {
 
     @Test
     public void testLinkOnRun() {
-	assertTrue(contract
-		.getContractType()
-		.equals(type));
-	assertTrue(type
-		.getContracts()
-		.contains(contract));
+	assertTrue(contract.getContractType().equals(type));
+	assertTrue(type.getContracts().contains(contract));
     }
 
     @Test
     public void testUnlinkOnRun() {
 
-	Associations.Type
-		.unlink(contract, type);
+	Associations.Type.unlink(contract, type);
 
-	assertTrue(contract
-		.getContractType() == null);
-	assertFalse(type
-		.getContracts()
-		.contains(contract));
+	assertTrue(contract.getContractType() == null);
+	assertFalse(type.getContracts().contains(contract));
 
     }
 
     @Test
     public void testSafeReturn() {
-	Set<Contract> contracts = type
-		.getContracts();
-	int num = contracts
-		.size();
+	Set<Contract> contracts = type.getContracts();
+	int num = contracts.size();
 
-	contracts
-		.remove(contract);
+	contracts.remove(contract);
 
-	assertTrue(type
-		.getContracts()
-		.size() == num);
-	assertTrue("It must be a copy of the collection or a read-only version", type
-		.getContracts()
-		.contains(contract));
+	assertTrue(type.getContracts().size() == num);
+	assertTrue("It must be a copy of the collection or a read-only version",
+		type.getContracts().contains(contract));
     }
 
 }

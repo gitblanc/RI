@@ -4,19 +4,24 @@
 package uo.ri.cws.domain;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
+import uo.ri.util.math.Round;
 
 /**
  * @author UO285176
@@ -46,14 +51,16 @@ public class Contract extends BaseEntity {
 
     // accidentales
 
-    @OneToOne(mappedBy = "contract")
+    @OneToOne()
     private Mechanic mechanic;
     @ManyToOne
     private Mechanic firedMechanic;// CUIDADO, no es clave
     @ManyToOne
     private ContractType contractType;
     @ManyToOne
-    private ProfessionalGroup group;
+    private ProfessionalGroup professionalGroup;
+    @OneToMany(mappedBy = "contract")
+    private Set<Payroll> payrolls = new HashSet<>();
 
     Contract() {
     }
@@ -65,12 +72,51 @@ public class Contract extends BaseEntity {
 	ArgumentChecks.isNotNull(group);
 	ArgumentChecks.isNotNull(endDate);
 	ArgumentChecks.isTrue(wage >= 0);
-	this.mechanic = mechanic;// FALTA link
-	this.contractType = type;// FALTA link
-	this.group = group;// FALTA link
+	this.state = ContractState.IN_FORCE;
 	this.startDate = LocalDate.now();
 	this.endDate = endDate;
 	this.annualBaseWage = wage;
+	Associations.Type.link(this, type);
+	Associations.Hire.link(this, mechanic);
+	Associations.Group.link(this, group);
+    }
+
+    private void calculateSettlement() {
+	int C = Math.abs(this.startDate.getYear() - this.endDate.getYear());
+	double B = this.contractType.getCompensationDays();
+	// double A = this.annualBaseWage / 365;
+	double A = calcularMedia();
+	double aux = A * B * C;
+	if (aux < 1) {// comprobamos el año completo
+	    this.settlement = 0.00;
+	} else {
+	    this.settlement = aux;
+	}
+    }
+
+    private double calcularMedia() {
+	double media = this.annualBaseWage;
+	Payroll[] p = getPayrolls().toArray(new Payroll[getPayrolls().size()]);
+	int cont = 0;
+	for (int i = p.length - 1; cont == 12 || i > -1; i--, cont++) {
+	    media += p[i].getMonthlyWage() / 12;
+	}
+	media += professionalGroup.getTrienniumPayment();
+	return Round.twoCents(media / 365);
+    }
+
+    public Contract(Mechanic mechanic, ContractType type,
+	    ProfessionalGroup group, double wage) {
+	ArgumentChecks.isNotNull(mechanic);
+	ArgumentChecks.isNotNull(type);
+	ArgumentChecks.isNotNull(group);
+	ArgumentChecks.isTrue(wage >= 0);
+	this.state = ContractState.IN_FORCE;
+	this.startDate = LocalDate.now();
+	this.annualBaseWage = wage;
+	Associations.Type.link(this, type);
+	Associations.Hire.link(this, mechanic);
+	Associations.Group.link(this, group);
     }
 
     public LocalDate getStartDate() {
@@ -89,8 +135,8 @@ public class Contract extends BaseEntity {
 	this.annualBaseWage = annualBaseWage;
     }
 
-    public LocalDate getEndDate() {
-	return endDate;
+    public Optional<LocalDate> getEndDate() {
+	return Optional.ofNullable(endDate);
     }
 
     public void setEndDate(LocalDate endDate) {
@@ -113,16 +159,16 @@ public class Contract extends BaseEntity {
 	this.state = state;
     }
 
-    public Mechanic getMechanic() {
-	return mechanic;
+    public Optional<Mechanic> getMechanic() {
+	return Optional.ofNullable(mechanic);
     }
 
     public void setMechanic(Mechanic mechanic) {
 	this.mechanic = mechanic;
     }
 
-    public Mechanic getFiredMechanic() {
-	return firedMechanic;
+    public Optional<Mechanic> getFiredMechanic() {
+	return Optional.ofNullable(firedMechanic);
     }
 
     public void setFiredMechanic(Mechanic firedMechanic) {
@@ -133,16 +179,16 @@ public class Contract extends BaseEntity {
 	return contractType;
     }
 
-    public void setContractType(ContractType contractType) {
+    public void _setContractType(ContractType contractType) {
 	this.contractType = contractType;
     }
 
-    public ProfessionalGroup getGroup() {
-	return group;
+    public ProfessionalGroup getProfessionalGroup() {
+	return professionalGroup;
     }
 
-    public void setGroup(ProfessionalGroup group) {
-	this.group = group;
+    public void _setGroup(ProfessionalGroup group) {
+	this.professionalGroup = group;
     }
 
     @Override
@@ -177,6 +223,20 @@ public class Contract extends BaseEntity {
 			.doubleToLongBits(other.settlement)
 		&& Objects.equals(startDate, other.startDate)
 		&& state == other.state;
+    }
+
+    public Set<Payroll> getPayrolls() {
+	return new HashSet<Payroll>(payrolls);
+    }
+
+    Set<Payroll> _getPayrolls() {
+	return this.payrolls;
+    }
+
+    public void terminate() {
+	calculateSettlement();
+	Associations.Fire.link(this);
+	this.state = ContractState.TERMINATED;
     }
 
 }

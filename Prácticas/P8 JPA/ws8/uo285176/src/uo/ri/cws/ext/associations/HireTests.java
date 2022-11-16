@@ -31,35 +31,22 @@ public class HireTests {
 
     @Test
     public void testLinkOnHire() {
-	Optional<Mechanic> m = contract
-		.getMechanic();
-	Optional<Contract> contractInForce = mechanic
-		.getContractInForce();
+	Optional<Mechanic> m = contract.getMechanic();
+	Optional<Contract> contractInForce = mechanic.getContractInForce();
 
-	assertTrue(m
-		.isPresent());
-	assertTrue(m
-		.get()
-		.equals(mechanic));
-	assertTrue(contractInForce
-		.isPresent());
-	assertTrue(contractInForce
-		.get()
-		.equals(contract));
+	assertTrue(m.isPresent());
+	assertTrue(m.get().equals(mechanic));
+	assertTrue(contractInForce.isPresent());
+	assertTrue(contractInForce.get().equals(contract));
 
     }
 
     @Test
     public void testUnlinkOnHire() {
-	Associations.Hire
-		.unlink(contract, mechanic);
+	Associations.Hire.unlink(contract, mechanic);
 
-	assertTrue(mechanic
-		.getContractInForce()
-		.isEmpty());
-	assertTrue(contract
-		.getMechanic()
-		.isPresent());
+	assertTrue(mechanic.getContractInForce().isEmpty());
+	assertTrue(contract.getMechanic().isPresent());
     }
 
     @Test
@@ -69,19 +56,10 @@ public class HireTests {
 		new ContractType("othertype", 2.5),
 		new ProfessionalGroup("othergroup", 200.0, 20.0), 2000.0);
 
-	assertTrue(secondContract
-		.getMechanic()
-		.isPresent());
-	assertTrue(secondContract
-		.getMechanic()
-		.get()
-		.equals(mechanic));
-	assertTrue(mechanic
-		.isInForce());
-	assertTrue(mechanic
-		.getContractInForce()
-		.get()
-		.equals(secondContract));
+	assertTrue(secondContract.getMechanic().isPresent());
+	assertTrue(secondContract.getMechanic().get().equals(mechanic));
+	assertTrue(mechanic.isInForce());
+	assertTrue(mechanic.getContractInForce().get().equals(secondContract));
     }
 
 }

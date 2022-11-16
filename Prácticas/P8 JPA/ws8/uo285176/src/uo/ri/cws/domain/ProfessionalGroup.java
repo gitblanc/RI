@@ -3,11 +3,14 @@
  */
 package uo.ri.cws.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import uo.ri.cws.domain.base.BaseEntity;
@@ -29,6 +32,10 @@ public class ProfessionalGroup extends BaseEntity {
     @Basic(optional = false)
     private double trienniumSalary;
 
+    // accidentales
+    @OneToMany(mappedBy = "professionalGroup")
+    private Set<Contract> contracts = new HashSet<>();
+
     ProfessionalGroup() {
     }
 
@@ -47,11 +54,7 @@ public class ProfessionalGroup extends BaseEntity {
 	return name;
     }
 
-    public double getProductivityRate() {
-	return productivityRate;
-    }
-
-    public double getTrienniumSalary() {
+    public double getTrienniumPayment() {
 	return trienniumSalary;
     }
 
@@ -60,6 +63,14 @@ public class ProfessionalGroup extends BaseEntity {
 	return "ProfessionalGroup [name=" + name + ", productivityRate="
 		+ productivityRate + ", trienniumSalary=" + trienniumSalary
 		+ "]";
+    }
+
+    public Set<Contract> getContracts() {
+	return new HashSet<Contract>(contracts);
+    }
+
+    Set<Contract> _getContracts() {
+	return contracts;
     }
 
     @Override
@@ -85,6 +96,10 @@ public class ProfessionalGroup extends BaseEntity {
 			.doubleToLongBits(other.productivityRate)
 		&& Double.doubleToLongBits(trienniumSalary) == Double
 			.doubleToLongBits(other.trienniumSalary);
+    }
+
+    public double getProductivityBonusPercentage() {
+	return productivityRate;
     }
 
 }

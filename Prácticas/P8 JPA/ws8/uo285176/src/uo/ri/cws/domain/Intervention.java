@@ -1,6 +1,7 @@
 package uo.ri.cws.domain;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -40,9 +41,20 @@ public class Intervention extends BaseEntity {
 	ArgumentChecks.isNotNull(mecanico, "The mechanic can't be null");
 	ArgumentChecks.isNotNull(workOrder, "The workOrder can't be null");
 	ArgumentChecks.isTrue(time >= 0, "The time can't be negative");
-	this.date = LocalDateTime.now();
+	this.date = LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS);
 	this.minutes = time;
 	Associations.Intervene.link(workOrder, this, mecanico);
+    }
+
+    public Intervention(Mechanic mechanic, WorkOrder wo,
+	    LocalDateTime atStartOfDay, int i) {
+	ArgumentChecks.isNotNull(mechanic, "The mechanic can't be null");
+	ArgumentChecks.isNotNull(wo, "The workOrder can't be null");
+	ArgumentChecks.isNotNull(atStartOfDay, "The date can't be null");
+	ArgumentChecks.isTrue(i >= 0);
+	Associations.Intervene.link(wo, this, mechanic);
+	this.date = atStartOfDay.truncatedTo(ChronoUnit.MILLIS);
+	this.minutes = i;
     }
 
     @Override

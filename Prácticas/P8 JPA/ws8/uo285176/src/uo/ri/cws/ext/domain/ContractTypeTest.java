@@ -15,42 +15,38 @@ import uo.ri.cws.domain.ProfessionalGroup;
 
 public class ContractTypeTest {
 
-	private ContractType ct = null;
+    private ContractType ct = null;
 
-	@Before
-	public void setUp() throws Exception {
-		ct = new ContractType("name", 1.5);
+    @Before
+    public void setUp() throws Exception {
+	ct = new ContractType("name", 1.5);
 
-	}
+    }
 
-	/**
-	 * A new contract type object has no contracts
-	 */
-	@Test
-	public void testConstructor() {
+    /**
+     * A new contract type object has no contracts
+     */
+    @Test
+    public void testConstructor() {
 
-		assertTrue(ct	.getName()
-						.equals("name"));
-		assertTrue(ct.getCompensationDays() == 1.5);
-		assertTrue(ct	.getContracts()
-						.isEmpty());
-	}
+	assertTrue(ct.getName().equals("name"));
+	assertTrue(ct.getCompensationDays() == 1.5);
+	assertTrue(ct.getContracts().isEmpty());
+    }
 
-	/**
-	 * After creating a contract, contract type references the contract
-	 */
-	@Test
-	public void testNewContract() {
+    /**
+     * After creating a contract, contract type references the contract
+     */
+    @Test
+    public void testNewContract() {
 
-		LocalDate endDate = LocalDate	.now()
-										.plusMonths(6)
-										.with(TemporalAdjusters.lastDayOfMonth());
+	LocalDate endDate = LocalDate.now().plusMonths(6)
+		.with(TemporalAdjusters.lastDayOfMonth());
 
-		Contract contract = new Contract(new Mechanic("dni", "name", "surname"),
-				ct, new ProfessionalGroup("name", 1, 1), endDate, 1000.0);
+	Contract contract = new Contract(new Mechanic("dni", "name", "surname"),
+		ct, new ProfessionalGroup("name", 1, 1), endDate, 1000.0);
 
-		assertTrue(ct	.getContracts()
-						.contains(contract));
-	}
+	assertTrue(ct.getContracts().contains(contract));
+    }
 
 }

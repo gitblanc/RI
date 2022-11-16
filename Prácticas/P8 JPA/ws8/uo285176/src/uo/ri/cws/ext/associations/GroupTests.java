@@ -33,45 +33,31 @@ public class GroupTests {
 
     @Test
     public void testLinkOnRun() {
-	assertTrue(contract
-		.getProfessionalGroup()
-		.equals(group));
-	assertTrue(group
-		.getContracts()
-		.contains(contract));
+	assertTrue(contract.getProfessionalGroup().equals(group));
+	assertTrue(group.getContracts().contains(contract));
     }
 
     @Test
     public void testUnlinkOnRun() {
 
-	Associations.Group
-		.unlink(contract, group);
+	Associations.Group.unlink(contract, group);
 
-	assertTrue(contract
-		.getProfessionalGroup() == null);
+	assertTrue(contract.getProfessionalGroup() == null);
 
-	assertFalse(group
-		.getContracts()
-		.contains(contract));
+	assertFalse(group.getContracts().contains(contract));
 
     }
 
     @Test
     public void testSafeReturn() {
-	Set<Contract> contracts = group
-		.getContracts();
-	int num = contracts
-		.size();
+	Set<Contract> contracts = group.getContracts();
+	int num = contracts.size();
 
-	contracts
-		.remove(contract);
+	contracts.remove(contract);
 
-	assertTrue(group
-		.getContracts()
-		.size() == num);
-	assertTrue("It must be a copy of the collection or a read-only version", group
-		.getContracts()
-		.contains(contract));
+	assertTrue(group.getContracts().size() == num);
+	assertTrue("It must be a copy of the collection or a read-only version",
+		group.getContracts().contains(contract));
     }
 
 }

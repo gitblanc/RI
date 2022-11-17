@@ -9,8 +9,8 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
 @RunWith(Cucumber.class)
 
 @CucumberOptions(features = {
-//	"src/test/resources/uo/ri/cws/application/service/mechanic",
-	"src/test/resources/uo/ri/cws/application/service/invoice",
+	"src/test/resources/uo/ri/cws/application/service/mechanic",
+//	"src/test/resources/uo/ri/cws/application/service/invoice",
 //	"src/test/resources/uo/ri/cws/application/service/contract",
 //	"src/test/resources/uo/ri/cws/application/service/payroll",
 //	"src/test/resources/uo/ri/cws/application/service/professionalgroup",

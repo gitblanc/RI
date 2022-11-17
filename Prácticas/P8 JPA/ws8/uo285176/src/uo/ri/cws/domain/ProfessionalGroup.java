@@ -103,4 +103,16 @@ public class ProfessionalGroup extends BaseEntity {
 	return productivityBonusPercentage;
     }
 
+    public void setName(String name2) {
+	this.name = name2;
+    }
+
+    public void setProductivityRate(double productivityRate) {
+	this.productivityBonusPercentage = productivityRate;
+    }
+
+    public void setTriennium(double trieniumSalary) {
+	this.trienniumPayment = trieniumSalary;
+    }
+
 }

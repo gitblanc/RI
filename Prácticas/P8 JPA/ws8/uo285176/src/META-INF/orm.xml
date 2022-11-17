@@ -89,6 +89,13 @@
 			   where m.id = ?1
 		</query>
 	</named-query>
+	
+	<named-query name="Contract.findByProfessionalGroupId">
+		<query>select c 
+			   from Contract c 
+			   where c.professionalGroup.id = ?1
+		</query>
+	</named-query>
 
 	<!-- ContractType queries -->
 	<named-query name="ContractType.findByName">

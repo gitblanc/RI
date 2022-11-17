@@ -2,6 +2,7 @@ package uo.ri.cws.application.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import uo.ri.cws.application.service.client.ClientCrudService.ClientDto;
@@ -11,6 +12,7 @@ import uo.ri.cws.application.service.invoice.InvoicingService.InvoiceDto;
 import uo.ri.cws.application.service.invoice.InvoicingService.PaymentMeanDto;
 import uo.ri.cws.application.service.invoice.InvoicingService.VoucherDto;
 import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.service.professionalgroup.ProfessionalGroupService.ProfessionalGroupBLDto;
 import uo.ri.cws.application.service.vehicle.VehicleCrudService.VehicleDto;
 import uo.ri.cws.application.service.vehicleType.VehicleTypeCrudService.VehicleTypeDto;
 import uo.ri.cws.application.service.workorder.WorkOrderCrudService.WorkOrderDto;
@@ -20,6 +22,7 @@ import uo.ri.cws.domain.CreditCard;
 import uo.ri.cws.domain.Invoice;
 import uo.ri.cws.domain.Mechanic;
 import uo.ri.cws.domain.PaymentMean;
+import uo.ri.cws.domain.ProfessionalGroup;
 import uo.ri.cws.domain.Vehicle;
 import uo.ri.cws.domain.VehicleType;
 import uo.ri.cws.domain.Voucher;
@@ -190,6 +193,34 @@ public class DtoAssembler {
     public static List<VehicleTypeDto> toVehicleTypeDtoList(
 	    List<VehicleType> list) {
 	return list.stream().map(a -> toDto(a)).collect(Collectors.toList());
+    }
+
+    public static ProfessionalGroupBLDto toProfessionalGroupBLDto(
+	    ProfessionalGroup p) {
+	ProfessionalGroupBLDto dto = new ProfessionalGroupBLDto();
+	dto.id = p.getId();
+	dto.name = p.getName();
+	dto.productivityRate = p.getProductivityBonusPercentage();
+	dto.trieniumSalary = p.getTrienniumPayment();
+	dto.version = p.getVersion();
+
+	return dto;
+    }
+
+    public static Optional<ProfessionalGroupBLDto> toProfessionalGroupDto(
+	    Optional<ProfessionalGroup> arg) {
+	Optional<ProfessionalGroupBLDto> result = arg.isEmpty()
+		? Optional.ofNullable(null)
+		: Optional.ofNullable(toProfessionalGroupBLDto(arg.get()));
+	return result;
+    }
+
+    public static List<ProfessionalGroupBLDto> toProfessionalGroupBLDtoList(
+	    List<ProfessionalGroup> arg) {
+	List<ProfessionalGroupBLDto> result = new ArrayList<ProfessionalGroupBLDto>();
+	for (ProfessionalGroup mr : arg)
+	    result.add(toProfessionalGroupBLDto(mr));
+	return result;
     }
 
 }

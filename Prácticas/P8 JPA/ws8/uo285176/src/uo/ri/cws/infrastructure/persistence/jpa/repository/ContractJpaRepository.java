@@ -32,8 +32,11 @@ public class ContractJpaRepository extends BaseJpaRepository<Contract>
     }
 
     @Override
-    public List<Contract> findByProfessionalGroupId(String id) {
-	throw new NotYetImplementedException("SIN HACER");
+    public List<Contract> findByProfessionalGroupId(String group_id) {
+	return Jpa.getManager()
+		.createNamedQuery("Contract.findByProfessionalGroupId",
+			Contract.class)
+		.setParameter(1, group_id).getResultList();
     }
 
     @Override

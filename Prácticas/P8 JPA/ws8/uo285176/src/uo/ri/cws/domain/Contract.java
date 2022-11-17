@@ -32,7 +32,7 @@ import uo.ri.util.math.Round;
  */
 @Entity
 @Table(name = "tcontracts", uniqueConstraints = @UniqueConstraint(columnNames = {
-	"mechanic_id", "startdate", "firedmechanic_id" }))
+	"mechanic_id", "startdate" }))
 public class Contract extends BaseEntity {
 
     class OrdenarPayrolls implements Comparator<Payroll> {

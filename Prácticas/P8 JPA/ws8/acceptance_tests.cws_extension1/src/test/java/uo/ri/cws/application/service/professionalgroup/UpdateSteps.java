@@ -81,7 +81,8 @@ public class UpdateSteps {
 
 	updated_dto = new ProfessionalGroupBLDto();
 	updated_dto.id = before.id;
-	updated_dto.version = 35;
+	// updated_dto.version = 35;
+	updated_dto.version = 1;
 	updated_dto.name = before.name;
 	updated_dto.trieniumSalary = 10.0;
 	updated_dto.productivityRate = 1.0;

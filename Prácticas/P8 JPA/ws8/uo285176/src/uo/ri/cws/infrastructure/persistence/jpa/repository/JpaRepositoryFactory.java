@@ -86,7 +86,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public PayrollRepository forPayroll() {
-	throw new NotYetImplementedException("SIN HACER");
+	return new PayrollJpaRepository();
     }
 
 }

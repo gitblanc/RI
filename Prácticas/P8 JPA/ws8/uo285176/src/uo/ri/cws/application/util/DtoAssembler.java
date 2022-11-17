@@ -12,6 +12,8 @@ import uo.ri.cws.application.service.invoice.InvoicingService.InvoiceDto;
 import uo.ri.cws.application.service.invoice.InvoicingService.PaymentMeanDto;
 import uo.ri.cws.application.service.invoice.InvoicingService.VoucherDto;
 import uo.ri.cws.application.service.mechanic.MechanicCrudService.MechanicDto;
+import uo.ri.cws.application.service.payroll.PayrollService.PayrollBLDto;
+import uo.ri.cws.application.service.payroll.PayrollService.PayrollSummaryBLDto;
 import uo.ri.cws.application.service.professionalgroup.ProfessionalGroupService.ProfessionalGroupBLDto;
 import uo.ri.cws.application.service.vehicle.VehicleCrudService.VehicleDto;
 import uo.ri.cws.application.service.vehicleType.VehicleTypeCrudService.VehicleTypeDto;
@@ -22,6 +24,7 @@ import uo.ri.cws.domain.CreditCard;
 import uo.ri.cws.domain.Invoice;
 import uo.ri.cws.domain.Mechanic;
 import uo.ri.cws.domain.PaymentMean;
+import uo.ri.cws.domain.Payroll;
 import uo.ri.cws.domain.ProfessionalGroup;
 import uo.ri.cws.domain.Vehicle;
 import uo.ri.cws.domain.VehicleType;
@@ -221,6 +224,56 @@ public class DtoAssembler {
 	for (ProfessionalGroup mr : arg)
 	    result.add(toProfessionalGroupBLDto(mr));
 	return result;
+    }
+
+    public static List<PayrollSummaryBLDto> toPayrollSummaryDto(
+	    List<Payroll> arg) {
+	List<PayrollSummaryBLDto> result = new ArrayList<PayrollSummaryBLDto>();
+	for (Payroll mr : arg)
+	    result.add(toPayrollSummaryBLDto(mr));
+	return result;
+    }
+
+    private static PayrollSummaryBLDto toPayrollSummaryBLDto(Payroll rs) {
+	PayrollSummaryBLDto p = new PayrollSummaryBLDto();
+	p.id = rs.getId();
+	p.version = rs.getVersion();
+	p.date = rs.getDate();
+	p.netWage = calculateNetWage(rs);
+	return p;
+    }
+
+    private static double calculateNetWage(Payroll p) {
+	// Abonos -> monthlyWage + bonus productivityBonus + trienniumpayment
+	double salary = p.getMonthlyWage();
+	double bonus = p.getBonus();
+	double pBonus = p.getProductivityBonus();
+	double trienn = p.getTrienniumPayment();
+
+	return salary + bonus + pBonus + trienn - p.getIncomeTax() - p.getNIC();
+    }
+
+    public static Optional<PayrollBLDto> toPayrollDto(Optional<Payroll> arg) {
+	Optional<PayrollBLDto> result = (arg.isEmpty() || arg == null)
+		? Optional.ofNullable(null)
+		: Optional.ofNullable(toPayrollBLDto(arg.get()));
+	return result;
+    }
+
+    private static PayrollBLDto toPayrollBLDto(Payroll x) {
+	PayrollBLDto payroll = new PayrollBLDto();
+	payroll.id = x.getId();
+	payroll.bonus = x.getBonus();
+	payroll.date = x.getDate();
+	payroll.incomeTax = x.getIncomeTax();
+	payroll.monthlyWage = x.getMonthlyWage();
+	payroll.nic = x.getNIC();
+	payroll.productivityBonus = x.getProductivityBonus();
+	payroll.trienniumPayment = x.getTrienniumPayment();
+	payroll.version = x.getVersion();
+	payroll.contractId = x.getContract().getId();
+	payroll.netWage = calculateNetWage(x);
+	return payroll;
     }
 
 }

@@ -7,13 +7,14 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\UO285176\Desktop\RI\Prácticas\P8 JPA\ws8"/>
 			<item value="C:\Users\omenp\Desktop\3rd grade\RI\Prácticas\P8 JPA\ws8"/>
 			<item value=""/>
 			<item value="D:\3rd grade\RI\Prácticas\P7 JPA\ws7"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
-			<item value="D:\3rd grade\RI\Prácticas\P8 JPA\ri.jpa.cws.2022.p8.skeleton.zip"/>
 			<item value=""/>
+			<item value="D:\3rd grade\RI\Prácticas\P8 JPA\ri.jpa.cws.2022.p8.skeleton.zip"/>
 		</list>
 	</section>
 	<section name="SmartImportWizard">

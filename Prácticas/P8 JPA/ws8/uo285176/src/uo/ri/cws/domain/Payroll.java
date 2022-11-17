@@ -81,7 +81,7 @@ public class Payroll extends BaseEntity {
     }
 
     private void calcularDatosPayroll() {
-	this.monthlyWage = Round.twoCents(contract.getAnnualBaseWage() / 14);
+	this.monthlyWage = Math.floor(contract.getAnnualBaseWage() / 14);
 	calculateBonus();// bonus
 	calculateProductivityBonus(contract.getMechanic().get().getAssigned(),
 		contract.getProfessionalGroup());// plus de productividad
@@ -96,7 +96,7 @@ public class Payroll extends BaseEntity {
 	this.nic = Round.twoCents(percentage / 12);
     }
 
-    private double calculateGrossWage() {
+    public double calculateGrossWage() {
 	return this.monthlyWage + this.bonus + this.productivityBonus
 		+ this.trienniumPayment;
     }
@@ -125,14 +125,14 @@ public class Payroll extends BaseEntity {
 	// obtenemos la antiguedad del contrato
 	long time = Period.between(contract.getStartDate(), this.date)
 		.getYears();
-	int numTrienniums = (int) (time / 3);
+	int numTrienniums = (int) Math.floor(time / 3);
 
 	ProfessionalGroup group = contract.getProfessionalGroup();
 	if (!group.getName().isEmpty()) {
 	    double triennium = group.getTrienniumPayment();
 	    tPayment = triennium * numTrienniums;
 	}
-	this.trienniumPayment = Round.twoCents(tPayment * 10);// math.floor?
+	this.trienniumPayment = Math.floor(tPayment * 10);// math.floor?
     }
 
     private void calculateProductivityBonus(Set<WorkOrder> workOrders,
@@ -148,7 +148,7 @@ public class Payroll extends BaseEntity {
 	// aplicamos al amount
 	if (!group.getName().isEmpty()) {
 	    double percentage = group.getProductivityBonusPercentage();
-	    productivityBonus = percentage * amount;
+	    productivityBonus = Math.floor(percentage * amount);
 	}
 	return Round.twoCents(productivityBonus / 1000);// Round.twoCents()
     }
@@ -162,17 +162,17 @@ public class Payroll extends BaseEntity {
 	    boolean condState = w.getState().equals(WorkOrderState.INVOICED);
 
 	    if (condDate && condState)
-		amount += w.getAmount();
+		amount += Math.floor(w.getAmount());
 	}
-	return amount;
+	return Round.twoCents(amount);
     }
 
     private void calculateBonus() {
 	if (this.date.getMonth().equals(Month.JUNE)
 		|| this.date.getMonth().equals(Month.DECEMBER)) {
-	    this.bonus = contract.getAnnualBaseWage() / 14;
+	    this.bonus = Math.floor(contract.getAnnualBaseWage() / 14);
 	} else {
-	    this.bonus = 0;
+	    this.bonus = 0.0;
 	}
     }
 
@@ -224,8 +224,7 @@ public class Payroll extends BaseEntity {
     public int hashCode() {
 	final int prime = 31;
 	int result = super.hashCode();
-	result = prime * result + Objects.hash(bonus, date, incomeTax,
-		monthlyWage, nic, productivityBonus, trienniumPayment);
+	result = prime * result + Objects.hash(contract, date);
 	return result;
     }
 
@@ -238,19 +237,8 @@ public class Payroll extends BaseEntity {
 	if (getClass() != obj.getClass())
 	    return false;
 	Payroll other = (Payroll) obj;
-	return Double.doubleToLongBits(bonus) == Double
-		.doubleToLongBits(other.bonus)
-		&& Objects.equals(date, other.date)
-		&& Double.doubleToLongBits(incomeTax) == Double
-			.doubleToLongBits(other.incomeTax)
-		&& Double.doubleToLongBits(monthlyWage) == Double
-			.doubleToLongBits(other.monthlyWage)
-		&& Double.doubleToLongBits(nic) == Double
-			.doubleToLongBits(other.nic)
-		&& Double.doubleToLongBits(productivityBonus) == Double
-			.doubleToLongBits(other.productivityBonus)
-		&& Double.doubleToLongBits(trienniumPayment) == Double
-			.doubleToLongBits(other.trienniumPayment);
+	return Objects.equals(contract, other.contract)
+		&& Objects.equals(date, other.date);
     }
 
 }

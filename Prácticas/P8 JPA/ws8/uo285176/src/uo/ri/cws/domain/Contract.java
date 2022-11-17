@@ -4,7 +4,10 @@
 package uo.ri.cws.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -31,6 +34,15 @@ import uo.ri.util.math.Round;
 @Table(name = "tcontracts", uniqueConstraints = @UniqueConstraint(columnNames = {
 	"mechanic_id", "startdate" }))
 public class Contract extends BaseEntity {
+
+    class OrdenarPayrolls implements Comparator<Payroll> {
+
+	@Override
+	public int compare(Payroll o1, Payroll o2) {
+	    return o1.getDate().compareTo(o2.getDate());
+	}
+
+    }
 
     public enum ContractState {
 	IN_FORCE, TERMINATED
@@ -88,9 +100,9 @@ public class Contract extends BaseEntity {
     private void calculateSettlement() {
 	int C = LocalDate.now().getYear() - getStartDate().getYear();
 	double B = this.contractType.getCompensationDays();
-	double A = (this.annualBaseWage / 365);
-//	double A = calcularMedia();
-	double aux = Math.floor(A * B * C);
+	// double A = (this.annualBaseWage / 365);
+	double A = calcularMedia();
+	double aux = A * B * C;
 	if (aux < 1) {// comprobamos el año completo
 	    this.settlement = 0.00;
 	} else {
@@ -99,14 +111,17 @@ public class Contract extends BaseEntity {
     }
 
     private double calcularMedia() {
-	double media = 0;
-	Payroll[] p = getPayrolls().toArray(new Payroll[getPayrolls().size()]);
-	int cont = 0;
-	for (int i = p.length - 1; cont == 12 || i > -1; i--, cont++) {
-	    media += p[i].getTrienniumPayment();
+	List<Payroll> pAux = new ArrayList<>(payrolls);
+	pAux.sort(new OrdenarPayrolls());
+	double res = 0;
+	int meses = 0;
+	for (Payroll p : pAux) {
+	    if (meses < 12) {
+		res += p.calculateGrossWage();
+		meses++;
+	    }
 	}
-	media += professionalGroup.getTrienniumPayment();
-	return Round.twoCents(media / 365);
+	return Round.twoCents(res / 365);
     }
 
     public LocalDate getStartDate() {
@@ -206,8 +221,7 @@ public class Contract extends BaseEntity {
     public int hashCode() {
 	final int prime = 31;
 	int result = super.hashCode();
-	result = prime * result + Objects.hash(annualBaseWage, endDate,
-		settlement, startDate, state);
+	result = prime * result + Objects.hash(mechanic, startDate);
 	return result;
     }
 
@@ -220,13 +234,8 @@ public class Contract extends BaseEntity {
 	if (getClass() != obj.getClass())
 	    return false;
 	Contract other = (Contract) obj;
-	return Double.doubleToLongBits(annualBaseWage) == Double
-		.doubleToLongBits(other.annualBaseWage)
-		&& Objects.equals(endDate, other.endDate)
-		&& Double.doubleToLongBits(settlement) == Double
-			.doubleToLongBits(other.settlement)
-		&& Objects.equals(startDate, other.startDate)
-		&& state == other.state;
+	return Objects.equals(mechanic, other.mechanic)
+		&& Objects.equals(startDate, other.startDate);
     }
 
 }

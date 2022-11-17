@@ -12,9 +12,7 @@
     <fullyQualifiedTypeName name="javax.persistence.EntityManagerFactory"/>
     <fullyQualifiedTypeName name="javax.persistence.Persistence"/>
     <fullyQualifiedTypeName name="javax.persistence.TypedQuery"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="javax.persistence.EntityTransaction"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="uo.ri.cws.infrastructure.persistence.jpa.MyCommandExecutor"/>
     <fullyQualifiedTypeName name="uo.ri.util.jdbc.Jdbc"/>
     <fullyQualifiedTypeName name="uo.ri.cws.infrastructure.persistence.jpa.util.Jpa"/>
@@ -27,7 +25,6 @@
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.ToInvoice"/>
     <fullyQualifiedTypeName name="uo.ri.util.assertion.Assert"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.PaymentMean"/>
-    <fullyQualifiedTypeName name="uo.ri.util.math.Round"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.SparePart"/>
     <fullyQualifiedTypeName name="com.sun.jdi.connect.Connector.Argument"/>
     <fullyQualifiedTypeName name="uo.ri.cws.domain.Associations.Substitute"/>
@@ -58,4 +55,8 @@
     <fullyQualifiedTypeName name="uo.ri.cws.domain.ProfessionalGroup"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
     <fullyQualifiedTypeName name="uo.ri.util.assertion.ArgumentChecks"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Comparator"/>
+    <fullyQualifiedTypeName name="uo.ri.util.math.Round"/>
 </qualifiedTypeNameHistroy>

@@ -6,38 +6,34 @@ import java.util.Optional;
 import uo.ri.cws.application.repository.ClientRepository;
 import uo.ri.cws.domain.Client;
 import uo.ri.cws.infrastructure.persistence.jpa.util.BaseJpaRepository;
+import uo.ri.util.exception.NotYetImplementedException;
 
 public class ClientJpaRepository extends BaseJpaRepository<Client>
 	implements ClientRepository {
 
     @Override
     public Optional<Client> findByDni(String dni) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public List<Client> findSponsoredByClient(String id) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public List<Client> findRecomendedBy(String id) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public List<Client> findWithThreeUnusedWorkOrders() {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public List<Client> findWithRecomendationsDone() {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
 }

@@ -15,6 +15,7 @@ import uo.ri.cws.application.repository.SparePartRepository;
 import uo.ri.cws.application.repository.VehicleRepository;
 import uo.ri.cws.application.repository.VehicleTypeRepository;
 import uo.ri.cws.application.repository.WorkOrderRepository;
+import uo.ri.util.exception.NotYetImplementedException;
 
 public class JpaRepositoryFactory implements RepositoryFactory {
 
@@ -65,32 +66,27 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public ChargeRepository forCharge() {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public ContractRepository forContract() {
-	// TODO Auto-generated method stub
-	return null;
+	return new ContractJpaRepository();
     }
 
     @Override
     public ProfessionalGroupRepository forProfessionalGroup() {
-	// TODO Auto-generated method stub
-	return null;
+	return new ProfessionalGroupJpaRepository();
     }
 
     @Override
     public ContractTypeRepository forContractType() {
-	// TODO Auto-generated method stub
-	return null;
+	return new ContractTypeJpaRepository();
     }
 
     @Override
     public PayrollRepository forPayroll() {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
 }

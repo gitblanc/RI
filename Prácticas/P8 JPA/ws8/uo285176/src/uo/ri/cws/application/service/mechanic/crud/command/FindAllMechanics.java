@@ -12,16 +12,16 @@ import uo.ri.cws.domain.Mechanic;
 
 public class FindAllMechanics implements Command<List<MechanicDto>> {
 
-	private MechanicRepository repo = Factory.repository.forMechanic();
+    private MechanicRepository repo = Factory.repository.forMechanic();
 
-	public List<MechanicDto> execute() throws BusinessException {
-		List<MechanicDto> result = null;
+    public List<MechanicDto> execute() throws BusinessException {
+	List<MechanicDto> result = null;
 
-		List<Mechanic> l = repo.findAll();
+	List<Mechanic> l = repo.findAll();
 
-		result = DtoAssembler.toMechanicDtoList(l);
+	result = DtoAssembler.toMechanicDtoList(l);
 
-		return result;
-	}
+	return result;
+    }
 
 }

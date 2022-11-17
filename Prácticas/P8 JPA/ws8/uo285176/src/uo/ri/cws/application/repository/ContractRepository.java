@@ -7,28 +7,23 @@ import uo.ri.cws.domain.Contract;
 
 public interface ContractRepository extends Repository<Contract> {
 
-
     /**
      * @return a list with all contracts (might be empty)
      */
     @Override
-	List<Contract> findAll();
+    List<Contract> findAll();
 
-    
     /**
-     * @return a list with all contracts in force (might be empty) 
+     * @return a list with all contracts in force (might be empty)
      */
     List<Contract> findAllInForce();
 
+    List<Contract> findByMechanicId(String id);
 
-	List<Contract> findByMechanicId(String id);
+    List<Contract> findByProfessionalGroupId(String id);
 
+    List<Contract> findByContractTypeId(String id2Del);
 
-	List<Contract> findByProfessionalGroupId(String id);
-	
-	List<Contract> findByContractTypeId(String id2Del);
-
-
-	List<Contract> findAllInForceThisMonth(LocalDate present);
+    List<Contract> findAllInForceThisMonth(LocalDate present);
 
 }

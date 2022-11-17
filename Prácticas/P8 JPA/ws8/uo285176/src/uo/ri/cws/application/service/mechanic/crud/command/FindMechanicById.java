@@ -12,17 +12,20 @@ import uo.ri.util.assertion.ArgumentChecks;
 
 public class FindMechanicById implements Command<Optional<MechanicDto>> {
 
-	private String id;
+    private String id;
 
-	public FindMechanicById(String id) {
-		ArgumentChecks.isNotNull(id, "The mechanic id can't be null");
-		ArgumentChecks.isNotEmpty(id, "The mechanic id can't be empty");
-		this.id = id;
-	}
+    public FindMechanicById(String id) {
+	ArgumentChecks.isNotNull(id, "The mechanic id can't be null");
+	ArgumentChecks.isNotEmpty(id, "The mechanic id can't be empty");
+	ArgumentChecks.isNotBlank(id, "The id can't be blank");
+	this.id = id;
+    }
 
-	public Optional<MechanicDto> execute() throws BusinessException {
-		Optional<Mechanic> m = Factory.repository.forMechanic().findById(id);
-		return Optional.of(DtoAssembler.toDto(m.get()));
-	}
+    public Optional<MechanicDto> execute() throws BusinessException {
+	Optional<Mechanic> m = Factory.repository.forMechanic().findById(id);
+	if (m.isPresent())
+	    return Optional.of(DtoAssembler.toDto(m.get()));
+	return null;
+    }
 
 }

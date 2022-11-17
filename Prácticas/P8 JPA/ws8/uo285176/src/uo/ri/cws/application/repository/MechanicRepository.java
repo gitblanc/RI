@@ -9,20 +9,20 @@ import uo.ri.cws.domain.ProfessionalGroup;
 
 public interface MechanicRepository extends Repository<Mechanic> {
 
-	/**
-	 * @param dni
-	 * @return the mechanic identified by the dni or null if none
-	 */
-	Optional<Mechanic> findByDni(String dni);
+    /**
+     * @param dni
+     * @return the mechanic identified by the dni or null if none
+     */
+    Optional<Mechanic> findByDni(String dni);
 
-	/**
-	 * @return a list with all mechanics (might be empty)
-	 */
-	List<Mechanic> findAll();
+    /**
+     * @return a list with all mechanics (might be empty)
+     */
+    List<Mechanic> findAll();
 
-	List<Mechanic> findAllInForce();
+    List<Mechanic> findAllInForce();
 
-	List<Mechanic> findInForceInContractType(ContractType contractType);
+    List<Mechanic> findInForceInContractType(ContractType contractType);
 
-	List<Mechanic> findAllInProfessionalGroup(ProfessionalGroup group);
+    List<Mechanic> findAllInProfessionalGroup(ProfessionalGroup group);
 }

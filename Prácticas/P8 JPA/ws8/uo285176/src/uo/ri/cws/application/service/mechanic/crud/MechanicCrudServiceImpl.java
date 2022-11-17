@@ -10,9 +10,11 @@ import uo.ri.cws.application.service.mechanic.crud.command.AddMechanic;
 import uo.ri.cws.application.service.mechanic.crud.command.DeleteMechanic;
 import uo.ri.cws.application.service.mechanic.crud.command.FindAllMechanics;
 import uo.ri.cws.application.service.mechanic.crud.command.FindMechanicById;
+import uo.ri.cws.application.service.mechanic.crud.command.FindMechanicsInForce;
+import uo.ri.cws.application.service.mechanic.crud.command.FindMechanicsInForceInContractType;
+import uo.ri.cws.application.service.mechanic.crud.command.FindMechanicsInProfessionalGroups;
 import uo.ri.cws.application.service.mechanic.crud.command.UpdateMechanic;
 import uo.ri.cws.application.util.command.CommandExecutor;
-import uo.ri.util.exception.NotYetImplementedException;
 
 public class MechanicCrudServiceImpl implements MechanicCrudService {
 
@@ -45,20 +47,20 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
     }
 
     @Override
-    public List<MechanicDto> findMechanicsInProfessionalGroups(String string)
+    public List<MechanicDto> findMechanicsInProfessionalGroups(String group)
 	    throws BusinessException {
-	throw new NotYetImplementedException("AUN SIN HACER");
+	return executor.execute(new FindMechanicsInProfessionalGroups(group));
     }
 
     @Override
     public List<MechanicDto> findMechanicsWithContractInForceInContractType(
-	    String string) throws BusinessException {
-	throw new NotYetImplementedException("AUN SIN HACER");
+	    String type) throws BusinessException {
+	return executor.execute(new FindMechanicsInForceInContractType(type));
     }
 
     @Override
-    public List<MechanicDto> findMechanicsInForce() {
-	throw new NotYetImplementedException("AUN SIN HACER");
+    public List<MechanicDto> findMechanicsInForce() throws BusinessException {
+	return executor.execute(new FindMechanicsInForce());
     }
 
 }

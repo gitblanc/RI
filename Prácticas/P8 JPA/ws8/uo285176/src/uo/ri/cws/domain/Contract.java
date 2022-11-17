@@ -32,7 +32,7 @@ import uo.ri.util.math.Round;
  */
 @Entity
 @Table(name = "tcontracts", uniqueConstraints = @UniqueConstraint(columnNames = {
-	"mechanic_id", "startdate" }))
+	"mechanic_id", "startdate", "firedmechanic_id" }))
 public class Contract extends BaseEntity {
 
     class OrdenarPayrolls implements Comparator<Payroll> {
@@ -221,7 +221,8 @@ public class Contract extends BaseEntity {
     public int hashCode() {
 	final int prime = 31;
 	int result = super.hashCode();
-	result = prime * result + Objects.hash(mechanic, startDate);
+	result = prime * result
+		+ Objects.hash(mechanic, startDate, firedMechanic);
 	return result;
     }
 
@@ -235,7 +236,8 @@ public class Contract extends BaseEntity {
 	    return false;
 	Contract other = (Contract) obj;
 	return Objects.equals(mechanic, other.mechanic)
-		&& Objects.equals(startDate, other.startDate);
+		&& Objects.equals(startDate, other.startDate)
+		&& Objects.equals(firedMechanic, other.firedMechanic);
     }
 
 }

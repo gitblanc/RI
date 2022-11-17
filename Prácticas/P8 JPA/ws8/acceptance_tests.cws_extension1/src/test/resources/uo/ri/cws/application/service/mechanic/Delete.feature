@@ -36,10 +36,10 @@ Feature: Delete a mechanic
     Then argument is rejected with an explaining message
 
   Scenario Outline: Try to delete a mechanic with wrong fields
-    When I try to delete a mechanic with <dni>
+    When I try to delete a mechanic with <id>
     Then argument is rejected with an explaining message
 
     Examples: 
-      | dni    |
+      | id    |
       | "   " |
       | ""    |

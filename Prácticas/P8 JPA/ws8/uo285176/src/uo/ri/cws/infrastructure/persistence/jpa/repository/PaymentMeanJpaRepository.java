@@ -8,50 +8,44 @@ import uo.ri.cws.domain.CreditCard;
 import uo.ri.cws.domain.PaymentMean;
 import uo.ri.cws.domain.Voucher;
 import uo.ri.cws.infrastructure.persistence.jpa.util.BaseJpaRepository;
+import uo.ri.util.exception.NotYetImplementedException;
 
 public class PaymentMeanJpaRepository extends BaseJpaRepository<PaymentMean>
 	implements PaymentMeanRepository {
 
     @Override
     public List<PaymentMean> findPaymentMeansByClientId(String id) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public List<PaymentMean> findPaymentMeansByInvoiceId(String idFactura) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public List<PaymentMean> findByClientId(String id) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public Object[] findAggregateVoucherDataByClientId(String id) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public Optional<CreditCard> findCreditCardByNumber(String pan) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public List<Voucher> findVouchersByClientId(String id) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
     @Override
     public Optional<Voucher> findVoucherByCode(String code) {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("SIN HACER");
     }
 
 }

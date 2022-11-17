@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import uo.ri.cws.application.repository.MechanicRepository;
+import uo.ri.cws.domain.Contract.ContractState;
 import uo.ri.cws.domain.ContractType;
 import uo.ri.cws.domain.Mechanic;
 import uo.ri.cws.domain.ProfessionalGroup;
@@ -37,20 +38,25 @@ public class MechanicJpaRepository extends BaseJpaRepository<Mechanic>// impleme
 
     @Override
     public List<Mechanic> findAllInForce() {
-	// TODO Auto-generated method stub
-	return null;
+	return Jpa.getManager()
+		.createNamedQuery("Mechanic.findAllInForce", Mechanic.class)
+		.setParameter(1, ContractState.IN_FORCE).getResultList();
     }
 
     @Override
     public List<Mechanic> findInForceInContractType(ContractType contractType) {
-	// TODO Auto-generated method stub
-	return null;
+	return Jpa.getManager()
+		.createNamedQuery("Mechanic.findInForceInContractType",
+			Mechanic.class)
+		.setParameter(1, contractType.getName()).getResultList();
     }
 
     @Override
     public List<Mechanic> findAllInProfessionalGroup(ProfessionalGroup group) {
-	// TODO Auto-generated method stub
-	return null;
+	return Jpa.getManager()
+		.createNamedQuery("Mechanic.findAllInProfessionalGroup",
+			Mechanic.class)
+		.setParameter(1, group.getName()).getResultList();
     }
 
 }

@@ -242,7 +242,7 @@ public class WorkOrder extends BaseEntity {
 	return amount;
     }
 
-    public WorkOrderState getState() {
+    public WorkOrderState getStatus() {
 	return status;
     }
 

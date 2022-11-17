@@ -9,22 +9,22 @@ import uo.ri.cws.application.service.BusinessException;
 import uo.ri.cws.application.service.invoice.InvoicingService.InvoiceDto;
 import uo.ri.cws.application.util.command.Command;
 import uo.ri.util.assertion.ArgumentChecks;
+import uo.ri.util.exception.NotYetImplementedException;
 
-public class CreateInvoiceFor implements Command<InvoiceDto>{
+public class CreateInvoiceFor implements Command<InvoiceDto> {
 
-	private List<String> workOrderIds;
-	private WorkOrderRepository wrkrsRepo = Factory.repository.forWorkOrder();
-	private InvoiceRepository invsRepo = Factory.repository.forInvoice();
+    private List<String> workOrderIds;
+    private WorkOrderRepository wrkrsRepo = Factory.repository.forWorkOrder();
+    private InvoiceRepository invsRepo = Factory.repository.forInvoice();
 
-	public CreateInvoiceFor(List<String> workOrderIds) {
-		ArgumentChecks.isNotNull( workOrderIds );
-		this.workOrderIds = workOrderIds;
-	}
+    public CreateInvoiceFor(List<String> workOrderIds) {
+	ArgumentChecks.isNotNull(workOrderIds);
+	this.workOrderIds = workOrderIds;
+    }
 
-	@Override
-	public InvoiceDto execute() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public InvoiceDto execute() throws BusinessException {
+	throw new NotYetImplementedException("SIN HACER");
+    }
 
 }

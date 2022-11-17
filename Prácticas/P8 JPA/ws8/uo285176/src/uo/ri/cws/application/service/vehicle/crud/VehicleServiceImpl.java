@@ -8,7 +8,7 @@ import uo.ri.cws.application.service.vehicle.VehicleCrudService;
 import uo.ri.cws.application.service.vehicle.crud.commands.FindVehicleByPlate;
 import uo.ri.cws.application.util.command.CommandExecutor;
 
-public class VehicleCrudServiceImpl implements VehicleCrudService {
+public class VehicleServiceImpl implements VehicleCrudService {
 
 	private CommandExecutor executor = Factory.executor.forExecutor();
 

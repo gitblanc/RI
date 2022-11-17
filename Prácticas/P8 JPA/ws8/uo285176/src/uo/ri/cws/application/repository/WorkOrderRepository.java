@@ -12,4 +12,8 @@ public interface WorkOrderRepository extends Repository<WorkOrder>{
 	 * 	o lista vacía si no hay ninguna
 	 */
 	List<WorkOrder> findByIds(List<String> workOrderIds);
+
+	List<WorkOrder> findNotInvoicedWorkOrdersByClientDni(String dni);
+
+	List<WorkOrder> findByMechanic(String mechanic_id);
 }

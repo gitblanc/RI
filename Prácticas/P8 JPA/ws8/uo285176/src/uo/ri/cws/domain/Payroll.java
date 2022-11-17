@@ -159,7 +159,7 @@ public class Payroll extends BaseEntity {
 	    boolean condDate = w.getDate().getMonth()
 		    .equals(this.date.getMonth())
 		    && w.getDate().getYear() == this.date.getYear();
-	    boolean condState = w.getState().equals(WorkOrderState.INVOICED);
+	    boolean condState = w.getStatus().equals(WorkOrderState.INVOICED);
 
 	    if (condDate && condState)
 		amount += Math.floor(w.getAmount());

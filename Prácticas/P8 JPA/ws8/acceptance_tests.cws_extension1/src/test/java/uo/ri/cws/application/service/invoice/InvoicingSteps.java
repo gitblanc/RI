@@ -26,7 +26,6 @@ import uo.ri.cws.application.service.vehicle.VehicleCrudService.VehicleDto;
 import uo.ri.cws.application.service.workorder.WorkOrderCrudService.WorkOrderDto;
 import uo.ri.cws.domain.Invoice.InvoiceState;
 import uo.ri.cws.domain.WorkOrder.WorkOrderState;
-import uo.ri.util.math.Round;
 
 public class InvoicingSteps {
 
@@ -46,23 +45,23 @@ public class InvoicingSteps {
 
     private VehicleDto vehicle;
 
-    public InvoicingSteps ( TestContext ctx ) {
+    public InvoicingSteps(TestContext ctx) {
 	this.ctx = ctx;
 	client = (ClientDto) ctx.get(TestContext.Key.ACLIENT);
     }
 
     @Given("a vehicle")
-    public void aVehicle ( ) {
+    public void aVehicle() {
 	vehicle = new VehicleUtil().withOwner(client.id).register().get();
     }
 
     @Given("one finished workorder")
-    public void aListOfOneFinishedWorkorderId ( ) {
+    public void aListOfOneFinishedWorkorderId() {
 	createWorkOrderWithState("FINISHED");
 	onlyFinishedWorkorders.add(workorder);
     }
 
-    private void createWorkOrderWithState ( String state ) {
+    private void createWorkOrderWithState(String state) {
 	double leftLimit = 1D;
 	double rightLimit = 100D;
 
@@ -74,12 +73,12 @@ public class InvoicingSteps {
     }
 
     @Given("a list of several finished workorder ids")
-    public void aListOfSeveralFinishedWorkorderIds ( ) {
+    public void aListOfSeveralFinishedWorkorderIds() {
 	int min = 2;
 	int max = 5;
 	int num = new Random().nextInt(max - min + 1) + min;
 
-	for ( int x = 0; x < num; x++ ) {
+	for (int x = 0; x < num; x++) {
 	    createWorkOrderWithState("FINISHED");
 	    onlyFinishedWorkorders.add(workorder);
 
@@ -89,69 +88,69 @@ public class InvoicingSteps {
     }
 
     @Given("one non existent workorder")
-    public void oneNonExistentWorkorder ( ) {
+    public void oneNonExistentWorkorder() {
 	workordersIds.add("non-existing-workorderID");
     }
 
     @Given("one ASSIGNED workorder")
-    public void oneASSIGNEDWorkorder ( ) {
+    public void oneASSIGNEDWorkorder() {
 	createWorkOrderWithState("ASSIGNED");
 
     }
 
     @Given("one OPEN workorder")
-    public void oneOPENWorkorder ( ) {
+    public void oneOPENWorkorder() {
 	createWorkOrderWithState("OPEN");
 
     }
 
     @Given("one INVOICED workorder")
-    public void oneINVOICEDWorkorder ( ) {
+    public void oneINVOICEDWorkorder() {
 	createWorkOrderWithState("INVOICED");
 
     }
 
     @Given("a null id")
-    public void aNullId ( ) {
+    public void aNullId() {
 	workordersIds.add(null);
     }
 
     @Given("an empty id")
-    public void anEmtpyId ( ) {
+    public void anEmtpyId() {
 	workordersIds.add(" ");
     }
 
     @When("I try to create an invoice")
-    public void iTryToCreateAnInvoice ( ) {
+    public void iTryToCreateAnInvoice() {
 	tryCreateAndKeepException();
 
     }
 
     @When("I try to create an invoice for a null list")
-    public void iTryToCreateAnInvoiceForANullList ( ) {
+    public void iTryToCreateAnInvoiceForANullList() {
 	this.workordersIds = null;
 	tryCreateAndKeepException();
 
     }
 
     @When("I try to create an invoice for an empty list")
-    public void iTryToCreateAnInvoiceForAnEmptyList ( ) {
+    public void iTryToCreateAnInvoiceForAnEmptyList() {
 	tryCreateAndKeepException();
     }
 
     @When("I try to create an invoice for a wrong argument")
-    public void iTryToCreateAnInvoiceForAWrongArgument ( ) {
+    public void iTryToCreateAnInvoiceForAWrongArgument() {
 	tryCreateAndKeepException();
 
     }
 
     @When("I try to create an invoice for a list and one of the strings is empty")
-    public void iTryToCreateAnInvoiceForAListAndOneOfTheStringsIsEmpty ( ) {
+    public void iTryToCreateAnInvoiceForAListAndOneOfTheStringsIsEmpty() {
 	int min = 2;
 	int max = 5;
 	int num = new Random().nextInt(max - min + 1) + min;
 
-	for ( int x = 0; x < num; x++ ) {
+	for (int x = 0; x < num; x++) {
 	    createWorkOrderWithState("FINISHED");
 	}
 	workordersIds.add("");
@@ -186,7 +185,7 @@ public class InvoicingSteps {
 //
 //    }
 
-    private void tryCreateAndKeepException ( ) {
+    private void tryCreateAndKeepException() {
 	try {
 	    service.createInvoiceFor(workordersIds);
 	    fail();
@@ -198,7 +197,7 @@ public class InvoicingSteps {
 
     }
 
-    private double randomAmount ( double leftLimit, double rightLimit ) {
+    private double randomAmount(double leftLimit, double rightLimit) {
 
 	double generatedDouble = leftLimit
 		+ new Random().nextDouble() * (rightLimit - leftLimit);
@@ -207,12 +206,12 @@ public class InvoicingSteps {
 
     @SuppressWarnings("unchecked")
     @When("I create an invoice for the workorders")
-    public void iCreateAnInvoiceForTheWorkorders ( ) throws BusinessException {
-	if ( workordersIds.isEmpty() ) {
+    public void iCreateAnInvoiceForTheWorkorders() throws BusinessException {
+	if (workordersIds.isEmpty()) {
 	    workordersIds = ((List<WorkOrderDto>) this.ctx
 		    .get(TestContext.Key.WORKORDERS)).stream()
-			    .filter(wo -> wo.state.equals("FINISHED"))
-			    .map(wo -> wo.id).collect(Collectors.toList());
+		    .filter(wo -> wo.state.equals("FINISHED")).map(wo -> wo.id)
+		    .collect(Collectors.toList());
 	}
 	invoice = Factory.service.forCreateInvoiceService()
 		.createInvoiceFor(workordersIds);
@@ -227,7 +226,7 @@ public class InvoicingSteps {
 //    }
 
     @Then("I get only finished workorders")
-    public void iGetOnlyFinishedWorkorders ( ) {
+    public void iGetOnlyFinishedWorkorders() {
 	assertTrue(this.invoicingWorkOrders
 		.size() == this.onlyFinishedWorkorders.size());
 	/* ids match */
@@ -240,12 +239,12 @@ public class InvoicingSteps {
     }
 
     @Then("I get an empty list")
-    public void iGetAnEmptyList ( ) {
+    public void iGetAnEmptyList() {
 	assertTrue(this.invoicingWorkOrders.isEmpty());
     }
 
     @Then("an invoice is created")
-    public void anInvoiceIsCreated ( ) {
+    public void anInvoiceIsCreated() {
 	/* invoice is created */
 	InvoiceDto found = new InvoiceUtil().find(invoice.id).get();
 	assertTrue(found != null);
@@ -260,7 +259,7 @@ public class InvoicingSteps {
 
 	/* workorders are updated */
 	List<WorkOrderDto> updated = new ArrayList<>();
-	for ( String id : workordersIds ) {
+	for (String id : workordersIds) {
 	    FindWorkOrderSqlUnitOfWork find = new FindWorkOrderSqlUnitOfWork(
 		    id);
 	    find.execute();
@@ -277,22 +276,22 @@ public class InvoicingSteps {
 
     }
 
-    private InvoiceDto createExpectedInvoice ( List<WorkOrderDto> workorders ) {
+    private InvoiceDto createExpectedInvoice(List<WorkOrderDto> workorders) {
 	InvoiceDto result = new InvoiceDto();
 
 	double total = calculateTotal(workorders);
 
-	result.total = Math.floor(total * 100)/100;
+	result.total = Math.floor(total * 100) / 100;
 	result.state = InvoiceState.NOT_YET_PAID.toString();
 	return result;
     }
 
-    private double calculateTotal ( List<WorkOrderDto> lst ) {
+    private double calculateTotal(List<WorkOrderDto> lst) {
 	double VAT = 0.21;
 	double totalAmount = lst.stream().map(wo -> wo.total)
 		.collect(Collectors.summingDouble(Double::doubleValue));
 	double total = totalAmount * (1 + VAT); // vat included
-	return total ;
+	return total;
     }
 
 }

@@ -3,7 +3,9 @@ package uo.ri.cws.application.repository;
 import java.util.List;
 import java.util.Optional;
 
+import uo.ri.cws.domain.ContractType;
 import uo.ri.cws.domain.Mechanic;
+import uo.ri.cws.domain.ProfessionalGroup;
 
 public interface MechanicRepository extends Repository<Mechanic> {
 
@@ -18,4 +20,9 @@ public interface MechanicRepository extends Repository<Mechanic> {
 	 */
 	List<Mechanic> findAll();
 
+	List<Mechanic> findAllInForce();
+
+	List<Mechanic> findInForceInContractType(ContractType contractType);
+
+	List<Mechanic> findAllInProfessionalGroup(ProfessionalGroup group);
 }

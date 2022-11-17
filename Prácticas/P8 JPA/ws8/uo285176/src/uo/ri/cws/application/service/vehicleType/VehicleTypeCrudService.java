@@ -1,4 +1,4 @@
-package uo.ri.cws.application.service.vehicletype;
+package uo.ri.cws.application.service.vehicleType;
 
 /**
  * This service is intended to be used by the Cashier

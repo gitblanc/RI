@@ -46,7 +46,7 @@ public class AddSteps {
 
     private ContractDto inForce = null, terminated = null;
 
-    public AddSteps ( TestContext ctx ) {
+    public AddSteps(TestContext ctx) {
 	this.ctx = ctx;
 	inForce = (ContractDto) ctx.get(Key.INFORCE);
 	terminated = (ContractDto) ctx.get(Key.TERMINATED);
@@ -56,15 +56,15 @@ public class AddSteps {
     @When("I hire the mechanic with this data")
     // start date = first day next month
     // end date = null
-    public void i_register_this_contract_for_this_mechanic (
-	    DataTable dataTable ) throws BusinessException {
+    public void i_register_this_contract_for_this_mechanic(DataTable dataTable)
+	    throws BusinessException {
 	Map<String, String> row = dataTable.asMaps().get(0);
 
 	MechanicDto m = (MechanicDto) ctx.get(Key.MECHANIC);
 
 	ContractDto previous = new ContractUtil()
 		.findContractInForceForMechanic(m.id).get();
-	if ( previous != null ) { // there were a prvious contract in force
+	if (previous != null) { // there were a prvious contract in force
 	    FindContractByIdSqlUnitOfWork x = new FindContractByIdSqlUnitOfWork(
 		    previous.id);
 	    x.execute();
@@ -92,7 +92,7 @@ public class AddSteps {
     }
 
     @Given("a contract terminated")
-    public void a_contract_terminated_for_the_mechanic ( )
+    public void a_contract_terminated_for_the_mechanic()
 	    throws BusinessException {
 	MechanicDto m = (MechanicDto) ctx.get(Key.MECHANIC);
 	ContractTypeDto ct = (ContractTypeDto) ctx.get(Key.CONTRACTTYPE);
@@ -102,8 +102,8 @@ public class AddSteps {
 	add_a_contract_terminated_for_mechanic(m, ct, pg);
     }
 
-    private void add_a_contract_terminated_for_mechanic ( MechanicDto m,
-	    ContractTypeDto ct, ProfessionalGroupBLDto pg )
+    private void add_a_contract_terminated_for_mechanic(MechanicDto m,
+	    ContractTypeDto ct, ProfessionalGroupBLDto pg)
 	    throws BusinessException {
 	LocalDate startDate = LocalDate.now().minusYears(1);
 	LocalDate endDate = startDate.plusMonths(6);
@@ -114,13 +114,13 @@ public class AddSteps {
     }
 
     @Then("contract version is {int}")
-    public void contract_version_is ( Integer n ) {
+    public void contract_version_is(Integer n) {
 	assertTrue(inForce.version == n);
 
     }
 
     @Then("previous contract is terminated with this settlement")
-    public void previous_contract_is_terminated ( DataTable t )
+    public void previous_contract_is_terminated(DataTable t)
 	    throws BusinessException {
 	terminated = (ContractDto) ctx.get(Key.TERMINATED);
 
@@ -136,21 +136,21 @@ public class AddSteps {
     }
 
     @Then("there is a contract in force for the mechanic with the following data")
-    public void there_is_a_contract_in_force_for_the_mechanic (
-	    DataTable dataTable ) throws BusinessException {
+    public void there_is_a_contract_in_force_for_the_mechanic(
+	    DataTable dataTable) throws BusinessException {
 	MechanicDto m = (MechanicDto) ctx.get(Key.MECHANIC);
 	inForce = cUtil.findContractInForceForMechanic(m.id).get();
 	LocalDate initDate, endDate = null;
 
 	Map<String, String> row = dataTable.asMaps().get(0);
 	String d = row.get("startDate");
-	if ( d != null )
+	if (d != null)
 	    initDate = LocalDateConverter.convert(d);
 	else
 	    initDate = LocalDate.now()
 		    .with(TemporalAdjusters.firstDayOfNextMonth());
 
-	if ( inForce.contractTypeName.equals("FIXED_TERM") ) {
+	if (inForce.contractTypeName.equals("FIXED_TERM")) {
 	    d = row.get("endDate");
 	    endDate = LocalDateConverter.convert(d);
 	}
@@ -161,7 +161,7 @@ public class AddSteps {
 	assertTrue(inForce.contractTypeName.equals(row.get("type")));
 	assertTrue(inForce.state.equals(ContractState.IN_FORCE));
 	assertTrue(inForce.startDate.equals(initDate));
-	if ( inForce.contractTypeName.equals("FIXED_TERM") )
+	if (inForce.contractTypeName.equals("FIXED_TERM"))
 	    assertTrue(inForce.endDate.equals(endDate));
 	double sett = Double.parseDouble(row.get("settlement"));
 	sett = trunc2Dec(sett); // (Math.round(sett * 100) / 100);
@@ -173,12 +173,12 @@ public class AddSteps {
     }
 
     @Then("there is no settlement")
-    public void there_is_no_settlement ( ) {
+    public void there_is_no_settlement() {
 	assertTrue(inForce.settlement == 0.0);
     }
 
     @Then("start date is first day next month")
-    public void start_date_is_first_day_next_month ( ) {
+    public void start_date_is_first_day_next_month() {
 	LocalDate firstDayofNextMonth = LocalDate.now()
 		.with(TemporalAdjusters.firstDayOfNextMonth());
 	assertTrue(inForce.startDate.equals(firstDayofNextMonth));
@@ -188,7 +188,7 @@ public class AddSteps {
      * All payrolls are generated, this month and before
      */
     @Given("several payrolls")
-    public void several_payrolls ( ) {
+    public void several_payrolls() {
 	List<PayrollBLDto> payrolls = new ArrayList<>();
 	LocalDate fromDate = LocalDate.now();
 	LocalDate toDate = inForce.startDate;
@@ -199,10 +199,10 @@ public class AddSteps {
 	ctx.put(Key.PAYROLLS, payrolls);
     }
 
-    private PayrollBLDto generateAMonthPayroll ( ContractDto c,
-	    LocalDate endDate ) {
+    private PayrollBLDto generateAMonthPayroll(ContractDto c,
+	    LocalDate endDate) {
 	double bonus = 0.0;
-	if ( endDate.getMonthValue() == 6 || endDate.getMonthValue() == 12 ) {
+	if (endDate.getMonthValue() == 6 || endDate.getMonthValue() == 12) {
 	    bonus = 1000.0;
 	}
 	pUtil.unique().forContract(c.id).forDate(endDate).forMonthlyWage(1000.0)
@@ -213,7 +213,7 @@ public class AddSteps {
     }
 
     @Given("several payrolls this month only")
-    public void several_payrolls_this_month_only ( ) {
+    public void several_payrolls_this_month_only() {
 	ContractDto c = inForce;
 	LocalDate beginDate = LocalDate.now();
 	LocalDate endDate = beginDate;
@@ -221,7 +221,7 @@ public class AddSteps {
     }
 
     @Given("several payrolls before this month")
-    public void several_old_payrolls ( ) {
+    public void several_old_payrolls() {
 	ContractDto c = inForce;
 	LocalDate beginDate = c.startDate;
 	LocalDate endDate = c.startDate.plusMonths(1);
@@ -233,7 +233,7 @@ public class AddSteps {
     }
 
     @Then("previous contract settlement is calculated")
-    public void settlement_is_calculated ( ) {
+    public void settlement_is_calculated() {
 	/*
 	 * settlement is 158.67
 	 */
@@ -246,7 +246,7 @@ public class AddSteps {
     }
 
     @When("I try to add a contract for a non existing mechanic")
-    public void i_try_to_add_a_contract_for_a_non_existing_mechanic ( ) {
+    public void i_try_to_add_a_contract_for_a_non_existing_mechanic() {
 	MechanicDto m = new MechanicUtil().unique().get();
 	ContractTypeDto ct = new ContractTypeUtil()
 		.findContractType("PERMANENT").get();
@@ -259,7 +259,7 @@ public class AddSteps {
     }
 
     @When("I try to add a contract for a non existing contract type")
-    public void i_try_to_add_a_contract_for_a_non_existing_contract_type ( ) {
+    public void i_try_to_add_a_contract_for_a_non_existing_contract_type() {
 	MechanicDto m = (MechanicDto) ctx.get(Key.MECHANIC);
 	ContractTypeDto ct = new ContractTypeUtil().unique().get();
 	ProfessionalGroupBLDto pg = new ProfessionalGroupUtil()
@@ -271,7 +271,7 @@ public class AddSteps {
     }
 
     @When("I try to add a contract for a non existing professional group")
-    public void i_try_to_add_a_contract_for_a_non_existing_professional_group ( ) {
+    public void i_try_to_add_a_contract_for_a_non_existing_professional_group() {
 	MechanicDto m = (MechanicDto) ctx.get(Key.MECHANIC);
 	ContractTypeDto ct = new ContractTypeUtil()
 		.findContractType("PERMANENT").get();
@@ -283,7 +283,7 @@ public class AddSteps {
     }
 
     @When("I try to add a contract with end date not later than start date")
-    public void i_try_to_add_a_contract_with_start_date_not_later_than_today ( ) {
+    public void i_try_to_add_a_contract_with_start_date_not_later_than_today() {
 	MechanicDto m = (MechanicDto) ctx.get(Key.MECHANIC);
 	ContractTypeDto ct = new ContractTypeUtil()
 		.findContractType("FIXED_TERM").get();
@@ -297,13 +297,13 @@ public class AddSteps {
     }
 
     @When("I try to add a null argument")
-    public void i_try_to_add_a_null_argument ( ) {
+    public void i_try_to_add_a_null_argument() {
 	ContractDto c = null;
 	tryAddAndKeepException(c);
     }
 
     @When("I try to add a contract with null dni")
-    public void i_try_to_add_a_contract_with_null_mechanic_id ( ) {
+    public void i_try_to_add_a_contract_with_null_mechanic_id() {
 
 	ContractDto c = cUtil.unique().get();
 	c.dni = null;
@@ -312,7 +312,7 @@ public class AddSteps {
     }
 
     @When("I try to add a contract with null contract type id")
-    public void i_try_to_add_a_contract_with_null_contract_type_id ( ) {
+    public void i_try_to_add_a_contract_with_null_contract_type_id() {
 
 	ContractDto c = cUtil.unique().get();
 	c.dni = NIFUtil.generateRandomNIF();
@@ -321,7 +321,7 @@ public class AddSteps {
     }
 
     @When("I try to add a contract with null professional group id")
-    public void i_try_to_add_a_contract_with_null_professional_group_id ( ) {
+    public void i_try_to_add_a_contract_with_null_professional_group_id() {
 
 	ContractDto c = cUtil.unique().get();
 	c.dni = NIFUtil.generateRandomNIF();
@@ -330,7 +330,7 @@ public class AddSteps {
     }
 
     @When("I try to add a contract with wrong dni {string}")
-    public void i_try_to_add_a_contract_with_dni ( String mechdni ) {
+    public void i_try_to_add_a_contract_with_dni(String mechdni) {
 
 	ContractDto c = cUtil.unique().get();
 	c.dni = mechdni;
@@ -344,8 +344,8 @@ public class AddSteps {
      */
 
     @When("I try to add a contract with wrong fields {string} {string} {double}")
-    public void i_try_to_add_a_contract_wrong ( String type, String group,
-	    Double wage ) {
+    public void i_try_to_add_a_contract_wrong(String type, String group,
+	    Double wage) {
 	ContractDto c = cUtil.unique().get();
 
 	c.contractTypeName = type;
@@ -355,14 +355,14 @@ public class AddSteps {
     }
 
     @When("I try to add a contract with null end date for FIXED_TERM contract type")
-    public void i_try_to_add_a_contract_with_null_end_date ( ) {
+    public void i_try_to_add_a_contract_with_null_end_date() {
 	ContractDto c = cUtil.unique().get();
 	c.contractTypeName = "FIXED_TERM";
 	c.endDate = null;
 	tryAddAndKeepException(c);
     }
 
-    private void tryAddAndKeepException ( ContractDto c ) {
+    private void tryAddAndKeepException(ContractDto c) {
 	try {
 	    service.addContract(c);
 	    fail();
@@ -373,11 +373,11 @@ public class AddSteps {
 	}
     }
 
-    private double calculateSettlement ( ContractDto arg ) {
+    private double calculateSettlement(ContractDto arg) {
 	long days = arg.startDate.until(arg.endDate, ChronoUnit.DAYS);
 	int numberOfEntireYearsWorked = (int) (days / DAYSINAYEAR);
 	Double settlement = 0.0;
-	if ( numberOfEntireYearsWorked > 0 ) {
+	if (numberOfEntireYearsWorked > 0) {
 	    double dailyGrossWage = calculateDailyGrossWageLastYear(arg);
 	    dailyGrossWage = trunc2Dec(dailyGrossWage);
 	    double compensationDays = findCompensationDays(arg);
@@ -388,12 +388,12 @@ public class AddSteps {
 	return settlement;
     }
 
-    private double trunc2Dec ( double arg ) {
+    private double trunc2Dec(double arg) {
 	double result = Math.round(arg * 100) / 100.0;
 	return result;
     }
 
-    private double calculateDailyGrossWageLastYear ( ContractDto existing ) {
+    private double calculateDailyGrossWageLastYear(ContractDto existing) {
 	FindPayrollsByContractLastYearSqlUnitOfWork unit = new FindPayrollsByContractLastYearSqlUnitOfWork(
 		existing.id);
 	unit.execute();
@@ -407,7 +407,7 @@ public class AddSteps {
 	return monthlyEarnings / DAYSINAYEAR;
     }
 
-    private double findCompensationDays ( ContractDto arg ) {
+    private double findCompensationDays(ContractDto arg) {
 	FindContractTypeByIdSqlUnitOfWork unit = new FindContractTypeByIdSqlUnitOfWork(
 		arg.contractTypeName);
 	unit.execute();

@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import uo.ri.cws.domain.Contract.ContractState;
 import uo.ri.cws.domain.WorkOrder.WorkOrderState;
 import uo.ri.cws.domain.base.BaseEntity;
 import uo.ri.util.assertion.ArgumentChecks;
@@ -83,8 +84,15 @@ public class Payroll extends BaseEntity {
     private void calcularDatosPayroll() {
 	this.monthlyWage = Math.floor(contract.getAnnualBaseWage() / 14);
 	calculateBonus();// bonus
-	calculateProductivityBonus(contract.getMechanic().get().getAssigned(),
-		contract.getProfessionalGroup());// plus de productividad
+	if (contract.getMechanic().isPresent()) {
+	    calculateProductivityBonus(
+		    contract.getMechanic().get().getAssigned(),
+		    contract.getProfessionalGroup());// plus de productividad
+	} else if (contract.getState().equals(ContractState.TERMINATED)) {
+	    calculateProductivityBonus(
+		    contract.getFiredMechanic().get().getAssigned(),
+		    contract.getProfessionalGroup());// plus de productividad
+	}
 	calculateTrienniumPayment();// trienniums
 	double grossWage = calculateGrossWage();
 	calculateIncomeTax(grossWage, contract.getAnnualBaseWage());

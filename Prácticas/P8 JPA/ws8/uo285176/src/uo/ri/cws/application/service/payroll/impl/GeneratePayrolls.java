@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import uo.ri.conf.Factory;
 import uo.ri.cws.application.repository.ContractRepository;
-import uo.ri.cws.application.repository.MechanicRepository;
 import uo.ri.cws.application.repository.PayrollRepository;
 import uo.ri.cws.application.service.BusinessException;
 import uo.ri.cws.application.util.command.Command;
@@ -27,7 +26,6 @@ public class GeneratePayrolls implements Command<Void> {
     private LocalDate date;
 
     private ContractRepository crepo = Factory.repository.forContract();
-    private MechanicRepository mrepo = Factory.repository.forMechanic();
     private PayrollRepository repo = Factory.repository.forPayroll();
 
     public GeneratePayrolls() {

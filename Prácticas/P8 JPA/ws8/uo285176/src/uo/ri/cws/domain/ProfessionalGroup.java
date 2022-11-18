@@ -39,8 +39,8 @@ public class ProfessionalGroup extends BaseEntity {
     ProfessionalGroup() {
     }
 
-    public ProfessionalGroup(String name, double productivityRate,
-	    double triennium) {
+    public ProfessionalGroup(String name, double triennium,
+	    double productivityRate) {
 	ArgumentChecks.isNotNull(name);
 	ArgumentChecks.isNotEmpty(name);
 	ArgumentChecks.isTrue(productivityRate >= 0);

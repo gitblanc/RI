@@ -42,7 +42,7 @@ public class AddProfessionalGroup implements Command<ProfessionalGroupBLDto> {
 	Optional<ProfessionalGroup> pg = repo.findByName(group.name);
 	BusinessChecks.isTrue(!pg.isPresent(), "The group already exists");
 	ProfessionalGroup p = new ProfessionalGroup(group.name,
-		group.productivityRate, group.trieniumSalary);
+		group.trieniumSalary, group.productivityRate);
 	repo.add(p);
 	return DtoAssembler.toProfessionalGroupBLDto(p);
     }

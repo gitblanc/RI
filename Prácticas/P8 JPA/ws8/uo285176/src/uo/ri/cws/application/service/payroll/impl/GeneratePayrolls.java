@@ -4,7 +4,6 @@
 package uo.ri.cws.application.service.payroll.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +16,6 @@ import uo.ri.cws.application.service.BusinessException;
 import uo.ri.cws.application.util.command.Command;
 import uo.ri.cws.domain.Contract;
 import uo.ri.cws.domain.Contract.ContractState;
-import uo.ri.cws.domain.Mechanic;
 import uo.ri.cws.domain.Payroll;
 
 /**
@@ -61,34 +59,20 @@ public class GeneratePayrolls implements Command<Void> {
 			}
 		    }
 		} else if (c.getState().equals(ContractState.TERMINATED)) {
-		    Optional<Payroll> p = repo
-			    .findCurrentMonthByContractId(c.getId());
-		    if (p.isPresent()) {
-			generateNewPayroll(c);
+		    if (c.getEndDate().isPresent()) {
+			if (c.getEndDate().get().getMonthValue() == this.date
+				.getMonthValue()
+				&& c.getEndDate().get().getYear() == this.date
+					.getYear()) {
+			    Optional<Payroll> p = repo.findByDate(this.date);
+			    if (p.isEmpty()) {
+				generateNewPayroll(c);
+			    }
+			}
 		    }
 		}
 	    }
 	}
-//	if (p != null) {
-//	    List<Mechanic> mechanics = mrepo.findAll();
-//	    if (!mechanics.isEmpty()) {
-//		for (Mechanic m : mechanics) {
-//		    List<Contract> terminated = new ArrayList<>(
-//			    m.getTerminatedContracts());
-//		    if (!terminated.isEmpty()) {
-//			for (Contract c : terminated) {
-//			    if (c.getEndDate().get().getMonthValue() == p
-//				    .getDate().getMonthValue()
-//				    && c.getEndDate().get().getYear() == p
-//					    .getDate().getYear())
-//				generateNewPayroll(c);
-//			}
-//		    }
-//
-//		}
-//	    }
-//
-//	}
 	return null;
     }
 
@@ -100,82 +84,6 @@ public class GeneratePayrolls implements Command<Void> {
 		payroll = Optional.ofNullable(p);
 	}
 	return payroll;
-    }
-
-//	List<Contract> contracts = crepo.findAll();
-//	if (!contracts.isEmpty()) {
-//	    for (Contract c : contracts) {
-//		if (c.getState().equals(ContractState.IN_FORCE)
-//			|| c.getState().equals(ContractState.TERMINATED)) {
-//		    if (c.getMechanic().isPresent()) {
-//
-//			Optional<Payroll> lastPayroll = repo
-//				.findCurrentMonthByContractId(c.getId());
-//			if (lastPayroll.isEmpty()) {
-//			    generateNewPayroll(c);
-//			}
-//		    }
-//		}
-//	    }
-//	}
-
-    private void generateTerminatedPayrolls() {
-	List<Mechanic> mechanics = mrepo.findAll();
-	if (!mechanics.isEmpty()) {
-	    for (Mechanic m : mechanics) {
-		List<Contract> terminatedContracts = new ArrayList<>(
-			m.getTerminatedContracts());
-		if (!terminatedContracts.isEmpty()) {
-		    for (Contract c : terminatedContracts) {
-			Optional<Payroll> lastPayroll = repo
-				.findCurrentMonthByContractId(c.getId());
-			if (lastPayroll.isEmpty())
-			    generateNewPayroll(c);
-		    }
-		}
-	    }
-	}
-    }
-
-    private void generateInForcePayrolls() {
-	List<Mechanic> mechanics = mrepo.findAllInForce();
-	if (!mechanics.isEmpty()) {
-	    for (Mechanic m : mechanics) {
-		List<Contract> contracts = new ArrayList<>(
-			m.getTerminatedContracts());
-		for (Contract c : contracts) {
-
-		    Optional<Payroll> lastPayroll = repo
-			    .findCurrentMonthByContractId(c.getId());
-		    if (lastPayroll.isEmpty())
-			generateNewPayroll(c);
-		}
-
-		Optional<Contract> c = m.getContractInForce();
-
-		if (c.isPresent()) {
-		    Optional<Payroll> lastPayroll = repo
-			    .findCurrentMonthByContractId(c.get().getId());
-		    if (lastPayroll.isEmpty())
-			generateNewPayroll(c.get());
-		}
-
-	    }
-	}
-    }
-
-    private Contract findLastTerminatedContract(Payroll p,
-	    List<Contract> terminatedContracts) {
-	terminatedContracts.sort(new OrdenarContratosTerminados());
-	int month = p.getDate().getMonthValue();
-	int year = p.getDate().getYear();
-	Contract c = null;
-	for (Contract co : terminatedContracts) {
-	    if (co.getEndDate().get().getMonthValue() == month
-		    && co.getEndDate().get().getYear() == year)
-		c = co;
-	}
-	return c;
     }
 
     private void generateNewPayroll(Contract c) {

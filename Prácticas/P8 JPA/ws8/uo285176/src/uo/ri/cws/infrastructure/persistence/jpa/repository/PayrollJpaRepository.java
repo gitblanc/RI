@@ -54,4 +54,21 @@ public class PayrollJpaRepository extends BaseJpaRepository<Payroll>
 	return Optional.ofNullable(p);
     }
 
+    @Override
+    public Optional<Payroll> findByDate(LocalDate date) {
+	TypedQuery<Payroll> tq = Jpa.getManager()
+		.createNamedQuery("Payroll.findByDate", Payroll.class)
+		.setParameter(1, date.getMonthValue())
+		.setParameter(2, date.getYear());
+
+	Payroll p = null;
+	// Obtenemos los resultados NO USAR getSingleResult()
+	List<Payroll> result = tq.getResultList();
+
+	if (!result.isEmpty())
+	    p = result.get(0);
+
+	return Optional.ofNullable(p);
+    }
+
 }

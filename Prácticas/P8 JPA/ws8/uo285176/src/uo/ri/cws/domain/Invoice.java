@@ -89,6 +89,8 @@ public class Invoice extends BaseEntity {
 	}
 	this.vat = LocalDate.parse("2012-07-01").isBefore(this.date) ? 21.0
 		: 18.0;
+	// this.amount = Math.floor(newAmount * (1 + this.vat / 100) * 100) /
+	// 100;
 	this.amount = Round.twoCents(newAmount * (1 + this.vat / 100));
     }
 

@@ -89,7 +89,7 @@
 			   where m.id = ?1
 		</query>
 	</named-query>
-	
+
 	<named-query name="Contract.findByProfessionalGroupId">
 		<query>select c 
 			   from Contract c 
@@ -112,6 +112,31 @@
 			select p 
 			from ProfessionalGroup p 
 			where p.name = ?1
+		</query>
+	</named-query>
+
+	<!-- Payroll queries -->
+	<named-query name="Payroll.findCurrentMonthPayrolls">
+		<query>
+			select p 
+			from Payroll p 
+			where FUNC('MONTH', p.date) = ?1 and FUNC('YEAR', p.date) = ?2
+		</query>
+	</named-query>
+	
+	<named-query name="Payroll.findByContract">
+		<query>
+			select p 
+			from Payroll p 
+			where p.contract.id = ?1
+		</query>
+	</named-query>
+
+	<named-query name="Payroll.findCurrentMonthByContractId">
+		<query>
+			select p 
+			from Payroll p 
+			where p.contract.id = ?1 and FUNC('MONTH', p.contract.endDate) = FUNC('MONTH', p.date)
 		</query>
 	</named-query>
 

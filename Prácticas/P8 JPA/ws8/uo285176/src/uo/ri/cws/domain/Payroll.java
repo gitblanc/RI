@@ -132,7 +132,7 @@ public class Payroll extends BaseEntity {
 	    double triennium = group.getTrienniumPayment();
 	    tPayment = triennium * numTrienniums;
 	}
-	this.trienniumPayment = Math.floor(tPayment * 10);// math.floor?
+	this.trienniumPayment = Math.floor(tPayment * 100) / 100;// math.floor?
     }
 
     private void calculateProductivityBonus(Set<WorkOrder> workOrders,
@@ -150,7 +150,7 @@ public class Payroll extends BaseEntity {
 	    double percentage = group.getProductivityBonusPercentage();
 	    productivityBonus = Math.floor(percentage * amount);
 	}
-	return Round.twoCents(productivityBonus / 1000);// Round.twoCents()
+	return Math.floor(productivityBonus / 100 * 100) / 100;// Round.twoCents()
     }
 
     private double calculateAmount(Set<WorkOrder> workOrders) {

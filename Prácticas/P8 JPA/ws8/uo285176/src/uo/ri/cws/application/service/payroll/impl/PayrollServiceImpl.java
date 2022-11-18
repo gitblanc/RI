@@ -22,27 +22,23 @@ public class PayrollServiceImpl implements PayrollService {
 
     @Override
     public void generatePayrolls() throws BusinessException {
-	// TODO Auto-generated method stub
-
+	executor.execute(new GeneratePayrolls());
     }
 
     @Override
     public void generatePayrolls(LocalDate present) throws BusinessException {
-	// TODO Auto-generated method stub
-
+	executor.execute(new GeneratePayrolls(present));
     }
 
     @Override
     public void deleteLastPayrollFor(String mechanicId)
 	    throws BusinessException {
-	// TODO Auto-generated method stub
-
+	executor.execute(new DeleteLastPayrollsFor(mechanicId));
     }
 
     @Override
     public void deleteLastPayrolls() throws BusinessException {
-	// TODO Auto-generated method stub
-
+	executor.execute(new DeleteLastPayrolls());
     }
 
     @Override

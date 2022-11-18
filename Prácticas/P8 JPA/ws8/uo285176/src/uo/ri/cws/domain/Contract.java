@@ -41,7 +41,6 @@ public class Contract extends BaseEntity {
 	public int compare(Payroll o1, Payroll o2) {
 	    return o1.getDate().compareTo(o2.getDate());
 	}
-
     }
 
     public enum ContractState {

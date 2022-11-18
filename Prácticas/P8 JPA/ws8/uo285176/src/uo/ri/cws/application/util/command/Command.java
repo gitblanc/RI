@@ -4,5 +4,5 @@ import uo.ri.cws.application.service.BusinessException;
 
 public interface Command<T> {
 
-	T execute() throws BusinessException; 
+    T execute() throws BusinessException;
 }

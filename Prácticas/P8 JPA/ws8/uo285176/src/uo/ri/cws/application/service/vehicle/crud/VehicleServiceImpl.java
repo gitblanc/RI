@@ -10,12 +10,12 @@ import uo.ri.cws.application.util.command.CommandExecutor;
 
 public class VehicleServiceImpl implements VehicleCrudService {
 
-	private CommandExecutor executor = Factory.executor.forExecutor();
+    private CommandExecutor executor = Factory.executor.forExecutor();
 
-	@Override
-	public Optional<VehicleDto> findVehicleByPlate(String plate)
-			throws BusinessException {
-		return executor.execute(new FindVehicleByPlate(plate));
-	}
+    @Override
+    public Optional<VehicleDto> findVehicleByPlate(String plate)
+	    throws BusinessException {
+	return executor.execute(new FindVehicleByPlate(plate));
+    }
 
 }

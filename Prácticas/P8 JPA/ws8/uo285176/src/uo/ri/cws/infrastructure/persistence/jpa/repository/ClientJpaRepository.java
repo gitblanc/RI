@@ -13,27 +13,27 @@ public class ClientJpaRepository extends BaseJpaRepository<Client>
 
     @Override
     public Optional<Client> findByDni(String dni) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<Client> findSponsoredByClient(String id) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<Client> findRecomendedBy(String id) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<Client> findWithThreeUnusedWorkOrders() {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<Client> findWithRecomendationsDone() {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
 }

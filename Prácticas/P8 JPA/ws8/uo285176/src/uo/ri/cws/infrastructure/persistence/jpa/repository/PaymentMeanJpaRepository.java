@@ -15,37 +15,37 @@ public class PaymentMeanJpaRepository extends BaseJpaRepository<PaymentMean>
 
     @Override
     public List<PaymentMean> findPaymentMeansByClientId(String id) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<PaymentMean> findPaymentMeansByInvoiceId(String idFactura) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<PaymentMean> findByClientId(String id) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public Object[] findAggregateVoucherDataByClientId(String id) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public Optional<CreditCard> findCreditCardByNumber(String pan) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<Voucher> findVouchersByClientId(String id) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public Optional<Voucher> findVoucherByCode(String code) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
 }

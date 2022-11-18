@@ -6,6 +6,6 @@ import uo.ri.cws.domain.VehicleType;
 
 public interface VehicleTypeRepository extends Repository<VehicleType> {
 
-	List<VehicleType> findAll();
+    List<VehicleType> findAll();
 
 }

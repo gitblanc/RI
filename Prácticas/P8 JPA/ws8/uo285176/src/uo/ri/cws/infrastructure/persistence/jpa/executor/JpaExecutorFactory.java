@@ -5,9 +5,9 @@ import uo.ri.cws.application.util.command.CommandExecutor;
 
 public class JpaExecutorFactory implements ComandExecutorFactory {
 
-	@Override
-	public CommandExecutor forExecutor() {
-		return new JpaCommandExecutor();
-	}
+    @Override
+    public CommandExecutor forExecutor() {
+	return new JpaCommandExecutor();
+    }
 
 }

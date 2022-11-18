@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import uo.ri.cws.application.service.BusinessException;
 import uo.ri.cws.application.service.client.ClientCrudService;
+import uo.ri.util.exception.NotYetImplementedException;
 
 /**
  * @author UO285176
@@ -17,33 +18,28 @@ public class ClientServiceImpl implements ClientCrudService {
 
     @Override
     public ClientDto addClient(ClientDto client) throws BusinessException {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public void deleteClient(String idClient) throws BusinessException {
-	// TODO Auto-generated method stub
-
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public void updateClient(ClientDto client) throws BusinessException {
-	// TODO Auto-generated method stub
-
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<ClientDto> findAllClients() throws BusinessException {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public Optional<ClientDto> findClientById(String idClient)
 	    throws BusinessException {
-	// TODO Auto-generated method stub
-	return null;
+	throw new NotYetImplementedException("no me toca");
     }
 
 }

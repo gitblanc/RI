@@ -10,17 +10,17 @@ public interface InterventionService {
 
     // ...
 
-	public static class InterventionDto {
+    public static class InterventionDto {
 
-		public String id;
-		public long version;
+	public String id;
+	public long version;
 
-		public LocalDateTime date;
-		public int minutes;
+	public LocalDateTime date;
+	public int minutes;
 
-		// might be null
-		public String mechanicId;
-		public String workorderId;
+	// might be null
+	public String mechanicId;
+	public String workorderId;
 
-	}
+    }
 }

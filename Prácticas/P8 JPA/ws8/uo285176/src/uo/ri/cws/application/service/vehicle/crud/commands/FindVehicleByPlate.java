@@ -13,20 +13,19 @@ import uo.ri.util.assertion.ArgumentChecks;
 
 public class FindVehicleByPlate implements Command<Optional<VehicleDto>> {
 
-	private String plate;
-	private VehicleRepository repo = Factory.repository.forVehicle();
-	
-	public FindVehicleByPlate(String plate) {
-		ArgumentChecks.isNotEmpty( plate );
-		this.plate = plate;
-	}
+    private String plate;
+    private VehicleRepository repo = Factory.repository.forVehicle();
 
-	@Override
-	public Optional<VehicleDto> execute() throws BusinessException {
-		Optional<Vehicle> m = repo.findByPlate( plate );
-		return m.isPresent()
-				? Optional.of( DtoAssembler.toDto( m.get() ))
-				: Optional.empty();
-	}
+    public FindVehicleByPlate(String plate) {
+	ArgumentChecks.isNotEmpty(plate);
+	this.plate = plate;
+    }
+
+    @Override
+    public Optional<VehicleDto> execute() throws BusinessException {
+	Optional<Vehicle> m = repo.findByPlate(plate);
+	return m.isPresent() ? Optional.of(DtoAssembler.toDto(m.get()))
+		: Optional.empty();
+    }
 
 }

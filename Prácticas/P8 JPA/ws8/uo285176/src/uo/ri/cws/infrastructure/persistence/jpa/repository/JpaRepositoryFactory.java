@@ -66,7 +66,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
     @Override
     public ChargeRepository forCharge() {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override

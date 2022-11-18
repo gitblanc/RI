@@ -23,6 +23,7 @@ import uo.ri.cws.application.service.vehicleType.VehicleTypeCrudService;
 import uo.ri.cws.application.service.workorder.CloseWorkOrderService;
 import uo.ri.cws.application.service.workorder.ViewAssignedWorkOrdersService;
 import uo.ri.cws.application.service.workorder.WorkOrderCrudService;
+import uo.ri.util.exception.NotYetImplementedException;
 
 public class BusinessFactory implements ServiceFactory {
 
@@ -43,17 +44,17 @@ public class BusinessFactory implements ServiceFactory {
 
     @Override
     public CloseWorkOrderService forClosingBreakdown() {
-	throw new RuntimeException("Not yet implemented");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public VehicleTypeCrudService forVehicleTypeCrudService() {
-	throw new RuntimeException("Not yet implemented");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public SparePartCrudService forSparePartCrudService() {
-	throw new RuntimeException("Not yet implemented");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
@@ -63,17 +64,17 @@ public class BusinessFactory implements ServiceFactory {
 
     @Override
     public ClientHistoryService forClientHistoryService() {
-	throw new RuntimeException("Not yet implemented");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public WorkOrderCrudService forWorkOrderCrudService() {
-	throw new RuntimeException("Not yet implemented");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public ViewAssignedWorkOrdersService forViewAssignedWorkOrdersService() {
-	throw new RuntimeException("Not yet implemented");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override

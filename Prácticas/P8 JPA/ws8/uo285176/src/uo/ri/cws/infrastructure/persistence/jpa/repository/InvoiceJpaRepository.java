@@ -16,7 +16,7 @@ public class InvoiceJpaRepository extends BaseJpaRepository<Invoice>
 
     @Override
     public Optional<Invoice> findByNumber(Long numero) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override

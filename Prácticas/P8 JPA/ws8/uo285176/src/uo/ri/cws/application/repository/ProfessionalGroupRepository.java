@@ -4,12 +4,13 @@ import java.util.Optional;
 
 import uo.ri.cws.domain.ProfessionalGroup;
 
-public interface ProfessionalGroupRepository extends Repository<ProfessionalGroup>{
+public interface ProfessionalGroupRepository
+	extends Repository<ProfessionalGroup> {
 
-	/**
-	 * @param name
-	 * @return the contract category object 
-	 */
-	Optional<ProfessionalGroup> findByName(String name);
+    /**
+     * @param name
+     * @return the contract category object
+     */
+    Optional<ProfessionalGroup> findByName(String name);
 
 }

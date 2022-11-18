@@ -21,12 +21,13 @@ public class DtoAssembler {
 	return dto;
     }
 
-    public static List<InvoicingWorkOrderDto> toWorkOrderDtoList(List<WorkOrder> list) {
+    public static List<InvoicingWorkOrderDto> toWorkOrderDtoList(
+	    List<WorkOrder> list) {
 	return list.stream().map(a -> toDto(a)).collect(Collectors.toList());
     }
 
-
-    public static List<InvoicingWorkOrderDto> toWorkOrderForInvoicingDtoList(List<WorkOrder> list) {
+    public static List<InvoicingWorkOrderDto> toWorkOrderForInvoicingDtoList(
+	    List<WorkOrder> list) {
 	List<InvoicingWorkOrderDto> result = new ArrayList<InvoicingWorkOrderDto>();
 	for (WorkOrder w : list)
 	    result.add(toDto(w));
@@ -34,4 +35,3 @@ public class DtoAssembler {
     }
 
 }
-

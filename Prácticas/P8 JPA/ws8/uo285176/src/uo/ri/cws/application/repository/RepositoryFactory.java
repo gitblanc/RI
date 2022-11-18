@@ -1,6 +1,5 @@
 package uo.ri.cws.application.repository;
 
-
 public interface RepositoryFactory {
 
     MechanicRepository forMechanic();
@@ -21,15 +20,14 @@ public interface RepositoryFactory {
 
     VehicleTypeRepository forVehicleType();
 
-
     ChargeRepository forCharge();
 
-	ContractRepository forContract();
+    ContractRepository forContract();
 
-	ProfessionalGroupRepository forProfessionalGroup();
+    ProfessionalGroupRepository forProfessionalGroup();
 
-	ContractTypeRepository forContractType();
+    ContractTypeRepository forContractType();
 
-	PayrollRepository forPayroll();
+    PayrollRepository forPayroll();
 
 }

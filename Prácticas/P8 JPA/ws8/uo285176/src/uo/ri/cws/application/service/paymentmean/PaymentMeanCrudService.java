@@ -88,27 +88,28 @@ public interface PaymentMeanCrudService {
      */
     List<PaymentMeanDto> findPaymentMeansByClientId(String id)
 	    throws BusinessException;
-    
-    public static abstract class PaymentMeanDto {
-        public String id;
-        public Long version;
 
-        public String clientId;
-        public Double accumulated;
+    public static abstract class PaymentMeanDto {
+	public String id;
+	public Long version;
+
+	public String clientId;
+	public Double accumulated;
     }
 
     public static class CardDto extends PaymentMeanDto {
-        public String cardNumber;
-        public LocalDate cardExpiration;
-        public String cardType;
+	public String cardNumber;
+	public LocalDate cardExpiration;
+	public String cardType;
     }
-    
-    public static class CashDto extends PaymentMeanDto {}
-    
+
+    public static class CashDto extends PaymentMeanDto {
+    }
+
     public static class VoucherDto extends PaymentMeanDto {
-        public String code;
-        public String description;
-        public Double balance;
+	public String code;
+	public String description;
+	public Double balance;
     }
-    
+
 }

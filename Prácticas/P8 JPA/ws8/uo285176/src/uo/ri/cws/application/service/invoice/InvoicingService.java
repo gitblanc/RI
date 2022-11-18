@@ -30,14 +30,14 @@ public interface InvoicingService {
 
     public static class InvoiceDto {
 
-	public String id;		// the surrogate id (UUID)
+	public String id; // the surrogate id (UUID)
 	public long version;
 
-	public double total;	// total amount (money) vat included
-	public double vat;		// amount of vat (money)
-	public long number;		// the invoice identity, a sequential number
-	public LocalDate date;	// of the invoice
-	public String state;	// the state as in InvoiceState
+	public double total; // total amount (money) vat included
+	public double vat; // amount of vat (money)
+	public long number; // the invoice identity, a sequential number
+	public LocalDate date; // of the invoice
+	public String state; // the state as in InvoiceState
 
     }
 

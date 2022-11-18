@@ -41,12 +41,12 @@ public class ContractJpaRepository extends BaseJpaRepository<Contract>
 
     @Override
     public List<Contract> findByContractTypeId(String id2Del) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
     @Override
     public List<Contract> findAllInForceThisMonth(LocalDate present) {
-	throw new NotYetImplementedException("SIN HACER");
+	throw new NotYetImplementedException("no me toca");
     }
 
 }

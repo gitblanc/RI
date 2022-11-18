@@ -4,6 +4,6 @@ import uo.ri.cws.application.service.BusinessException;
 
 public interface CommandExecutor {
 
-	<T> T execute(Command<T> cmd) throws BusinessException;
+    <T> T execute(Command<T> cmd) throws BusinessException;
 
 }

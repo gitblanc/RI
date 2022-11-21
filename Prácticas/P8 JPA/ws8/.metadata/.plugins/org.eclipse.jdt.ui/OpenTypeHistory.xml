@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.service.client{ClientCrudService.java[ClientCrudService" modifiers="513" timestamp="1668695456171"/>
+    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.service.client{ClientCrudService.java[ClientCrudService" modifiers="513" timestamp="1668807980216"/>
     <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.service.contracttype{ContractTypeService.java[ContractTypeService" modifiers="513" timestamp="1668695456182"/>
-    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.service.payroll{PayrollService.java[PayrollService" modifiers="513" timestamp="1668695456192"/>
-    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.service.professionalgroup{ProfessionalGroupService.java[ProfessionalGroupService" modifiers="513" timestamp="1668695456194"/>
+    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.service.payroll{PayrollService.java[PayrollService" modifiers="513" timestamp="1668808334883"/>
+    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.service.professionalgroup{ProfessionalGroupService.java[ProfessionalGroupService" modifiers="513" timestamp="1668808382356"/>
     <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.repository{ContractRepository.java[ContractRepository" modifiers="513" timestamp="1668697776197"/>
-    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.util.command{Command.java[Command" modifiers="513" timestamp="1668691757392"/>
+    <typeInfo handle="=uo285176/src=/optional=/true=/=/maven.pomderived=/true=/&lt;uo.ri.cws.application.util.command{Command.java[Command" modifiers="513" timestamp="1668808566504"/>
 </typeInfoHistroy>

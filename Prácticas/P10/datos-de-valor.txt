@@ -1,0 +1,4 @@
+elastic <- usuario
+P1yGNVSkssSNbOO0iXxd <- contraseña elastic ordenador clase
+
+ndjson <- archivo de texto con lineas y cada linea es un json

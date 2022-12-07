@@ -13,7 +13,7 @@ def main():
     global es
 
     es = Elasticsearch(
-        "https://localhost:9200",
+        "https://127.0.0.1:9200",
         ca_certs="./http_ca.crt",
         basic_auth=("lectura", READONLY_PASSWORD)
     )

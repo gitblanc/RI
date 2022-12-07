@@ -11,7 +11,7 @@ def main():
 
     # Password para el usuario 'elastic' generada por Elasticsearch
     #
-    ELASTIC_PASSWORD = "u*wmb02yhThyqXjm27fa"
+    ELASTIC_PASSWORD = "oO0c9fuv6YGBBfWb=FHE"
 
     # Creamos el cliente y lo conectamos a nuestro servidor
     #

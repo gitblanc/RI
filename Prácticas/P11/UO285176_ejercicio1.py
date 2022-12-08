@@ -19,6 +19,10 @@ import json # Para poder trabajar con objetos JSON
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
 import requests
+from datetime import datetime
+
+terminos_significativos = []
+entidades = []
 
 
 # Aquí indexaremos los documentos en bloques
@@ -48,7 +52,6 @@ def procesarLineas(lineas):
 
 # Aquí generaremos el índice de tuits en Español con shingles de 2 y 3 términos
 def generarIndice():
-        from datetime import datetime
 
         inicio = datetime.now()
         # Creamos el índice
@@ -118,86 +121,89 @@ def generarIndice():
 
         print(fin-inicio)
 
+# Función que hace la petición POST a ES con el término que le pases
+def lanzarEscaneo(termino):
 
-def lanzarEscaneo():
-
-    # Lanzamos el escaneo con la query correspondiente
-    results = helpers.scan(es,
+    # Lanzamos la petición con la query correspondiente
+    results = es.search(
         index="tweets-20090624-20090626-en_es-10percent-ejercicio1",
-        query =
-                {
+        body = {
                   "size": 0,
                   "query": {
                     "query_string": {
-                      "query": "\"farrah fawcett\" AND lang:es" # En esta query, puedes sustituir el
-                                                                # término farrah fawcett por cualquier otro
+                      "query": "\"" + termino + "\" AND lang:es"
                     }
                   },
                   "aggs": {
-                    "Trending topics por hora": {
-                      "date_histogram": {
-                        "field": "created_at",
-                        "fixed_interval": "1h" # Intervalo de 1h
-                      },
-                      "aggs": {
-                        "Trending topics": {
-                          "significant_terms": {
-                            "field": "text",
-                            "size": 50, # Tamaño de la lista de 50 trending topics
-                            "gnd": {}
+                    "Most significant terms": { # Sacamos los términos más significativos
+                        "significant_terms": {
+                            "field": "text"
+                        },
+                        "aggs": {
+                        "Trending topics por hora": {
+                          "date_histogram": {
+                            "field": "created_at",
+                            "fixed_interval": "1h" # Intervalo de 1h
                           },
                           "aggs": {
-                            "Most significant terms": { # Sacamos los términos más significativos
+                            "Trending topics": {
                               "significant_terms": {
-                                "field": "text"
+                                "field": "text",
+                                "size": 50, # Tamaño de la lista de 50 trending topics
+                                "gnd": {}
                               }
                             }
                           }
                         }
                       }
                     }
-                  }
+                }
         }
     )
 
     # Iteramos sobre los datos obtenidos de la petición POST
-    i= 0
-    for hit in results:
-        if i == 0:
-            print(hit)
-##            text = hit["_source"]["text"]
-##            print(text)
-            i+=1
 
-    token = "michael jackson"
-    # Hacemos la petición a WikiData en base al token (el término más significativo)
-    r = requests.get('https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&format=json&search=' + token)
-    if r.status_code == 200:
-        print("JSON:")
-        resultados = r.json()['search'] # Obtenemos todos los sinónimos
-
-        for result in resultados:
-            url = result['concepturi']
-            print(url)
-    else:
-        print("Ocurrió un error inesperado :(")
+    for hit in results["aggregations"]["Most significant terms"]["buckets"]:
+        for topic in hit["Trending topics por hora"]["buckets"]:
+            for key in topic["Trending topics"]["buckets"]:
+                if existeEnLaColeccion(key["key"]) == False:
+                    # vamos almacenando tuplas con los términos más significativos si no estaban ya almacenados y sus horas
+                    terminos_significativos.append((key["key"],topic["key_as_string"]))
+    print("Petición POST realizada...")
 
 
-##    f=open("ejercicio1.txt","wb")
-##
-##    # Iteramos sobre los resultados, no es preciso preocuparse de las
-##    # conexiones consecutivas que hay que hacer con el servidor ES
-##    for hit in results:
-##        text = hit["_source"]["text"]
-##
-##        # Para visualizar mejor los tuits se sustituyen los saltos de línea
-##        # por espacios en blanco *y* se añade un salto de línea tras cada tuit
-##        text = text.replace("\n"," ")+"\n"
-##        f.write(text.encode("UTF-8"))
-##
-##    f.close()
-##
-##    print("Comprueba el fichero ejercicio1.txt")
+def existeEnLaColeccion(key):
+    for term in terminos_significativos:
+        # if term == key or key in term: # Opción 1
+          if term == key: # Opción 2
+            return True # ya existe
+    return False
+
+
+def buscarSinonimosWikidata():
+    print("Esperado = " + str(len(terminos_significativos)*5) + " resultados o menor...")
+
+    for tk in terminos_significativos:
+        token = tk[0]
+        # Hacemos la petición a WikiData en base al token (el término más significativo)
+        r = requests.get('https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&format=json&search=' + token)
+        if r.status_code == 200:
+            resultados = r.json()['search'] # Obtenemos todos los sinónimos
+
+            for result in resultados: # obtenemos las entidades de cada uno de los sinónimos
+                entity = result['id']
+                entidades.append((tk,entity))
+
+        else:
+            print("Ocurrió un error inesperado :(")
+    print("Entidades cargadas...")
+
+def mostrarDatosPorPantalla():
+    i = 0
+    print("     Término\t\t\tHora\t\t\t\t\t\tEntidad")
+    for en in entidades:
+        print("$> " + str(i) + " " + str(en[0][0]) + " - " + str(en[0][1]) + " - " + str(en[1]))
+        i+=1
 
 
 def main():
@@ -218,7 +224,17 @@ def main():
 
     # generarIndice() # <- llamar sólo 1 vez
 
-    lanzarEscaneo()
+    inicio = datetime.now()
+
+    lanzarEscaneo("farrah fawcett") # Aquí le pasamos el termino a buscar
+    buscarSinonimosWikidata() # Aquí obtenemos las entidades de cada término significativo
+
+    fin = datetime.now()
+
+    mostrarDatosPorPantalla() # Mostramos los resultados por consola
+
+    print("Tiempo requerido: ")
+    print(fin-inicio)
 
 if __name__ == '__main__':
     main()

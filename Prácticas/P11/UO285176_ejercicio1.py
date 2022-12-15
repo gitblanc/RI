@@ -25,109 +25,15 @@ from elasticsearch import Elasticsearch
 from elasticsearch import helpers
 import requests
 from datetime import datetime
+import time
+import pickle
 
-terminos_significativos = []
-entidades = []
-
-
-# Aquí indexaremos los documentos en bloques
-def procesarLineas(lineas):
-  jsonvalue = []
-
-  for linea in lineas:
-    datos = json.loads(linea) # Para acceder al diccionario
-
-    ident = datos["id_str"]
-
-    if datos["lang"]=="es": # Comprobamos que estén escritos en español
-        datos["_index"] = "tweets-20090624-20090626-en_es-10percent-ejercicio1"
-        datos["_id"] = ident
-
-        jsonvalue.append(datos)
-
-  num_elementos = len(jsonvalue)
-  resultado = helpers.bulk(es,jsonvalue,chunk_size=num_elementos,request_timeout=200)
-  # Habría que procesar el resultado para ver que todo vaya bien...
-
-  global contador
-
-  contador += num_elementos
-  print(contador)
+trending_topics = {} # diccionario de trending topics repetidos
+trending_topics_sin_repetir = {} # diccionario de trending topics sin repetir
 
 
-# Aquí generaremos el índice de tuits en Español con shingles de 2 y 3 términos
-def generarIndice():
-
-        inicio = datetime.now()
-        # Creamos el índice
-        #
-        # Si no se crea explícitamente se crea al indexar el primer documento
-        #
-        # Debemos crearlo puesto que el mapeado por defecto (mapping) de algunos
-        # campos, no es satisfactorio.
-        #
-        # ignore=400 hace que se ignore el error de índice ya existente
-        #
-
-        argumentos={
-            "settings": {
-                "analysis": {
-                    "filter": {
-                        "bi_tri_gramas": { # shingles de 2 y 3 términos
-                            "type":"shingle",
-                            "min_shingle_size":2,
-                            "max_shingle_size":3
-                        },
-                        "estematizacion_spanish": { # estematización en Español
-                            "type":"stemmer",
-                            "name":"spanish"
-                        }
-                    },
-                    "analyzer": {
-                        "analizador_personalizado": {
-                            "tokenizer":"standard",
-                            "filter":["lowercase","estematizacion_spanish","bi_tri_gramas"]
-                        }
-                    }
-                }
-            },
-            "mappings": {
-                "properties": {
-                    "created_at": {
-                      "type":"date",
-                      "format": "EEE MMM dd HH:mm:ss Z yyyy"
-                    },
-                    "text": {
-                        "type":"text",
-                        "analyzer":"analizador_personalizado",
-                        "fielddata": "true"
-                    }
-                }
-            }
-        }
-
-        es.indices.create(index="tweets-20090624-20090626-en_es-10percent-ejercicio1",ignore=400,body=argumentos)
-
-        # Ahora se indexan los documentos.
-        # Leemos el fichero en grandes bloques
-        #
-        global contador
-        contador = 0
-
-        tamano = 40*1024*1024 # Para leer 40MB, tamaño estimado de manera experimental
-        fh = open("tweets-20090624-20090626-en_es-10percent.ndjson", 'rt')
-        lineas = fh.readlines(tamano)
-        while lineas:
-          procesarLineas(lineas)
-          lineas = fh.readlines(tamano)
-        fh.close()
-
-        fin = datetime.now()
-
-        print(fin-inicio)
-
-# Función que hace la petición POST a ES con el término que le pases
-def lanzarEscaneo(termino):
+# Función que hace la petición POST a ES
+def lanzarEscaneo():
 
     # Lanzamos la petición con la query correspondiente
     results = es.search(
@@ -136,78 +42,66 @@ def lanzarEscaneo(termino):
                   "size": 0,
                   "query": {
                     "query_string": {
-                      "query": "\"" + termino + "\" AND lang:es"
+                      "query": "lang:es"
                     }
                   },
                   "aggs": {
-                    "Most significant terms": { # Sacamos los términos más significativos
-                        "significant_terms": {
-                            "field": "text"
-                        },
-                        "aggs": {
-                        "Trending topics por hora": {
-                          "date_histogram": {
-                            "field": "created_at",
-                            "fixed_interval": "1h" # Intervalo de 1h
-                          },
-                          "aggs": {
-                            "Trending topics": {
-                              "significant_terms": {
-                                "field": "text",
-                                "size": 50, # Tamaño de la lista de 50 trending topics
-                                "gnd": {}
-                              }
-                            }
+                    "Trending topics per hour": {
+                      "date_histogram": {
+                        "field": "created_at",
+                        "fixed_interval": "1h"
+                      },
+                      "aggs": {
+                        "Trending topics": {
+                          "significant_terms": {
+                            "field": "text",
+                            "size": 50,
+                            "gnd": {}
                           }
                         }
                       }
                     }
-                }
-        }
+                  }
+                },
+        request_timeout = 30
     )
 
     # Iteramos sobre los datos obtenidos de la petición POST
 
-    for hit in results["aggregations"]["Most significant terms"]["buckets"]:
-        for topic in hit["Trending topics por hora"]["buckets"]:
-            for key in topic["Trending topics"]["buckets"]:
-                if existeEnLaColeccion(key["key"]) == False:
-                    # vamos almacenando tuplas con los términos más significativos si no estaban ya almacenados y sus horas
-                    terminos_significativos.append((key["key"],topic["key_as_string"]))
+    for hit in results["aggregations"]["Trending topics per hour"]["buckets"]:
+        for elem in hit["Trending topics"]["buckets"]:
+            key = elem["key"] # clave del topic
+            diaHora = hit["key_as_string"] # día del topic
+            trending_topics.setdefault(key,[]).append({diaHora})
+            if key not in trending_topics_sin_repetir: # Comprobamos que el topic no existiese previamente, para evitar duplicados
+                trending_topics_sin_repetir.setdefault(key,[]).append({diaHora})
+
+
     print("Petición POST realizada...")
-
-
-def existeEnLaColeccion(key):
-    for term in terminos_significativos:
-        # if term == key or key in term: # Opción 1
-          if term == key: # Opción 2
-            return True # ya existe
-    return False
+    print("Trending topics obtenidos...")
 
 
 def buscarSinonimosWikidata():
-    print("Esperado = " + str(len(terminos_significativos)*5) + " resultados o menor...")
-
-    for tk in terminos_significativos:
-        token = tk[0]
-        # Hacemos la petición a WikiData en base al token (el término más significativo)
-        r = requests.get('https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&format=json&search=' + token)
+    print("Buscando sinónimos para " + str(len(trending_topics_sin_repetir)) + " topics...")
+    for key,value in trending_topics_sin_repetir.items():
+        r = requests.get('https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&format=json&search=' + key)
         if r.status_code == 200:
             resultados = r.json()['search'] # Obtenemos todos los sinónimos
-
-            for result in resultados: # obtenemos las entidades de cada uno de los sinónimos
-                entity = result['id']
-                entidades.append((tk,entity))
-
+            aux = []
+            for res in resultados:# los sinónimos que obtengasmos de wikidata
+                aux.append(res['id'])
+            trending_topics_sin_repetir[key] = aux
+            time.sleep(2); # para durante 2 segundos entre petición y petición
         else:
             print("Ocurrió un error inesperado :(")
-    print("Entidades cargadas...")
+    print("Sinónimos:")
 
-def mostrarDatosPorPantalla():
-    i = 0
-    print("     Término\t\t\tHora\t\t\t\t\t\tEntidad")
-    for en in entidades:
-        print("$> " + str(i) + " " + str(en[0][0]) + " - " + str(en[0][1]) + " - " + str(en[1]))
+
+def mostrarDatosPorPantalla(dictionary):
+    i = 1
+    for topic,value in trending_topics.items():
+        sameValue = dictionary[topic]
+        print("$>",i,"|Topic:", topic,"- Date:",value,"- Sinónimos:",sameValue)
         i+=1
 
 
@@ -227,19 +121,34 @@ def main():
         basic_auth=("elastic", ELASTIC_PASSWORD)
     )
 
-    # generarIndice() # <- llamar sólo 1 vez
 
     inicio = datetime.now()
 
-    lanzarEscaneo("farrah fawcett") # Aquí le pasamos el termino a buscar
-    buscarSinonimosWikidata() # Aquí obtenemos las entidades de cada término significativo
+    lanzarEscaneo() # Lanzamos el escaneo
+
+    #buscarSinonimosWikidata() # Aquí obtenemos las entidades de cada término significativo
+
+    # Guardamos los valores en un fichero externo para sólo hacer 1 vez las peticiones
+    # --------------------------------------------------------------------------
+    # Creamos un archivo pickle y dumpeamos todos los trending topics sin repetir
+##    pickle_file = open('datos_ej1.pickle', 'wb')
+##    pickle.dump(trending_topics_sin_repetir, pickle_file)
+##    pickle_file.close()
+    # --------------------------------------------------------------------------
+    # Restauramos los datos pickled
+    pickle_rest = open('datos_ej1.pickle', 'rb')
+    trending_topics_sin_repetir = pickle.load(pickle_rest)
+    # --------------------------------------------------------------------------
+
+
+    mostrarDatosPorPantalla(trending_topics_sin_repetir) # Mostramos los resultados por consola
+
 
     fin = datetime.now()
 
-    mostrarDatosPorPantalla() # Mostramos los resultados por consola
-
     print("Tiempo requerido: ")
     print(fin-inicio)
+    pickle_rest.close()
 
 if __name__ == '__main__':
     main()

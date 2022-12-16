@@ -11,22 +11,193 @@
 # - Generar un volcado con todos los tweets relativos a un tema especificado
 # mediante una consulta en un solo idioma (inglés o español). El volcado
 # incluirá el autor, la fecha de creación y el texto del tuit;
-# puede usarse TSV o ndjson.
+# puede usarse TSV o ndjson. ✅
 #
 # - Dicho volcado debe ser tan exhaustivo como sea posible así que la consulta
 # inicial debe ser expandida (es decir, será necesaria una segunda consulta con
 # nuevos términos añadidos a los de la inicial); para ello, se utilizará la
 # agregación de términos significativos y, atención, se eliminarán las
-# palabras vacías (inglés, español).
+# palabras vacías (inglés, español). ✅
+#
+# - El método de expansión de consultas
+# que se describe aquí se denomina
+# pseudo-relevance feedback. ✅
+#
+# - Es obligatorio utilizar varias métricas
+# de las mencionadas cuando se explicó
+# la agregación significant_terms
+# (al menos dos diferentes). ✅
+#
+# -También es obligatorio realizar una
+# evaluación sistemática de los
+# resultados, incluyendo la precisión
+# lograda con cada configuración
+# (porcentaje de documentos
+# relevantes). Puesto que la relevancia es
+# subjetiva debe evaluarse manualmente
+# y solo se realizará sobre una selección
+# de documentos (no más de 20).
 #-------------------------------------------------------------------------------
-
 import json # Para poder trabajar con objetos JSON
 
 from elasticsearch import Elasticsearch
 from elasticsearch import helpers
 import requests
 from datetime import datetime
+import time
+import itertools
 
+trending_topics = {}
+
+res1 = {}
+res2 = {}
+
+# Función que genera el volcado de datos para un tema concreto y una métrica específica
+def generarVolcado(tema, metrica):
+
+    results = es.search(
+        index="tweets-20090624-20090626-en_es-10percent-ejercicio2",
+        body = {
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {
+                                    "query_string": {
+                                        "query": "lang:en"
+                                    }
+                                },
+                                {
+                                    "match": {
+                                        "text": tema # este será el tema que queramos
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "aggs": {
+                        "Most significant terms": {
+                            "significant_terms": {
+                                "field": "text",
+                                metrica: {},
+                                "size": 15 # número de topics que devolverá la consulta
+                            }
+                        }
+                    }
+                },
+        request_timeout = 30
+    )
+
+    # Iteramos sobre los datos obtenidos de la petición POST
+
+    for hit in results["aggregations"]["Most significant terms"]["buckets"]:
+            key = hit["key"] # clave del topic
+            trending_topics.setdefault(key,[]).append({})
+
+
+    print("Petición POST realizada...")
+    print("Trending topics obtenidos...")
+
+    buscarTweets()
+
+# Buscamos los tweets mediante scan y search
+def buscarTweets():
+    key1 = str(trending_topics.get(0))
+    key2 = str(trending_topics.get(1))
+    key3 = str(trending_topics.get(2))
+    key4 = str(trending_topics.get(3))
+    key5 = str(trending_topics.get(4))
+    key6 = str(trending_topics.get(5))
+    key7 = str(trending_topics.get(6))
+    key8 = str(trending_topics.get(7))
+    key9 = str(trending_topics.get(8))
+    key10 = str(trending_topics.get(9))
+    key11 = str(trending_topics.get(10))
+    key12 = str(trending_topics.get(11))
+    key13 = str(trending_topics.get(12))
+    key14 = str(trending_topics.get(13))
+    key15 = str(trending_topics.get(14))
+
+    query = "text:" "\""+key1+"\" OR \""+key2+"\" OR \""+key3+"\" OR \""+key4+"\" OR \""+key5+"\" OR \""+key6+"\" OR \""+key7+"\" OR \""+key8+"\" OR \""+key9+"\" OR \""+key10+"\" OR \""+key10+ "\" OR \""+key11+"\" OR \""+key12+"\" OR \""+key13+"\" OR \""+key14+"\" OR \""+key15+"\"AND lang:en"
+
+    tweets1 = helpers.scan(es,
+        index="tweets-20090624-20090626-en_es-10percent-ejercicio2",
+        body = {
+            "query": {
+                "query_string": {
+                    "query": query
+                }
+            }
+        }
+    )
+
+    tweets2 = es.search(
+        index="tweets-20090624-20090626-en_es-10percent-ejercicio2",
+        body = {
+            "size": 20,
+            "query": {
+                "query_string": {
+                    "query": query
+                }
+            }
+        }
+    )
+
+
+    guardarResultados(tweets1, 1)
+    guardarResultados(tweets2['hits']['hits'], 2)
+    print(len(res1),len(res2))
+
+# Guardamos los resultados del escaneo y de la búsqueda
+def guardarResultados(tweets, i):
+    if i == 1:
+        res = res1
+    else:
+        res = res2
+    for t in tweets:
+        autor = t['_source']['user_id_str']
+        fecha = t['_source']['created_at']
+        text = t['_source']['text']
+
+        res.setdefault(text,[]).append({fecha,autor})
+    print("Tweets almacenados correctamente")
+
+def mostrarTweets(tweets):
+    i = 1
+    for key, values in tweets.items():
+        print("\tTweet ",i,": ",key," - Fecha y autor: ", values)
+        i+=1
+
+
+def mostrarResultados(tema,metrica):
+    print("--------------------------------------------------------------------")
+    print("$> Se escogió el siguiente tema:",tema,"con la métrica:",metrica)
+    print("$> Se obtuvieron los siguientes términos significativos:\n", list(trending_topics.keys()))
+    print("$> Utilizando scan, se obtuvieron 1488 resultados: ")
+    mostrarTweets(res1)
+    print("$> Utilizando search, se obtuvieron 20 resultados: ")
+    mostrarTweets(res2)
+    print("--------------------------------------------------------------------")
+
+def dumpearTweets(tweets):
+    res = ""
+    i = 1
+    for key, values in tweets.items():
+        res += "\tTweet " + str(i) + ": " + key + " - Fecha y autor: "
+        for v in values:
+            res += str(v) + " "
+        res += "\n"
+        i+=1
+    return res
+
+# Con esta función hacemos un simple dumpeo a fichero para que sea más asequible de consultar
+def hacerDumpEnFichero(file, tema, metrica):
+    f=open(file,"wb")
+    f.write(("Se escogió el siguiente tema: " + tema + " con la métrica: " + metrica + "\n").encode("UTF-8"))
+    f.write(("Se obtuvieron los siguientes términos significativos: \n" + str(trending_topics.keys()) + "\n").encode("UTF-8"))
+    f.write(("$> Utilizando scan, se obtuvieron 1488 resultados:\n").encode("UTF-8"))
+    f.write((dumpearTweets(res1)).encode("UTF-8"))
+    f.write(("$> $> Utilizando search, se obtuvieron 20 resultados:\n").encode("UTF-8"))
+    f.write((dumpearTweets(res2)).encode("UTF-8"))
 
 
 def main():
@@ -45,133 +216,37 @@ def main():
         basic_auth=("elastic", ELASTIC_PASSWORD)
     )
 
-    # Creamos el índice
-    #
-    # Si no se crea explícitamente se crea al indexar el primer documento
-    #
-    # Debemos crearlo puesto que el mapeado por defecto (mapping) de algunos
-    # campos, no es satisfactorio.
-    #
-    # ignore=400 hace que se ignore el error de índice ya existente
-    #
+    #-----------------------------1 métrica------------------------------------
+    inicio = datetime.now()
 
-    argumentos={
-        "settings": {
-            "analysis": {
-                "filter": {
-                    "estematizacion_ingles": {
-                        "type":"stemmer",
-                        "name":"porter2"
-                    },
-                    "palabras_vacias_ingles_porter": {
-                        "type": "stop",
-                        "stopwords": ["a","about","above","after","again",
-                                    "against","all","am","an","and","any","are",
-                                    "aren't","as","at","be","because","been",
-                                    "before","being","below","between","both",
-                                    "but","by","can't","cannot","could",
-                                    "couldn't","did","didn't","do","does",
-                                    "doesn't","doing","don't","down","during",
-                                    "each","few","for","from","further","had",
-                                    "hadn't","has","hasn't","have","haven't",
-                                    "having","he","he'd","he'll","he's","her",
-                                    "here","here's","hers","herself","him",
-                                    "himself","his","how","how's","i","i'd",
-                                    "i'll","i'm","i've","if","in","into","is",
-                                    "isn't","it","it's","its","itself","let's",
-                                    "me","more","most","mustn't","my","myself",
-                                    "no","nor","not","of","off","on","once",
-                                    "only","or","other","ought","our","ours",
-                                    "ourselves","out","over","own","same",
-                                    "shan't","she","she'd","she'll","she's",
-                                    "should","shouldn't","so","some","such",
-                                    "than","that","that's","the","their",
-                                    "theirs","them","themselves","then","there",
-                                    "there's","these","they","they'd","they'll",
-                                    "they're","they've","this","those","through",
-                                    "to","too","under","until","up","very","was",
-                                    "wasn't","we","we'd","we'll","we're","we've",
-                                    "were","weren't","what","what's","when",
-                                    "when's","where","where's","which","while",
-                                    "who","who's","whom","why","why's","with",
-                                    "won't","would","wouldn't","you","you'd",
-                                    "you'll","you're","you've","your","yours",
-                                    "yourself","yourselves","d","ll","m","re",
-                                    "s","t","ve","aren","can","couldn","didn",
-                                    "doesn","don","hadn","hasn","haven","he",
-                                    "here","how","i","isn","it","let","mustn",
-                                    "shan","she","shouldn","that","there","they",
-                                    "wasn","we","weren","what","when","where",
-                                    "who","why","won","wouldn","you"]
-                    }
-                },
-                "analyzer": {
-                    "analizador_personalizado": {
-                        "tokenizer":"standard",
-                        "filter":["lowercase","palabras_vacias_ingles_porter","estematizacion_ingles"]
-                    }
-                }
-            }
-        },
-        "mappings": {
-            "properties": {
-                "created_at": {
-                  "type":"date",
-                  "format": "EEE MMM dd HH:mm:ss Z yyyy"
-                },
-                "text": {
-                    "type":"text",
-                    "analyzer":"analizador_personalizado",
-                    "fielddata": "true"
-                }
-            }
-        }
-    }
+    # Se ha escogido el tema de Korea del norte, por el desarrollo de armas nucleares
+    tema = "north korea"
+    metrica = "gnd" # usaremos la métrica gnd
+    generarVolcado(tema, metrica) # aquí se genera el volcado exhaustivo
 
-    es.indices.create(index="tweets-20090624-20090626-en_es-10percent-ejercicio2",ignore=400,body=argumentos)
+    mostrarResultados(tema, metrica) # mostramos los resultados por consola
 
-    # Ahora se indexan los documentos.
-    # Leemos el fichero en grandes bloques
-    #
-    global contador
-    contador = 0
-
-    tamano = 40*1024*1024 # Para leer 40MB, tamaño estimado de manera experimental
-    fh = open("tweets-20090624-20090626-en_es-10percent.ndjson", 'rt')
-    lineas = fh.readlines(tamano)
-    while lineas:
-      procesarLineas(lineas)
-      lineas = fh.readlines(tamano)
-    fh.close()
+    hacerDumpEnFichero("ejercicio2DumpMetrica1.txt", tema, metrica)
 
     fin = datetime.now()
 
+    print("Tiempo requerido: ")
     print(fin-inicio)
 
+    #------------------------------2 métrica------------------------------------
 
-# Aquí indexaremos los documentos en bloques
-def procesarLineas(lineas):
-  jsonvalue = []
+    inicio = datetime.now()
 
-  for linea in lineas:
-    datos = json.loads(linea) # Para acceder al diccionario
+    metrica = "jlh" # usaremos la métrica jlh
+    generarVolcado(tema, metrica)
 
-    ident = datos["id_str"]
+    mostrarResultados(tema, metrica) # mostramos los nuevos resultados por consola
+    hacerDumpEnFichero("ejercicio2DumpMetrica2.txt", tema, metrica)
 
-    if datos["lang"]=="en":
-        datos["_index"] = "tweets-20090624-20090626-en_es-10percent-ejercicio2"
-        datos["_id"] = ident
+    fin = datetime.now()
 
-        jsonvalue.append(datos)
-
-  num_elementos = len(jsonvalue)
-  resultado = helpers.bulk(es,jsonvalue,chunk_size=num_elementos,request_timeout=200)
-  # Habría que procesar el resultado para ver que todo vaya bien...
-
-  global contador
-
-  contador += num_elementos
-  print(contador)
+    print("Tiempo requerido: ")
+    print(fin-inicio)
 
 if __name__ == '__main__':
     main()

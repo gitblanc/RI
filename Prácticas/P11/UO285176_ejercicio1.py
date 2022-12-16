@@ -81,7 +81,7 @@ def lanzarEscaneo():
     print("Trending topics obtenidos...")
 
 
-def buscarSinonimosWikidata():
+def buscarEntradasWikidata():
     print("Buscando sinónimos para " + str(len(trending_topics_sin_repetir)) + " topics...")
     for key,value in trending_topics_sin_repetir.items():
         r = requests.get('https://www.wikidata.org/w/api.php?action=wbsearchentities&language=en&format=json&search=' + key)
@@ -94,16 +94,62 @@ def buscarSinonimosWikidata():
             time.sleep(2); # para durante 2 segundos entre petición y petición
         else:
             print("Ocurrió un error inesperado :(")
-    print("Sinónimos:")
 
 
 def mostrarDatosPorPantalla(dictionary):
     i = 1
     for topic,value in trending_topics.items():
         sameValue = dictionary[topic]
-        print("$>",i,"|Topic:", topic,"- Date:",value,"- Sinónimos:",sameValue)
+        sinonimos = buscarSinonimosWikidata(sameValue)
+        if len(sameValue) != 0:
+            tipo = buscarTipo(sameValue[0])
+        else:
+            tipo = "unknown"
+        print("$>",i,"|Topic:", topic,"- Date:",value,"- Entradas:",sameValue, "- Sinónimos: ", sinonimos, "- Tipo: ", tipo)
         i+=1
 
+
+def buscarTipo(entity):
+    r = requests.get("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + entity + "&languages=en&format=json")
+    time.sleep(2)
+    if r.status_code == 200:
+            res = tienePropiedadP31(r, entity) #aquí obtenemos el id del tipo
+            if res != "unknown":
+                r2 = requests.get("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" + res + "&languages=en&format=json") # hacemos otra petición para solicitar el valor
+                if r.status_code == 200:
+                    tipo = r2.json()['entities'][res]['labels']['en']['value']
+                    return tipo
+                else:
+                    print("Ocurrió un error inesperado :(")
+            else:
+                return res # devuelve desconocido
+    else:
+        print("Ocurrió un error inesperado :(")
+
+# En esta función comprobamos que la entidad tenga una de las dos propiedades, sino devuelve desconocido
+def tienePropiedadP31(request, entity):
+    properties = request.json()['entities'][entity]['claims']
+    if "P31" in properties:
+        return properties['P31'][0]['mainsnak']['datavalue']['value']['id']
+    elif "P279" in properties:
+        return properties['P279'][0]['mainsnak']['datavalue']['value']['id']
+    else:
+        return "unknown"
+
+
+def buscarSinonimosWikidata(lista):
+    aux = []
+    if len(lista) == 0:
+        return aux
+
+    i = 0
+    for entity in lista:
+        r = requests.get("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=" +entity +"&languages=en&format=json")
+        result = r.json()['entities'][entity]['aliases']
+        if len(result) != 0:
+            for elem in result['en']:
+                aux.append(elem['value'])
+    return aux
 
 def main():
 

@@ -21,18 +21,18 @@ import uo.ri.cws.domain.Payroll;
  * @author UO285176
  *
  */
-public class GeneratePayrolls implements Command<Void> {
+public class Payrolls implements Command<Void> {
 
     private LocalDate date;
 
     private ContractRepository crepo = Factory.repository.forContract();
     private PayrollRepository repo = Factory.repository.forPayroll();
 
-    public GeneratePayrolls() {
+    public Payrolls() {
 	this(null);
     }
 
-    public GeneratePayrolls(LocalDate present) {
+    public Payrolls(LocalDate present) {
 	if (present == null)
 	    this.date = LocalDate.now();
 	else
@@ -53,7 +53,7 @@ public class GeneratePayrolls implements Command<Void> {
 			Optional<Payroll> payroll = findPayroll(payrolls);
 			// Si el contrato no tiene nóminas asignadas
 			if (payroll == null) {
-			    generateNewPayroll(c);
+			    NewPayroll(c);
 			}
 		    }
 		} else if (c.getState().equals(ContractState.TERMINATED)) {
@@ -64,7 +64,7 @@ public class GeneratePayrolls implements Command<Void> {
 					.getYear()) {
 			    Optional<Payroll> p = repo.findByDate(this.date);
 			    if (p.isEmpty()) {
-				generateNewPayroll(c);
+				NewPayroll(c);
 			    }
 			}
 		    }
@@ -84,7 +84,7 @@ public class GeneratePayrolls implements Command<Void> {
 	return payroll;
     }
 
-    private void generateNewPayroll(Contract c) {
+    private void NewPayroll(Contract c) {
 	Payroll p = new Payroll(c, date);
 	repo.add(p);
     }

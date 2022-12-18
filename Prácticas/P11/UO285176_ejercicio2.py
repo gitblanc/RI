@@ -49,8 +49,8 @@ import itertools
 
 trending_topics = {}
 
-res1 = {}
-res2 = {}
+# Se ha escogido el tema de derailment and collision, por un grave accidente que ocurrió en Washington
+tema = "derailment and collision"
 
 # Función que genera el volcado de datos para un tema concreto y una métrica específica
 def generarVolcado(tema, metrica):
@@ -84,7 +84,7 @@ def generarVolcado(tema, metrica):
                         }
                     }
                 },
-        request_timeout = 30
+        request_timeout = 30 # tiempo de espera de 500 segs
     )
 
     # Iteramos sobre los datos obtenidos de la petición POST
@@ -97,27 +97,29 @@ def generarVolcado(tema, metrica):
     print("Petición POST realizada...")
     print("Trending topics obtenidos...")
 
-    buscarTweets()
+    buscarTweets(metrica)
 
 # Buscamos los tweets mediante scan y search
-def buscarTweets():
-    key1 = str(trending_topics.get(0))
-    key2 = str(trending_topics.get(1))
-    key3 = str(trending_topics.get(2))
-    key4 = str(trending_topics.get(3))
-    key5 = str(trending_topics.get(4))
-    key6 = str(trending_topics.get(5))
-    key7 = str(trending_topics.get(6))
-    key8 = str(trending_topics.get(7))
-    key9 = str(trending_topics.get(8))
-    key10 = str(trending_topics.get(9))
-    key11 = str(trending_topics.get(10))
-    key12 = str(trending_topics.get(11))
-    key13 = str(trending_topics.get(12))
-    key14 = str(trending_topics.get(13))
-    key15 = str(trending_topics.get(14))
+def buscarTweets(metrica):
+    keys = list(trending_topics.keys())
+    key1 = keys[0]
+    key2 = keys[1]
+    key3 = keys[2]
+    key4 = keys[3]
+    key5 = keys[4]
+    key6 = keys[5]
+    key7 = keys[6]
+    key8 = keys[7]
+    key9 = keys[8]
+    key10 = keys[9]
+    key11 = keys[10]
+    key12 = keys[11]
+    key13 = keys[12]
+    key14 = keys[13]
+    key15 = keys[14]
 
-    query = "text:" "\""+key1+"\" OR \""+key2+"\" OR \""+key3+"\" OR \""+key4+"\" OR \""+key5+"\" OR \""+key6+"\" OR \""+key7+"\" OR \""+key8+"\" OR \""+key9+"\" OR \""+key10+"\" OR \""+key10+ "\" OR \""+key11+"\" OR \""+key12+"\" OR \""+key13+"\" OR \""+key14+"\" OR \""+key15+"\"AND lang:en"
+    query = "text: \\""\""+key1+"\\""\" OR \\""\""+key2+"\\""\" OR \\""\""+key3+"\\""\" OR \\""\""+key4+"\\""\" OR \\""\""+key5+"\\""\" OR \\""\""+key6+"\\""\" OR \\""\""+key7+"\\""\" OR \\""\""+key8+"\\""\" OR \\""\""+key9+"\\""\" OR \\""\""+key10+"\\""\" OR \\""\""+key11+ "\\""\" OR \\""\""+key12+"\\""\" OR \\""\""+key13+"\\""\" OR \\""\""+key14+"\\""\" OR \\""\""+key15+"\\""\" AND lang:en"
+
 
     tweets1 = helpers.scan(es,
         index="tweets-20090624-20090626-en_es-10percent-ejercicio2",
@@ -142,62 +144,66 @@ def buscarTweets():
         }
     )
 
+    guardarEnJSON(metrica, tweets1, tweets2) # aquí hacemos el volcado
 
-    guardarResultados(tweets1, 1)
-    guardarResultados(tweets2['hits']['hits'], 2)
-    print(len(res1),len(res2))
 
-# Guardamos los resultados del escaneo y de la búsqueda
-def guardarResultados(tweets, i):
-    if i == 1:
-        res = res1
+def guardarEnJSON(metrica, tweets1, tweets2):
+
+    files = ["Scan-dump-gnd.ndjson", "Scan-dump-chisquare.ndjson", "Search-dump-gnd.ndjson", "Search-dump-chisquare.ndjson"] # posibles ficheros de volcado
+    file1 = ""
+    file2 = ""
+    if metrica == "gnd":
+        file1 = files[0]
+        file2 = files[2]
     else:
-        res = res2
-    for t in tweets:
-        autor = t['_source']['user_id_str']
-        fecha = t['_source']['created_at']
-        text = t['_source']['text']
+        file1 = files[1]
+        file2 = files[3]
 
-        res.setdefault(text,[]).append({fecha,autor})
-    print("Tweets almacenados correctamente")
+    f=open(file1,"wb")
 
-def mostrarTweets(tweets):
-    i = 1
-    for key, values in tweets.items():
-        print("\tTweet ",i,": ",key," - Fecha y autor: ", values)
-        i+=1
+   # Los metemos también en un JSON
+    for hit in tweets1:
+        text = hit["_source"]["text"]
+        user = hit["_source"]["user_id_str"]
+        fecha = hit['_source']['created_at']
+
+        # Para visualizar mejor los tuits se sustituyen los saltos de línea
+        # por espacios en blanco *y* se añade un salto de línea tras cada tuit
+        text = "User: " + user + ", tweet: " + text.replace("\n"," ")+ ", Date: " + fecha +"\n"
+        f.write(text.encode("UTF-8"))
+
+    f.close()
+
+    f=open(file2,"wb")
+    for hit in tweets2['hits']['hits']:
+        text = hit["_source"]["text"]
+        user = hit["_source"]["user_id_str"]
+        fecha = hit['_source']['created_at']
+
+        # Para visualizar mejor los tuits se sustituyen los saltos de línea
+        # por espacios en blanco *y* se añade un salto de línea tras cada tuit
+        text = "User: " + user + ", tweet: " + text.replace("\n"," ")+ ", Date: " + fecha +"\n"
+        f.write(text.encode("UTF-8"))
+
+    f.close()
+
+    mostrarResultados(file1, file2, metrica) # mostramos los resultados por consola
 
 
-def mostrarResultados(tema,metrica):
+def mostrarResultados(file1, file2, metrica):
     print("--------------------------------------------------------------------")
     print("$> Se escogió el siguiente tema:",tema,"con la métrica:",metrica)
     print("$> Se obtuvieron los siguientes términos significativos:\n", list(trending_topics.keys()))
-    print("$> Utilizando scan, se obtuvieron 1488 resultados: ")
-    mostrarTweets(res1)
-    print("$> Utilizando search, se obtuvieron 20 resultados: ")
-    mostrarTweets(res2)
+    print("$> Utilizando scan, se obtuvieron los resultados: ")
+
+    f = open(file1, "r")
+    for line in f: print(line.strip())
+    f.close
+    print("$> Utilizando search, se obtuvieron los resultados: ")
+    f = open(file2, "rb")
+    for line in f: print(line.strip())
+    f.close
     print("--------------------------------------------------------------------")
-
-def dumpearTweets(tweets):
-    res = ""
-    i = 1
-    for key, values in tweets.items():
-        res += "\tTweet " + str(i) + ": " + key + " - Fecha y autor: "
-        for v in values:
-            res += str(v) + " "
-        res += "\n"
-        i+=1
-    return res
-
-# Con esta función hacemos un simple dumpeo a fichero para que sea más asequible de consultar
-def hacerDumpEnFichero(file, tema, metrica):
-    f=open(file,"wb")
-    f.write(("Se escogió el siguiente tema: " + tema + " con la métrica: " + metrica + "\n").encode("UTF-8"))
-    f.write(("Se obtuvieron los siguientes términos significativos: \n" + str(trending_topics.keys()) + "\n").encode("UTF-8"))
-    f.write(("$> Utilizando scan, se obtuvieron 1488 resultados:\n").encode("UTF-8"))
-    f.write((dumpearTweets(res1)).encode("UTF-8"))
-    f.write(("$> $> Utilizando search, se obtuvieron 20 resultados:\n").encode("UTF-8"))
-    f.write((dumpearTweets(res2)).encode("UTF-8"))
 
 
 def main():
@@ -216,17 +222,13 @@ def main():
         basic_auth=("elastic", ELASTIC_PASSWORD)
     )
 
-    #-----------------------------1 métrica------------------------------------
+    #-----------------------------1 métrica-------------------------------------
+
     inicio = datetime.now()
 
-    # Se ha escogido el tema de Korea del norte, por el desarrollo de armas nucleares
-    tema = "north korea"
     metrica = "gnd" # usaremos la métrica gnd
+
     generarVolcado(tema, metrica) # aquí se genera el volcado exhaustivo
-
-    mostrarResultados(tema, metrica) # mostramos los resultados por consola
-
-    hacerDumpEnFichero("ejercicio2DumpMetrica1.txt", tema, metrica)
 
     fin = datetime.now()
 
@@ -237,11 +239,9 @@ def main():
 
     inicio = datetime.now()
 
-    metrica = "jlh" # usaremos la métrica jlh
-    generarVolcado(tema, metrica)
+    metrica = "jlh" # usaremos la métrica chi_square
 
-    mostrarResultados(tema, metrica) # mostramos los nuevos resultados por consola
-    hacerDumpEnFichero("ejercicio2DumpMetrica2.txt", tema, metrica)
+    generarVolcado(tema, metrica)
 
     fin = datetime.now()
 

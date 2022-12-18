@@ -8,6 +8,15 @@
 # Copyright:   (c) UO285176 2022
 # Licence:     Universidad de Oviedo
 #-------------------------------------------------------------------------------
+# - ¿Se te ocurre alguna configuración para este tipo de consulta o una forma de
+# producir una de esas consultas programáticamente de tal forma que se pueda
+# emular la expansión de términos realizada en el ejercicio anterior?
+#
+# - Si se te ocurre describe cómo hacerlo y escribe una función en Python que
+# reciba como parámetro una consulta en el formato aceptado por
+# simple_query_string, use internamente una consulta MLT y proporcione
+# resultados a la persona usuaria.
+#-------------------------------------------------------------------------------
 
 from elasticsearch import Elasticsearch
 

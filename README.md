@@ -1,5 +1,8 @@
 # RI
 
+![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+![](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=Oracle&logoColor=white)
+
 [![HitCount](https://hits.dwyl.com/gitblanc/RI.svg?style=flat-square)](http://hits.dwyl.com/gitblanc/RI)
 
 This is my work for Information Repositories

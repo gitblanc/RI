@@ -11,12 +11,12 @@
 #-------------------------------------------------------------------------------
 #
 # - Genera un índice de tuits escritos en Español usando shingles de dos y tres
-# términos. ✅
+# términos.
 # - Escribe un script basado en el ejemplo de agregación que generaba “trending
 # topics” y que pueda generar listas de 50 “trending topics” para cada hora en
-# el dataset. ✅
+# el dataset.
 # - El script debe procesar todos los “trending topics” para encontrar entidades
-# asociadas a los mismos en Wikidata ✅
+# asociadas a los mismos en Wikidata
 #-------------------------------------------------------------------------------
 
 import json # Para poder trabajar con objetos JSON

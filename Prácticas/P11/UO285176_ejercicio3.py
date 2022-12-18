@@ -2,19 +2,34 @@
 # Name:        Ejercicio3
 # Purpose:
 #
-# Author:      UO285176🐧
+# Author:      UO285276🐧
 #
 # Created:     08/12/2022
 # Copyright:   (c) UO285176 2022
 # Licence:     Universidad de Oviedo
 #-------------------------------------------------------------------------------
 
-import json # Para poder trabajar con objetos JSON
-
 from elasticsearch import Elasticsearch
-from elasticsearch import helpers
-import requests
-from datetime import datetime
+
+def moreLikeThis(query):
+
+    results = es.search(
+        index="tweets-20090624-20090626-en_es-10percent-ejercicio2",
+        body = {
+            "query": {
+                "more_like_this": {
+                    "fields": ["text"], # aquí metemos campos a buscar con la MLT query
+                    "like": query, # el texto para encontrar documentos similares
+                    "min_term_freq": 1,
+                    "max_query_terms": 25
+                }
+            }
+        }
+    )
+    i = 0
+    for r in results["hits"]["hits"]:
+        print("$>",i," ",r["_source"])
+        i+=1
 
 
 def main():
@@ -32,9 +47,8 @@ def main():
         basic_auth=("elastic", ELASTIC_PASSWORD)
     )
 
-
-
-
+    moreLikeThis("flight 447") # aquí hacemos la consulta, a la que le pasamos la frase
+                     # de lo que queremos que encuentre resultados similares
 
 if __name__ == '__main__':
     main()

@@ -11,22 +11,22 @@
 # - Generar un volcado con todos los tweets relativos a un tema especificado
 # mediante una consulta en un solo idioma (inglés o español). El volcado
 # incluirá el autor, la fecha de creación y el texto del tuit;
-# puede usarse TSV o ndjson. ✅
+# puede usarse TSV o ndjson.
 #
 # - Dicho volcado debe ser tan exhaustivo como sea posible así que la consulta
 # inicial debe ser expandida (es decir, será necesaria una segunda consulta con
 # nuevos términos añadidos a los de la inicial); para ello, se utilizará la
 # agregación de términos significativos y, atención, se eliminarán las
-# palabras vacías (inglés, español). ✅
+# palabras vacías (inglés, español).
 #
 # - El método de expansión de consultas
 # que se describe aquí se denomina
-# pseudo-relevance feedback. ✅
+# pseudo-relevance feedback.
 #
 # - Es obligatorio utilizar varias métricas
 # de las mencionadas cuando se explicó
 # la agregación significant_terms
-# (al menos dos diferentes). ✅
+# (al menos dos diferentes).
 #
 # -También es obligatorio realizar una
 # evaluación sistemática de los

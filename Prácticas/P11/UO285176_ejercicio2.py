@@ -126,7 +126,8 @@ def buscarTweets(metrica):
         body = {
             "query": {
                 "query_string": {
-                    "query": query
+                    "query": query,
+                    "default_operator": "AND"
                 }
             }
         }
@@ -138,7 +139,8 @@ def buscarTweets(metrica):
             "size": 20,
             "query": {
                 "query_string": {
-                    "query": query
+                    "query": query,
+                    "default_operator": "AND"
                 }
             }
         }

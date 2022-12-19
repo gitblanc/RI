@@ -20,25 +20,33 @@
 
 from elasticsearch import Elasticsearch
 
-def moreLikeThis(query):
+def moreLikeThis(doc_id):
 
-    results = es.search(
-        index="tweets-20090624-20090626-en_es-10percent-ejercicio2",
-        body = {
-            "query": {
-                "more_like_this": {
-                    "fields": ["text"], # aquí metemos campos a buscar con la MLT query
-                    "like": query, # el texto para encontrar documentos similares
-                    "min_term_freq": 1,
-                    "max_query_terms": 25
-                }
+    index = 'tweets-20090624-20090626-en_es-10percent-ejercicio2'  # El índice a utilizar
+    query = {
+      "query": {
+        "more_like_this": {
+          "fields": ["id_str", "text"],  # Los campos a usar por la query MLT
+          "like": [
+            {
+              "_id": doc_id
             }
+          ],
+          "min_term_freq": 1,  # Mínimo número de veces que el término aparece en el documento
+          "min_doc_freq": 1,  # Mínimo número de documentos en los que el término aparece
+          "max_query_terms": 25  # Máximo número de términos a incluír en la query MLT
         }
-    )
-    i = 0
-    for r in results["hits"]["hits"]:
-        print("$>",i," ",r["_source"])
+      }
+    }
+
+    res = es.search(index=index, body=query)
+
+    # Mostramos los resultados
+    i = 1
+    for hit in res['hits']['hits']:
+        print("$>",i,"Date:",hit['_source']['created_at'],"-",hit['_source']['text'])
         i+=1
+
 
 
 def main():
@@ -56,8 +64,8 @@ def main():
         basic_auth=("elastic", ELASTIC_PASSWORD)
     )
 
-    moreLikeThis("flight 447") # aquí hacemos la consulta, a la que le pasamos la frase
-                     # de lo que queremos que encuentre resultados similares
+    moreLikeThis("2302882831") # aquí hacemos la consulta, a la que le pasamos el id del documento
+                     # del que queremos que encuentre resultados similares
 
 if __name__ == '__main__':
     main()

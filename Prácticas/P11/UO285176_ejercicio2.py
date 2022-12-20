@@ -99,6 +99,7 @@ def generarVolcado(tema, metrica):
 
     buscarTweets(metrica)
 
+
 # Buscamos los tweets mediante scan y search
 def buscarTweets(metrica):
     keys = list(trending_topics.keys())
@@ -239,16 +240,16 @@ def main():
 
     #------------------------------2 métrica------------------------------------
 
-    inicio = datetime.now()
-
-    metrica = "jlh" # usaremos la métrica chi_square
-
-    generarVolcado(tema, metrica)
-
-    fin = datetime.now()
-
-    print("Tiempo requerido: ")
-    print(fin-inicio)
+##    inicio = datetime.now()
+##
+##    metrica = "mutual_information" # usaremos la métrica chi_square
+##
+##    generarVolcado(tema, metrica)
+##
+##    fin = datetime.now()
+##
+##    print("Tiempo requerido: ")
+##    print(fin-inicio)
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,116 @@
+create (Ingenieria_del_software:Grado{nombre:"Ingenieria del software",facultad:"Escuela de Ingenieria Informatica", localizacion:"Oviedo"}),
+(Quimica:Grado{nombre:"Quimica",facultad:"Facultad de ciencias de la UMA", localizacion:"Malaga"}),
+(Ingenieria_informatica:Grado{nombre:"Ingenieria Informatica",facultad:"Escuela politecnica de Barcelona", localizacion:"Barcelona"});
+
+create (RI:Asignatura{codigo:"1",nombre:"Repositorios de la Informacion",rama:"Ingenieria"}),
+(Algoritmia:Asignatura{codigo:"2",nombre:"Algoritmia",rama:"Ingenieria"}),
+(Software_para_Robots:Asignatura{codigo:"0003",nombre:"Software para Robots",rama:"Ingenieria"}),
+(Seguridad:Asignatura{codigo:"4",nombre:"Seguridad",rama:"Ingenieria"}),
+(Fisica:Asignatura{codigo:"5",nombre:"Fisica",rama:"Quimica"}),
+(Quimica_organica:Asignatura{codigo:"6",nombre:"Quimica Organica",rama:"Quimica"}),
+(Quimica_inorganica:Asignatura{codigo:"7",nombre:"Quimica inorganica",rama:"Quimica"}),
+(Calculo:Asignatura{codigo:"8",nombre:"Calculo",rama:"Ingenieria"}),
+(Algebra:Asignatura{codigo:"9",nombre:"Algebra",rama:"Ingenieria"});
+
+create (Eduardo:Persona{identificador:"UO285176", nombre:"Eduardo", apellidos:"Blanco Bielsa", edad:"20", correo:"UO285176@uniovi.es"}),
+(Sergio:Persona{identificador:"UO264292", nombre:"Sergio", apellidos:"Cimadevilla Torga", edad:"22", correo:"UO264292@uniovi.es"}),
+(Ruben:Persona{identificador:"0611133597", nombre:"Ruben", apellidos:"Sanchez Macia", edad:"19", correo:"rubensama2004@uma.es"}),
+(Marcos:Persona{identificador:"0611133598", nombre:"Marcos", apellidos:"Perez Gonzalez", edad:"19", correo:"marcosperez@uma.es"}),
+(Chen_Xin:Persona{identificador:"UO276967", nombre:"Chen Xin", apellidos:"Pan Wang", edad:"21", correo:"UO276967@uniovi.es"}),
+(Daniel:Persona{identificador:"UO276978", nombre:"Daniel", apellidos:"Fernandez de Juan", edad:"21", correo:"UO276978@uniovi.es"});
+
+create (Dario:Persona{identificador:"dario", nombre:"Dario", apellidos:"Alvarez Gutierrez", edad:"40", correo:"darioa@uniovi.es"}),
+(Enol:Persona{identificador:"enol", nombre:"Enol", apellidos:"Garcia Gonzalez", edad:"25", correo:"garciaenol@uniovi.es"}),
+(Enrique:Persona{identificador:"galiana", nombre:"Enrique J.", apellidos:"de Andres Galiana", edad:"40", correo:"andresenrique@uniovi.es"}),
+(Alberto:Persona{identificador:"alb", nombre:"Alberto Manuel", apellidos:"Fernandez Alvarez", edad:"42", correo:"alb@uniovi.es"}),
+(Lucas:Persona{identificador:"lvc4s", nombre:"Lucas", apellidos:"Blanco Martinez", edad:"56", correo:"lvc4s@uma.es"}),
+(Jose:Persona{identificador:"jose", nombre:"Jose", apellidos:"Fernandez Fernandez", edad:"58", correo:"jose@uma.es"});
+
+match (edu:Persona {nombre:"Eduardo", apellidos:"Blanco Bielsa"}), 
+(sergio:Persona {nombre:"Sergio", apellidos:"Cimadevilla Torga"}),
+(ruben:Persona {nombre:"Ruben", apellidos:"Sanchez Macia"}), 
+(marcos:Persona {nombre:"Marcos", apellidos:"Perez Gonzalez"}),
+(xin:Persona {nombre:"Chen Xin", apellidos:"Pan Wang"}), 
+(daniel:Persona {nombre:"Daniel", apellidos:"Fernandez de Juan"}),
+(dario:Persona {nombre:"Dario", apellidos:"Alvarez Gutierrez"}), 
+(enol:Persona {nombre:"Enol", apellidos:"Garcia Gonzalez"}),
+(enrique:Persona {nombre:"Enrique J.", apellidos:"de Andres Galiana"}), 
+(alb:Persona {nombre:"Alberto Manuel", apellidos:"Fernandez Alvarez"}),
+(lucas:Persona {nombre:"Lucas", apellidos:"Blanco Martinez"}), 
+(jose:Persona {nombre:"Jose", apellidos:"Fernandez Fernandez"}),
+(ri:Asignatura {codigo:"1"}), 
+(alg:Asignatura {codigo:"2"}), 
+(sr:Asignatura {codigo:"3"}), 
+(seguridad:Asignatura {codigo:"4"}),
+(fisica:Asignatura {codigo:"5"}), 
+(organica:Asignatura {codigo:"6"}), 
+(inorganica:Asignatura {codigo:"7"}), 
+(calculo:Asignatura {codigo:"8"}),
+(algebra:Asignatura {codigo:"9"}), 
+(ing_software:Grado {nombre:"Ingenieria del software"}), 
+(ing_inf:Grado {nombre:"Ingenieria Informatica"}),
+(quimica:Grado {nombre:"Quimica"})
+create (dario)-[:DIRIGE]->(ing_software)
+create (enrique)-[:DIRIGE]->(ing_inf)
+create (lucas)-[:DIRIGE]->(quimica)
+create (ing_software)-[:CONTIENE]->(ri)
+create (ing_software)-[:CONTIENE]->(alg)
+create (ing_software)-[:CONTIENE]->(sr)
+create (ing_software)-[:CONTIENE]->(seguridad)
+create (ing_software)-[:CONTIENE]->(calculo)
+create (ing_software)-[:CONTIENE]->(algebra)
+create (ing_inf)-[:CONTIENE]->(alg)
+create (ing_inf)-[:CONTIENE]->(seguridad)
+create (ing_inf)-[:CONTIENE]->(fisica)
+create (ing_inf)-[:CONTIENE]->(calculo)
+create (ing_inf)-[:CONTIENE]->(algebra)
+create (quimica)-[:CONTIENE]->(fisica)
+create (quimica)-[:CONTIENE]->(organica)
+create (quimica)-[:CONTIENE]->(inorganica)
+create (quimica)-[:CONTIENE]->(calculo)
+create (quimica)-[:CONTIENE]->(algebra)
+create (dario)-[:IMPARTE]->(ri)
+create (dario)-[:IMPARTE]->(alg)
+create (enol)-[:IMPARTE]->(ri)
+create (enol)-[:IMPARTE]->(alg)
+create (enol)-[:IMPARTE]->(seguridad)
+create (enrique)-[:IMPARTE]->(seguridad)
+create (enrique)-[:IMPARTE]->(fisica)
+create (enrique)-[:IMPARTE]->(calculo)
+create (alb)-[:IMPARTE]->(ri)
+create (alb)-[:IMPARTE]->(calculo)
+create (alb)-[:IMPARTE]->(algebra)
+create (lucas)-[:IMPARTE]->(organica)
+create (lucas)-[:IMPARTE]->(inorganica)
+create (lucas)-[:IMPARTE]->(algebra)
+create (lucas)-[:IMPARTE]->(calculo)
+create (jose)-[:IMPARTE]->(sr)
+create (sr)-[:IMPARTE]->(alg)
+create (edu)-[:ESTA_APUNTADO]->(ri)
+create (edu)-[:ESTA_APUNTADO]->(alg)
+create (edu)-[:ESTA_APUNTADO]->(sr)
+create (edu)-[:ESTA_APUNTADO]->(seguridad)
+create (ruben)-[:ESTA_APUNTADO]->(algebra)
+create (ruben)-[:ESTA_APUNTADO]->(organica)
+create (ruben)-[:ESTA_APUNTADO]->(inorganica)
+create (ruben)-[:ESTA_APUNTADO]->(calculo)
+create (ruben)-[:ESTA_APUNTADO]->(fisica)
+create (sergio)-[:ESTA_APUNTADO]->(ri)
+create (sergio)-[:ESTA_APUNTADO]->(algebra)
+create (sergio)-[:ESTA_APUNTADO]->(seguridad)
+create (marcos)-[:ESTA_APUNTADO]->(organica)
+create (marcos)-[:ESTA_APUNTADO]->(algebra)
+create (marcos)-[:ESTA_APUNTADO]->(calculo)
+create (xin)-[:ESTA_APUNTADO]->(ri)
+create (xin)-[:ESTA_APUNTADO]->(sr)
+create (xin)-[:ESTA_APUNTADO]->(seguridad)
+create (xin)-[:ESTA_APUNTADO]->(algebra)
+create (xin)-[:ESTA_APUNTADO]->(alg)
+create (daniel)-[:ESTA_APUNTADO]->(fisica)
+create (daniel)-[:ESTA_APUNTADO]->(calculo)
+create (daniel)-[:ESTA_APUNTADO]->(alg)
+create (daniel)-[:ESTA_APUNTADO]->(algebra);
+
+
+
+

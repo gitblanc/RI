@@ -4,7 +4,7 @@ create (Ingenieria_del_software:Grado{nombre:"Ingenieria del software",facultad:
 
 create (RI:Asignatura{codigo:"1",nombre:"Repositorios de la Informacion",rama:"Ingenieria"}),
 (Algoritmia:Asignatura{codigo:"2",nombre:"Algoritmia",rama:"Ingenieria"}),
-(Software_para_Robots:Asignatura{codigo:"0003",nombre:"Software para Robots",rama:"Ingenieria"}),
+(Software_para_Robots:Asignatura{codigo:"3",nombre:"Software para Robots",rama:"Ingenieria"}),
 (Seguridad:Asignatura{codigo:"4",nombre:"Seguridad",rama:"Ingenieria"}),
 (Fisica:Asignatura{codigo:"5",nombre:"Fisica",rama:"Quimica"}),
 (Quimica_organica:Asignatura{codigo:"6",nombre:"Quimica Organica",rama:"Quimica"}),
@@ -26,91 +26,74 @@ create (Dario:Persona{identificador:"dario", nombre:"Dario", apellidos:"Alvarez 
 (Lucas:Persona{identificador:"lvc4s", nombre:"Lucas", apellidos:"Blanco Martinez", edad:"56", correo:"lvc4s@uma.es"}),
 (Jose:Persona{identificador:"jose", nombre:"Jose", apellidos:"Fernandez Fernandez", edad:"58", correo:"jose@uma.es"});
 
-match (edu:Persona {nombre:"Eduardo", apellidos:"Blanco Bielsa"}), 
-(sergio:Persona {nombre:"Sergio", apellidos:"Cimadevilla Torga"}),
-(ruben:Persona {nombre:"Ruben", apellidos:"Sanchez Macia"}), 
-(marcos:Persona {nombre:"Marcos", apellidos:"Perez Gonzalez"}),
-(xin:Persona {nombre:"Chen Xin", apellidos:"Pan Wang"}), 
-(daniel:Persona {nombre:"Daniel", apellidos:"Fernandez de Juan"}),
-(dario:Persona {nombre:"Dario", apellidos:"Alvarez Gutierrez"}), 
-(enol:Persona {nombre:"Enol", apellidos:"Garcia Gonzalez"}),
-(enrique:Persona {nombre:"Enrique J.", apellidos:"de Andres Galiana"}), 
-(alb:Persona {nombre:"Alberto Manuel", apellidos:"Fernandez Alvarez"}),
-(lucas:Persona {nombre:"Lucas", apellidos:"Blanco Martinez"}), 
-(jose:Persona {nombre:"Jose", apellidos:"Fernandez Fernandez"}),
-(ri:Asignatura {codigo:"1"}), 
-(alg:Asignatura {codigo:"2"}), 
-(sr:Asignatura {codigo:"3"}), 
-(seguridad:Asignatura {codigo:"4"}),
-(fisica:Asignatura {codigo:"5"}), 
-(organica:Asignatura {codigo:"6"}), 
-(inorganica:Asignatura {codigo:"7"}), 
-(calculo:Asignatura {codigo:"8"}),
-(algebra:Asignatura {codigo:"9"}), 
-(ing_software:Grado {nombre:"Ingenieria del software"}), 
-(ing_inf:Grado {nombre:"Ingenieria Informatica"}),
-(quimica:Grado {nombre:"Quimica"})
-create (dario)-[:DIRIGE]->(ing_software)
-create (enrique)-[:DIRIGE]->(ing_inf)
-create (lucas)-[:DIRIGE]->(quimica)
-create (ing_software)-[:CONTIENE]->(ri)
-create (ing_software)-[:CONTIENE]->(alg)
-create (ing_software)-[:CONTIENE]->(sr)
-create (ing_software)-[:CONTIENE]->(seguridad)
-create (ing_software)-[:CONTIENE]->(calculo)
-create (ing_software)-[:CONTIENE]->(algebra)
-create (ing_inf)-[:CONTIENE]->(alg)
-create (ing_inf)-[:CONTIENE]->(seguridad)
-create (ing_inf)-[:CONTIENE]->(fisica)
-create (ing_inf)-[:CONTIENE]->(calculo)
-create (ing_inf)-[:CONTIENE]->(algebra)
-create (quimica)-[:CONTIENE]->(fisica)
-create (quimica)-[:CONTIENE]->(organica)
-create (quimica)-[:CONTIENE]->(inorganica)
-create (quimica)-[:CONTIENE]->(calculo)
-create (quimica)-[:CONTIENE]->(algebra)
-create (dario)-[:IMPARTE]->(ri)
-create (dario)-[:IMPARTE]->(alg)
-create (enol)-[:IMPARTE]->(ri)
-create (enol)-[:IMPARTE]->(alg)
-create (enol)-[:IMPARTE]->(seguridad)
-create (enrique)-[:IMPARTE]->(seguridad)
-create (enrique)-[:IMPARTE]->(fisica)
-create (enrique)-[:IMPARTE]->(calculo)
-create (alb)-[:IMPARTE]->(ri)
-create (alb)-[:IMPARTE]->(calculo)
-create (alb)-[:IMPARTE]->(algebra)
-create (lucas)-[:IMPARTE]->(organica)
-create (lucas)-[:IMPARTE]->(inorganica)
-create (lucas)-[:IMPARTE]->(algebra)
-create (lucas)-[:IMPARTE]->(calculo)
-create (jose)-[:IMPARTE]->(sr)
-create (sr)-[:IMPARTE]->(alg)
-create (edu)-[:ESTA_APUNTADO]->(ri)
-create (edu)-[:ESTA_APUNTADO]->(alg)
-create (edu)-[:ESTA_APUNTADO]->(sr)
-create (edu)-[:ESTA_APUNTADO]->(seguridad)
-create (ruben)-[:ESTA_APUNTADO]->(algebra)
-create (ruben)-[:ESTA_APUNTADO]->(organica)
-create (ruben)-[:ESTA_APUNTADO]->(inorganica)
-create (ruben)-[:ESTA_APUNTADO]->(calculo)
-create (ruben)-[:ESTA_APUNTADO]->(fisica)
-create (sergio)-[:ESTA_APUNTADO]->(ri)
-create (sergio)-[:ESTA_APUNTADO]->(algebra)
-create (sergio)-[:ESTA_APUNTADO]->(seguridad)
-create (marcos)-[:ESTA_APUNTADO]->(organica)
-create (marcos)-[:ESTA_APUNTADO]->(algebra)
-create (marcos)-[:ESTA_APUNTADO]->(calculo)
-create (xin)-[:ESTA_APUNTADO]->(ri)
-create (xin)-[:ESTA_APUNTADO]->(sr)
-create (xin)-[:ESTA_APUNTADO]->(seguridad)
-create (xin)-[:ESTA_APUNTADO]->(algebra)
-create (xin)-[:ESTA_APUNTADO]->(alg)
-create (daniel)-[:ESTA_APUNTADO]->(fisica)
-create (daniel)-[:ESTA_APUNTADO]->(calculo)
-create (daniel)-[:ESTA_APUNTADO]->(alg)
-create (daniel)-[:ESTA_APUNTADO]->(algebra);
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Eduardo" and p.apellidos = "Blanco Bielsa" AND (a.codigo = "1" OR a.codigo = "2" OR a.codigo = "3" OR a.codigo ="4")
+CREATE (p)-[:ESTA_APUNTADO]->(a);
 
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Sergio" and p.apellidos = "Cimadevilla Torga" AND (a.codigo = "1" OR a.codigo = "9" OR a.codigo = "4")
+CREATE (p)-[:ESTA_APUNTADO]->(a);
 
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Ruben" and p.apellidos = "Sanchez Macia" AND (a.codigo = "9" OR a.codigo = "5" OR a.codigo = "6" OR a.codigo ="7" OR a.codigo ="8")
+CREATE (p)-[:ESTA_APUNTADO]->(a);
 
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Marcos" and p.apellidos = "Perez Gonzalez" AND (a.codigo = "9" OR a.codigo = "6" OR a.codigo ="8")
+CREATE (p)-[:ESTA_APUNTADO]->(a);
 
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Chen Xin" and p.apellidos = "Pan Wang" AND (a.codigo = "1" OR a.codigo = "3" OR a.codigo = "4" OR a.codigo ="9" OR a.codigo ="2")
+CREATE (p)-[:ESTA_APUNTADO]->(a);
+
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Daniel" and p.apellidos = "Fernandez de Juan" AND (a.codigo = "2" OR a.codigo = "9" OR a.codigo = "5" OR a.codigo ="8")
+CREATE (p)-[:ESTA_APUNTADO]->(a);
+
+MATCH (p: Persona), (g:Grado)
+WHERE p.nombre = "Dario" and p.apellidos = "Alvarez Gutierrez" AND g.nombre = "Ingenieria del software"
+CREATE (p)-[:DIRIGE]->(g);
+
+MATCH (p: Persona), (g:Grado)
+WHERE p.nombre = "Enrique J." and p.apellidos = "de Andres Galiana" AND g.nombre = "Ingenieria Informatica"
+CREATE (p)-[:DIRIGE]->(g);
+
+MATCH (p: Persona), (g:Grado)
+WHERE p.nombre = "Lucas" and p.apellidos = "Blanco Martinez" AND g.nombre = "Quimica"
+CREATE (p)-[:DIRIGE]->(g);
+
+MATCH (a: Asignatura), (g:Grado)
+WHERE g.nombre = "Ingenieria del software" AND (a.codigo = "1" OR a.codigo = "2" OR a.codigo = "3" OR a.codigo = "4" OR a.codigo = "8" OR a.codigo = "9")
+CREATE (g)-[:CONTIENE]->(a);
+
+MATCH (a: Asignatura), (g:Grado)
+WHERE g.nombre = "Ingenieria Informatica" AND (a.codigo = "2" OR a.codigo = "4" OR a.codigo = "5" OR a.codigo = "8" OR a.codigo = "9")
+CREATE (g)-[:CONTIENE]->(a);
+
+MATCH (a: Asignatura), (g:Grado)
+WHERE g.nombre = "Quimica" AND (a.codigo = "5" OR a.codigo = "6" OR a.codigo = "7" OR a.codigo = "8" OR a.codigo = "9")
+CREATE (g)-[:CONTIENE]->(a);
+
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Dario" and p.apellidos = "Alvarez Gutierrez" AND (a.codigo = "1" OR a.codigo = "2")
+CREATE (p)-[:IMPARTE]->(a);
+
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Enol" and p.apellidos = "Garcia Gonzalez" AND (a.codigo = "1" OR a.codigo = "2" OR a.codigo = "4")
+CREATE (p)-[:IMPARTE]->(a);
+
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Enrique J." and p.apellidos = "de Andres Galiana" AND (a.codigo = "4" OR a.codigo = "5" OR a.codigo = "8")
+CREATE (p)-[:IMPARTE]->(a);
+
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Lucas" and p.apellidos = "Blanco Martinez" AND (a.codigo = "6" OR a.codigo = "7" OR a.codigo = "8" OR a.codigo = "9")
+CREATE (p)-[:IMPARTE]->(a);
+
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Alberto Manuel" and p.apellidos = "Fernandez Alvarez" AND (a.codigo = "1" OR a.codigo = "8" OR a.codigo = "9")
+CREATE (p)-[:IMPARTE]->(a);
+
+MATCH (p: Persona), (a:Asignatura)
+WHERE p.nombre = "Jose" and p.apellidos = "Fernandez Fernandez" AND (a.codigo = "3" OR a.codigo = "2")
+CREATE (p)-[:IMPARTE]->(a);

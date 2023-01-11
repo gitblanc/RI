@@ -7,69 +7,113 @@ class App:
     def __init__(self, uri, user, password):
         self.driver = GraphDatabase.driver(uri, auth=(user, password))
 
+
     def close(self):
         # Don't forget to close the driver connection when you are finished with it
         self.driver.close()
 
-    # def create_friendship(self, person1_name, person2_name):
-    #     with self.driver.session(database="neo4j") as session:
-    #         # Write transactions allow the driver to handle retries and transient errors
-    #         result = session.execute_write(
-    #             self._create_and_return_friendship, person1_name, person2_name)
-    #         for row in result:
-    #             print("Created friendship between: {p1}, {p2}".format(p1=row['p1'], p2=row['p2']))
 
-    # @staticmethod
-    # def _create_and_return_friendship(tx, person1_name, person2_name):
-    #     # To learn more about the Cypher syntax, see https://neo4j.com/docs/cypher-manual/current/
-    #     # The Reference Card is also a good resource for keywords https://neo4j.com/docs/cypher-refcard/current/
-    #     query = (
-    #         "CREATE (p1:Person { name: $person1_name }) "
-    #         "CREATE (p2:Person { name: $person2_name }) "
-    #         "CREATE (p1)-[:KNOWS]->(p2) "
-    #         "RETURN p1, p2"
-    #     )
-    #     result = tx.run(query, person1_name=person1_name, person2_name=person2_name)
-    #     try:
-    #         return [{"p1": row["p1"]["name"], "p2": row["p2"]["name"]}
-    #                 for row in result]
-    #     # Capture any errors along with the query and data for traceability
-    #     except ServiceUnavailable as exception:
-    #         logging.error("{query} raised an error: \n {exception}".format(
-    #             query=query, exception=exception))
-    #         raise
+    def consultas(self):
+        with self.driver.session(database="neo4j") as session:
+            #------------------------Apartado a)-----------------------------
+            result = session.execute_read(self.consultaSencilla1) # consulta 1
+            print("Consulta Sencilla 1: ",result)
+            result = session.execute_read(self.consultaSencilla2) # consulta 2
+            print("Consulta Sencilla 2: ",result)
+            #------------------------Apartado b)-----------------------------
+            result = session.execute_read(self.consultaIntermedia1) # consulta 1
+            print("Consulta Intermedia 1: ",result)
+            result = session.execute_read(self.consultaIntermedia2) # consulta 2
+            print("Consulta Intermedia 2: ",result)
+            #------------------------Apartado c)-----------------------------
+            result = session.execute_read(self.consultaAvanzada1) # consulta 1
+            print("Consulta Avanzada 1: ",result)
+            # result = session.execute_read(self.consultaAvanzada2) # consulta 2
+            # print("Consulta Avanzada 2: ",result)
 
-    # def find_person(self, person_name):
-    #     with self.driver.session(database="neo4j") as session:
-    #         result = session.execute_read(self._find_and_return_person, person_name)
-    #         for row in result:
-    #             print("Found person: {row}".format(row=row))
 
-    # @staticmethod
-    # def _find_and_return_person(tx, person_name):
-    #     query = (
-    #         "MATCH (p:Person) "
-    #         "WHERE p.name = $person_name "
-    #         "RETURN p.name AS name"
-    #     )
-    #     result = tx.run(query, person_name=person_name)
-    #     return [row["name"] for row in result]
+    def procesarNodos(nodes):
+        res = []
+        for x in nodes:
+            res.append(x[0])
+        return res
 
     @staticmethod
-    def consultaSencilla1():
+    def consultaSencilla1(tx):
         query = (
             "match (a: Asignatura) <-[:CONTIENE]- (:Grado{nombre:\"Ingenieria Informatica\"}) "
-            "return a"
+            "return a.nombre "
         )
-        result = tx.run 
+        nodes = tx.run(query)
+        return App.procesarNodos(nodes)
+
+
+    @staticmethod
+    def consultaSencilla2(tx):
+        query = (
+            "match (p:Persona)-[:ESTA_APUNTADO]->(a:Asignatura{nombre:\"Algebra\"}) "
+            "return p.nombre "
+        )
+        nodes = tx.run(query)
+        return App.procesarNodos(nodes)
+
+
+    @staticmethod
+    def consultaIntermedia1(tx):
+        query = (
+            "match (a: Asignatura) <- [:CONTIENE] - (g:Grado) "
+            "where g.localizacion <> \"Oviedo\" and a.nombre = \"Calculo\" "
+            "match (a) <- [:ESTA_APUNTADO] - (p:Persona) "
+            "return distinct(p.nombre) "
+        )
+        nodes = tx.run(query)
+        return App.procesarNodos(nodes)
+
+
+    @staticmethod
+    def consultaIntermedia2(tx):
+        query = (
+            "MATCH (p:Persona)-[:IMPARTE]->(s:Asignatura) "
+            "OPTIONAL MATCH (p)-[:DIRIGE]->(g:Grado) "
+            "WITH p, COUNT(g) AS contador "
+            "WHERE contador = 0 "
+            "RETURN p.nombre "
+        )
+        nodes = tx.run(query)
+        return App.procesarNodos(nodes)
+
+
+    @staticmethod
+    def consultaAvanzada1(tx):
+        query = (
+            "MATCH (g:Grado) "
+            "WHERE EXISTS{ "
+            "MATCH (g)<-[:DIRIGE]-(p:Persona) "
+            "WHERE p.edad=\"40\" AND EXISTS { "
+            "MATCH (g)-[:CONTIENE]->(a:Asignatura) "
+            "where a.rama=\"Ingenieria\" "
+            "} "
+            "} "
+            "RETURN  g.nombre "
+        )
+        nodes = tx.run(query)
+        return App.procesarNodos(nodes)
+
+
+    @staticmethod
+    def consultaAvanzada2(tx):
+        query = (
+            "falta"
+        )
+        nodes = tx.run(query)
+        return App.procesarNodos(nodes)
 
 
 if __name__ == "__main__":
     # Aura queries use an encrypted connection using the "neo4j+s" URI scheme
-    uri = "neo4j+s://5ab21b39.databases.neo4j.io"
+    uri = "neo4j+s://c4d04a65.databases.neo4j.io"
     user = "neo4j"
-    password = "4P1E94MhfNkggY-cjeDQK1xsSzY6MvvbLyRvNPYnZ3Y"
+    password = "iS6unODm5uW_20BFiogMwGR93P_M4kcTxKNyKNz0_cw"
     app = App(uri, user, password)
-    # app.create_friendship("Alice", "David")
-    # app.find_person("Alice")
+    app.consultas() # aquí se ejecutan las consultas
     app.close()

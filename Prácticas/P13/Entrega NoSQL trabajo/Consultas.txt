@@ -1,0 +1,36 @@
+------Básicas------
+
+match (a: Asignatura) <-[:CONTIENE]- (:Grado{nombre:"Ingenieria Informatica"}) 
+return a
+
+match (p:Persona)-[:ESTA_APUNTADO]->(a:Asignatura{nombre:"Algebra"}) 
+return p
+
+------Intermedias------
+
+match (a: Asignatura) <- [:CONTIENE] - (g:Grado) 
+where g.localizacion <> "Oviedo" and a.nombre = "Calculo" 
+match (a) <- [:ESTA_APUNTADO] - (p:Persona) 
+return distinct(p)
+
+MATCH (p:Persona)-[:IMPARTE]->(s:Asignatura)
+OPTIONAL MATCH (p)-[:DIRIGE]->(g:Grado)
+WITH p, COUNT(g) AS contador
+WHERE contador = 0
+RETURN p
+
+------Avanzadas------
+
+MATCH (g:Grado) 
+WHERE EXISTS{ 
+    MATCH (g)<-[:DIRIGE]-(p:Persona) 
+    WHERE p.edad=40 AND EXISTS { 
+        MATCH (g)-[:CONTIENE]->(a:Asignatura) 
+        where a.rama="Ingenieria" 
+    }
+} 
+RETURN  g
+
+MATCH (a:Persona{nombre:"Dario"}),(b:Persona{nombre:"Sergio"}), p = shortestPath((a)-[:DIRIGE|CONTIENE|ESTA_APUNTADO*..4]-(b))
+RETURN p,SIZE(NODES(p))-2;
+

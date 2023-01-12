@@ -17,45 +17,45 @@ class App:
         with self.driver.session(database="neo4j") as session:
             #------------------------Apartado a)-----------------------------
             result = session.execute_read(self.consultaSencilla1) # consulta 1
-            print("Consulta Sencilla 1: ",result)
+            print("Consulta Sencilla 1: \n",result,"\n")
             result = session.execute_read(self.consultaSencilla2) # consulta 2
-            print("Consulta Sencilla 2: ",result)
+            print("Consulta Sencilla 2: \n",result,"\n")
             #------------------------Apartado b)-----------------------------
             result = session.execute_read(self.consultaIntermedia1) # consulta 1
-            print("Consulta Intermedia 1: ",result)
+            print("Consulta Intermedia 1: \n",result,"\n")
             result = session.execute_read(self.consultaIntermedia2) # consulta 2
-            print("Consulta Intermedia 2: ",result)
+            print("Consulta Intermedia 2: \n",result,"\n")
             #------------------------Apartado c)-----------------------------
             result = session.execute_read(self.consultaAvanzada1) # consulta 1
-            print("Consulta Avanzada 1: ",result)
-            # result = session.execute_read(self.consultaAvanzada2) # consulta 2
-            # print("Consulta Avanzada 2: ",result)
+            print("Consulta Avanzada 1: \n",result,"\n")
+            result, count = session.execute_read(self.consultaAvanzada2) # consulta 2
+            print("Consulta Avanzada 2: \n $> Camino: ",result, "\n $> Nodos intermedios: ", count,"\n")
 
 
-    def procesarNodos(nodes):
+    def procesarNodos(nodes, nodo):
         res = []
         for x in nodes:
-            res.append(x[0])
+            res.append(x.data()[nodo])
         return res
 
     @staticmethod
     def consultaSencilla1(tx):
         query = (
             "match (a: Asignatura) <-[:CONTIENE]- (:Grado{nombre:\"Ingenieria Informatica\"}) "
-            "return a.nombre "
+            "return a"
         )
         nodes = tx.run(query)
-        return App.procesarNodos(nodes)
+        return App.procesarNodos(nodes, "a")
 
 
     @staticmethod
     def consultaSencilla2(tx):
         query = (
             "match (p:Persona)-[:ESTA_APUNTADO]->(a:Asignatura{nombre:\"Algebra\"}) "
-            "return p.nombre "
+            "return p"
         )
         nodes = tx.run(query)
-        return App.procesarNodos(nodes)
+        return App.procesarNodos(nodes, "p")
 
 
     @staticmethod
@@ -64,10 +64,10 @@ class App:
             "match (a: Asignatura) <- [:CONTIENE] - (g:Grado) "
             "where g.localizacion <> \"Oviedo\" and a.nombre = \"Calculo\" "
             "match (a) <- [:ESTA_APUNTADO] - (p:Persona) "
-            "return distinct(p.nombre) "
+            "return distinct(p) "
         )
         nodes = tx.run(query)
-        return App.procesarNodos(nodes)
+        return App.procesarNodos(nodes, "p")
 
 
     @staticmethod
@@ -77,10 +77,10 @@ class App:
             "OPTIONAL MATCH (p)-[:DIRIGE]->(g:Grado) "
             "WITH p, COUNT(g) AS contador "
             "WHERE contador = 0 "
-            "RETURN p.nombre "
+            "RETURN p"
         )
         nodes = tx.run(query)
-        return App.procesarNodos(nodes)
+        return App.procesarNodos(nodes, "p")
 
 
     @staticmethod
@@ -89,24 +89,24 @@ class App:
             "MATCH (g:Grado) "
             "WHERE EXISTS{ "
             "MATCH (g)<-[:DIRIGE]-(p:Persona) "
-            "WHERE p.edad=\"40\" AND EXISTS { "
+            "WHERE p.edad=40 AND EXISTS { "
             "MATCH (g)-[:CONTIENE]->(a:Asignatura) "
             "where a.rama=\"Ingenieria\" "
             "} "
             "} "
-            "RETURN  g.nombre "
+            "RETURN  g"
         )
         nodes = tx.run(query)
-        return App.procesarNodos(nodes)
+        return App.procesarNodos(nodes, "g")
 
 
     @staticmethod
     def consultaAvanzada2(tx):
         query = (
-            "falta"
+            "MATCH (a:Persona{nombre:\"Dario\"}),(b:Persona{nombre:\"Sergio\"}), p = shortestPath((a)-[:DIRIGE|CONTIENE|ESTA_APUNTADO*..4]-(b))"
+            "RETURN p, SIZE(NODES(p))-2;"
         )
-        nodes = tx.run(query)
-        return App.procesarNodos(nodes)
+        return tx.run(query).values()[0][0], tx.run(query).values()[0][1]
 
 
 if __name__ == "__main__":

@@ -12,19 +12,19 @@ create (RI:Asignatura{codigo:"1",nombre:"Repositorios de la Informacion",rama:"I
 (Calculo:Asignatura{codigo:"8",nombre:"Calculo",rama:"Ingenieria"}),
 (Algebra:Asignatura{codigo:"9",nombre:"Algebra",rama:"Ingenieria"});
 
-create (Eduardo:Persona{identificador:"UO285176", nombre:"Eduardo", apellidos:"Blanco Bielsa", edad:"20", correo:"UO285176@uniovi.es"}),
-(Sergio:Persona{identificador:"UO264292", nombre:"Sergio", apellidos:"Cimadevilla Torga", edad:"22", correo:"UO264292@uniovi.es"}),
-(Ruben:Persona{identificador:"0611133597", nombre:"Ruben", apellidos:"Sanchez Macia", edad:"19", correo:"rubensama2004@uma.es"}),
-(Marcos:Persona{identificador:"0611133598", nombre:"Marcos", apellidos:"Perez Gonzalez", edad:"19", correo:"marcosperez@uma.es"}),
-(Chen_Xin:Persona{identificador:"UO276967", nombre:"Chen Xin", apellidos:"Pan Wang", edad:"21", correo:"UO276967@uniovi.es"}),
-(Daniel:Persona{identificador:"UO276978", nombre:"Daniel", apellidos:"Fernandez de Juan", edad:"21", correo:"UO276978@uniovi.es"});
+create (Eduardo:Persona{identificador:"UO285176", nombre:"Eduardo", apellidos:"Blanco Bielsa", edad:20, correo:"UO285176@uniovi.es"}),
+(Sergio:Persona{identificador:"UO264292", nombre:"Sergio", apellidos:"Cimadevilla Torga", edad:22, correo:"UO264292@uniovi.es"}),
+(Ruben:Persona{identificador:"0611133597", nombre:"Ruben", apellidos:"Sanchez Macia", edad:19, correo:"rubensama2004@uma.es"}),
+(Marcos:Persona{identificador:"0611133598", nombre:"Marcos", apellidos:"Perez Gonzalez", edad:19, correo:"marcosperez@uma.es"}),
+(Chen_Xin:Persona{identificador:"UO276967", nombre:"Chen Xin", apellidos:"Pan Wang", edad:21, correo:"UO276967@uniovi.es"}),
+(Daniel:Persona{identificador:"UO276978", nombre:"Daniel", apellidos:"Fernandez de Juan", edad:21, correo:"UO276978@uniovi.es"});
 
-create (Dario:Persona{identificador:"dario", nombre:"Dario", apellidos:"Alvarez Gutierrez", edad:"40", correo:"darioa@uniovi.es"}),
-(Enol:Persona{identificador:"enol", nombre:"Enol", apellidos:"Garcia Gonzalez", edad:"25", correo:"garciaenol@uniovi.es"}),
-(Enrique:Persona{identificador:"galiana", nombre:"Enrique J.", apellidos:"de Andres Galiana", edad:"40", correo:"andresenrique@uniovi.es"}),
-(Alberto:Persona{identificador:"alb", nombre:"Alberto Manuel", apellidos:"Fernandez Alvarez", edad:"42", correo:"alb@uniovi.es"}),
-(Lucas:Persona{identificador:"lvc4s", nombre:"Lucas", apellidos:"Blanco Martinez", edad:"56", correo:"lvc4s@uma.es"}),
-(Jose:Persona{identificador:"jose", nombre:"Jose", apellidos:"Fernandez Fernandez", edad:"58", correo:"jose@uma.es"});
+create (Dario:Persona{identificador:"dario", nombre:"Dario", apellidos:"Alvarez Gutierrez", edad:40, correo:"darioa@uniovi.es"}),
+(Enol:Persona{identificador:"enol", nombre:"Enol", apellidos:"Garcia Gonzalez", edad:25, correo:"garciaenol@uniovi.es"}),
+(Enrique:Persona{identificador:"galiana", nombre:"Enrique J.", apellidos:"de Andres Galiana", edad:40, correo:"andresenrique@uniovi.es"}),
+(Alberto:Persona{identificador:"alb", nombre:"Alberto Manuel", apellidos:"Fernandez Alvarez", edad:42, correo:"alb@uniovi.es"}),
+(Lucas:Persona{identificador:"lvc4s", nombre:"Lucas", apellidos:"Blanco Martinez", edad:56, correo:"lvc4s@uma.es"}),
+(Jose:Persona{identificador:"jose", nombre:"Jose", apellidos:"Fernandez Fernandez", edad:58, correo:"jose@uma.es"});
 
 MATCH (p: Persona), (a:Asignatura)
 WHERE p.nombre = "Eduardo" and p.apellidos = "Blanco Bielsa" AND (a.codigo = "1" OR a.codigo = "2" OR a.codigo = "3" OR a.codigo ="4")
